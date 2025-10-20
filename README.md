@@ -11,6 +11,11 @@ Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetag
 
 ---
 
+## ✅ Actueller Fortschritt
+[ERD - logical Data model ](docs/ERD_logical_data_model.png)
+ERD - physical Data Model https://dbdiagram.io/d/68f0c40a2e68d21b41c5476b
+
+
 ## 🧩 Hauptfunktionen
 
 ### 🔐 Rollen & Zugriffsrechte
