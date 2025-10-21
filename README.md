@@ -12,8 +12,17 @@ Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetag
 ---
 
 ## ✅ Actueller Fortschritt
-[ERD - logical Data model ](docs/ERD_logical_data_model.png)
-ERD - physical Data Model https://dbdiagram.io/d/68f0c40a2e68d21b41c5476b
+- [ERD - logical Data model ](docs/ERD_logical_data_model.png)
+
+
+
+- [ERD - physical Data Model](https://dbdiagram.io/d/68f0c40a2e68d21b41c5476b)
+
+
+- [Figma design - in process](https://www.figma.com/design/3lPi9DrVtBNnbKULPAvOpB/K%C3%A4se-mit-liebe?node-id=0-1&p=f)
+
+
+
 
 
 ## 🧩 Hauptfunktionen
