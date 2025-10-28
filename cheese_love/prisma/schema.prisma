@@ -1,0 +1,223 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model batch_coments {
+  id             Int            @id @default(autoincrement())
+  batche_id      Int
+  user_nick      String         @db.VarChar
+  date           DateTime?      @db.Timestamp(6)
+  text           Json
+  cheese_batches cheese_batches @relation(fields: [batche_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users          users          @relation(fields: [user_nick], references: [nick_name], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model batch_notes {
+  id             Int            @id @default(autoincrement())
+  batche_id      Int
+  date           DateTime?      @db.Timestamp(6)
+  title          Json
+  text           Json?
+  cheese_batches cheese_batches @relation(fields: [batche_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model cart {
+  user_nick     String     @id @db.VarChar
+  cart_items_id Int
+  total_price   Decimal?   @db.Decimal(10, 2)
+  cart_items    cart_items @relation(fields: [cart_items_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users         users      @relation(fields: [user_nick], references: [nick_name], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model cart_items {
+  id         Int      @id @default(autoincrement())
+  product_id Int
+  quantity   Int
+  cart       cart[]
+  products   products @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model cheese_batches {
+  id            Int             @id @default(autoincrement())
+  recipe_id     Int
+  user_nick     String          @db.VarChar
+  date_batch    DateTime?       @db.Timestamp(6)
+  created_at    DateTime?       @db.Date
+  ready_at      DateTime?       @db.Date
+  description   Json?
+  foto          String?         @db.VarChar(50)
+  cheeseweight  Decimal?        @db.Decimal(10, 3)
+  ispublic      Boolean?        @default(false)
+  batch_coments batch_coments[]
+  batch_notes   batch_notes[]
+  recipes       recipes         @relation(fields: [recipe_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users         users           @relation(fields: [user_nick], references: [nick_name], onDelete: NoAction, onUpdate: NoAction)
+  milk_in_batch milk_in_batch[]
+}
+
+model favorite_recipes {
+  recipe_id Int
+  user_nick String  @db.VarChar
+  recipes   recipes @relation(fields: [recipe_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users     users   @relation(fields: [user_nick], references: [nick_name], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([recipe_id, user_nick])
+}
+
+model ingredients {
+  id                 Int                  @id @default(autoincrement())
+  name               Json?
+  type               ingredients_type     @default(Other)
+  description        Json?
+  unit               String?              @db.VarChar(10)
+  milk_in_batch      milk_in_batch[]
+  recipe_ingredients recipe_ingredients[]
+}
+
+model milk_in_batch {
+  batch_id       Int
+  milk_id        Int
+  amount         Int?
+  cheese_batches cheese_batches @relation(fields: [batch_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ingredients    ingredients    @relation(fields: [milk_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([batch_id, milk_id])
+}
+
+model order_items {
+  id          Int      @id @default(autoincrement())
+  product_id  Int
+  quantity    Int
+  total_price Decimal  @db.Decimal(10, 2)
+  products    products @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  orders      orders[]
+}
+
+model orders {
+  id             Int          @id @default(autoincrement())
+  user_nick      String       @db.VarChar
+  order_items_id Int
+  date           DateTime     @db.Timestamp(6)
+  total_price    Decimal      @db.Decimal(10, 2)
+  discount       Decimal?     @db.Decimal(10, 2)
+  comment        String?      @db.VarChar(500)
+  shipp_address  Json
+  status         order_status @default(pending)
+  order_items    order_items  @relation(fields: [order_items_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users          users        @relation(fields: [user_nick], references: [nick_name], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model products {
+  id                  Int                 @id @default(autoincrement())
+  name                Json
+  category_id         Int
+  description         Json?
+  price               Decimal             @db.Decimal(10, 2)
+  avaible             Boolean?
+  cart_items          cart_items[]
+  order_items         order_items[]
+  products_categories products_categories @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model products_categories {
+  id       Int        @id @default(autoincrement())
+  name     Json
+  body     Json?
+  products products[]
+}
+
+model recipe_ingredients {
+  recipe_id     Int
+  ingredient_id Int
+  amount        Int?
+  ingredients   ingredients @relation(fields: [ingredient_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  recipes       recipes     @relation(fields: [recipe_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([recipe_id, ingredient_id])
+}
+
+model recipes {
+  id                 Int                  @id @default(autoincrement())
+  category_id        Int
+  name               Json
+  body               Json?
+  created_at         DateTime?            @db.Timestamp(6)
+  aging              Int?
+  ispublic           Boolean?             @default(false)
+  cheese_batches     cheese_batches[]
+  favorite_recipes   favorite_recipes[]
+  recipe_ingredients recipe_ingredients[]
+  recipes_categories recipes_categories   @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model recipes_categories {
+  id      Int       @id @default(autoincrement())
+  name    Json
+  body    Json?
+  recipes recipes[]
+}
+
+model subscribe {
+  email String @id @db.VarChar(250)
+}
+
+model users {
+  nick_name        String             @id @db.VarChar(100)
+  username         String             @db.VarChar(100)
+  email            String             @unique @db.VarChar(250)
+  password         String             @db.VarChar(30)
+  created_at       DateTime           @db.Timestamp(6)
+  telefon          String?            @db.VarChar(30)
+  user_status      user_status        @default(user)
+  avtar            String?            @db.VarChar(50)
+  mood             Json?
+  info             Json?
+  user_address     Json?
+  latitude         Decimal?           @db.Decimal(9, 6)
+  longitude        Decimal?           @db.Decimal(9, 6)
+  ispublic         Boolean?           @default(true)
+  issubscribed     Boolean?           @default(true)
+  batch_coments    batch_coments[]
+  cart             cart?
+  cheese_batches   cheese_batches[]
+  favorite_recipes favorite_recipes[]
+  orders           orders[]
+}
+
+enum ingredients_type {
+  Milk
+  Starter_culture @map("Starter culture")
+  Rennet
+  Salt
+  Spice
+  Additive
+  Coating
+  Concervant
+  Colorant
+  Enzyme
+  Other
+}
+
+enum order_status {
+  pending
+  processing
+  paid
+  shipped
+  delivered
+  cancelled
+  refunded
+}
+
+enum user_status {
+  admin
+  basic
+  standard
+  premium
+  user
+}
