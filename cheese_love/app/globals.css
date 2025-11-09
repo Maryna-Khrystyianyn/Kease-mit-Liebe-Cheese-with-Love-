@@ -21,3 +21,32 @@
     color: var(--text);
     transition: background-color 0.18s ease, color 0.18s ease;
   }
+
+  /* ======================
+    Underline Orange
+  ========================*/
+  .link-underline {
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* можна трохи підняти чи опустити */
+    width: 0;
+    height: 2px;
+    background-color: #F4B619; /* оранжевий (Tailwind orange-500) */
+    transition: width 0.3s ease;
+  }
+  
+  .link-underline:hover {
+    color: #F4B619;
+  }
+  
+  .link-underline:hover::after {
+    width: 100%;
+  }

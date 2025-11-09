@@ -14,9 +14,6 @@
   font-size: 0.3rem;
   overflow: hidden;
   isolation: isolate;
-  box-shadow: 0 -0.1em 0.1em 0.03em rgba(0, 0, 0, 0.2),
-    0 0.1em 0.1em 0.03em rgb(255, 255, 255);
-
   --day: #397ab0;
   --night: #1c202c;
   --sun: #f2c426;

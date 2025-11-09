@@ -4,10 +4,10 @@ import HeaderMobile from "./HeaderMobile";
 const Header = () => {
   return (
     <>
-      <div className="sm:hidden">
+      <div className="md:hidden">
         <HeaderMobile />
       </div>
-      <div className="hidden sm:block">
+      <div className="hidden md:block">
         <HeaderDesktop />
       </div>
     </>
