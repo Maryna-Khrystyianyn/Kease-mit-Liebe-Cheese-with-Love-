@@ -2,6 +2,8 @@ CREATE TABLE subscribe (
   email VARCHAR(250) PRIMARY KEY
 );
 
+CREATE TYPE user_status AS ENUM ('admin','basic','standard','premium','user');
+
 CREATE TABLE users (
   nick_name VARCHAR(100) PRIMARY KEY,
   username VARCHAR(100) NOT NULL,
@@ -9,13 +11,13 @@ CREATE TABLE users (
   password VARCHAR(30) NOT NULL,
   created_at timestamp NOT NULL,
   telefon VARCHAR(30),
-  user_status ENUM ('admin','basic','standart','premium','user') NOT NULL,
+  user_status user_status NOT NULL DEFAULT 'user',
   avtar VARCHAR(50),
   mood JSONB,
   info JSONB,
   user_address JSONB,
-  latitude DOUBLE,
-  longitude DOUBLE,
+  latitude DECIMAL(9,6),
+  longitude DECIMAL(9,6),
   isPublic BOOLEAN DEFAULT true,
   isSubscribed BOOLEAN DEFAULT true
 );
@@ -36,12 +38,14 @@ CREATE TABLE recipes (
   isPublic BOOLEAN DEFAULT false
 );
 
+CREATE TYPE ingredients_type  AS ENUM ('Milk','Starter culture','Rennet', 'Salt', 'Spice', 'Additive', 'Coating', 'Concervant', 'Colorant', 'Enzyme', 'Other');
+
 CREATE TABLE ingredients (
   id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name JSONB,
-  type ENUM ('Milk','Starter culture','Rennet', 'Salt', 'Spice', 'Additive', 'Coating', 'Concervant', 'Colorant', 'Enzyme', 'Other'),
-  description JSONB
-  unit VARCHAR(10),
+  type ingredients_type NOT NULL DEFAULT 'Other',
+  description JSONB,
+  unit VARCHAR(10)
 );
 
 CREATE TABLE recipe_ingredients (
@@ -127,6 +131,8 @@ CREATE TABLE order_items (
   total_price DECIMAL(10,2) NOT NULL
 );
 
+CREATE TYPE order_status AS ENUM ('pending', 'processing', 'paid', 'shipped', 'delivered', 'cancelled', 'refunded');
+
 CREATE TABLE orders (
   id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   user_nick VARCHAR NOT NULL REFERENCES users (nick_name),
@@ -136,5 +142,5 @@ CREATE TABLE orders (
   discount DECIMAL(10,2),
   comment VARCHAR(500),
   shipp_address JSONB NOT NULL,
-  status ENUM('pending', 'processing', 'paid', 'shipped', 'delivered', 'cancelled', 'refunded')
+  status order_status NOT NULL DEFAULT 'pending'
 );
