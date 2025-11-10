@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const Nav = () => {
   return (
-    <ul className="flex  gap-3 text-[14px] md:text-base md:gap-7">
+    <ul className="flex gap-5">
         <li className="link-underline">
             <Link href={"#"}>Rezepte</Link>
         </li>

@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
+
 /* =======================
    Custom Theme Variables
    ======================= */
    :root {
     --bg: #fff;
     --text: #0F0F0F;
+    --gray:#f4f4f4;
   }
   
   [data-theme="dark"] {
     --bg: #0F0F0F;
     --text: #fff;
+    --gray:#1b1b19;
   }
   
   /* =======================
