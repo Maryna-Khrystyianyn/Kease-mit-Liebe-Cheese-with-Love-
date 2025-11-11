@@ -1,6 +1,6 @@
 "use client"
 import { useState, useRef, useEffect } from "react";
-import { ArrowDown } from "../icons/ArrowDown";
+import { ArrowDown } from "../icons/Arrows";
 const LanguageSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [language, setLanguage] = useState("de"); 

@@ -1,55 +1,58 @@
 @import "tailwindcss";
 
-
 /* =======================
    Custom Theme Variables
    ======================= */
-   :root {
-    --bg: #fff;
-    --text: #0F0F0F;
-    --gray:#f4f4f4;
-  }
-  
-  [data-theme="dark"] {
-    --bg: #0F0F0F;
-    --text: #fff;
-    --gray:#1b1b19;
-  }
-  
-  /* =======================
+:root {
+  --bg: #fff;
+  --text: #0f0f0f;
+  --text_gray: #393939;
+  --gray: #f4f4f4;
+  --gray_dunkel: #e5e5e5;
+  --orange: #f4b619;
+}
+
+[data-theme="dark"] {
+  --bg: #0f0f0f;
+  --gray_dunkel: #2b2b2b;;
+  --text: #fff;
+  --gray: #1b1b19;
+}
+
+/* =======================
      Global Styles
      ======================= */
-  body {
-    background: var(--bg);
-    color: var(--text);
-    transition: background-color 0.18s ease, color 0.18s ease;
-  }
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
 
-  /* ======================
+/* ======================
     Underline Orange
   ========================*/
-  .link-underline {
-    position: relative;
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .link-underline::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -2px; /* можна трохи підняти чи опустити */
-    width: 0;
-    height: 2px;
-    background-color: #F4B619; /* оранжевий (Tailwind orange-500) */
-    transition: width 0.3s ease;
-  }
-  
-  .link-underline:hover {
-    color: #F4B619;
-  }
-  
-  .link-underline:hover::after {
-    width: 100%;
-  }
+.link-underline {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px; /* можна трохи підняти чи опустити */
+  width: 0;
+  height: 2px;
+  background-color: #f4b619; /* оранжевий (Tailwind orange-500) */
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover {
+  color: #f4b619;
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
