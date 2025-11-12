@@ -40,10 +40,13 @@ const BurgerMenu = () => {
         ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <button
-        className="absolute top-4 text-2xl right-4 hover:rotate-6 transition-transform duration-150"
+        className={`absolute top-4 text-2xl right-3 group w-8 h-8 transition-transform duration-300 
+          ${!isOpen ? "rotate-180" : ""}`}
         onClick={() => setIsOpen(false)}
       >
-        ✕
+        <span className="block w-6 h-0.5 bg-(--text) group-hover:bg-[#F4B619] transition-transform duration-300 rotate-45 translate-y-[2px] group-hover:translate-x-[15px] group-hover:translate-y-[-2px] group-hover:w-3" />
+        <span className="block w-6 h-0.5 bg-(--text) group-hover:bg-[#F4B619] opacity-0 group-hover:opacity-100" />
+        <span className="block w-6 h-0.5 bg-(--text) group-hover:bg-[#F4B619] transition-transform duration-300 -rotate-45 translate-y-[-2px] group-hover:translate-x-[15px] group-hover:translate-y-[2px] group-hover:w-3" />
       </button>
         <NavMobile />
       </div>
