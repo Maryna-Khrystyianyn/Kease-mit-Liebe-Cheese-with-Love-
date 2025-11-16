@@ -1,10 +1,14 @@
-"use client"
+"use client";
 import { useState, useRef, useEffect } from "react";
 import { ArrowDown } from "../icons/Arrows";
+import { useTranslation } from "react-i18next";
+import "../../../lib/i18n";
+
 const LanguageSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguage] = useState("de"); 
+  const [language, setLanguage] = useState("de");
   const menuRef = useRef<HTMLDivElement>(null);
+  const { i18n } = useTranslation();
 
   // закривати меню при кліку поза ним
   useEffect(() => {
@@ -17,21 +21,22 @@ const LanguageSwitcher = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
- 
   const handleSelectLanguage = (lang: string) => {
     setLanguage(lang);
+    i18n?.changeLanguage(lang);
     setIsOpen(false);
-    // логіку для i18n
+    
   };
   return (
     <div className="relative" ref={menuRef}>
-     
       <button
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={() => {
+          setIsOpen((prev) => !prev);
+        }}
         className="flex gap-1 items-center font-bol link-underline hover:cursor-pointer "
       >
         {language === "de" ? "DE" : "УKR"}
-       <span>{ArrowDown} </span>
+        <span>{ArrowDown} </span>
       </button>
 
       {/* select language menu*/}
@@ -44,7 +49,7 @@ const LanguageSwitcher = () => {
             Deutsch
           </button>
           <button
-            onClick={() => handleSelectLanguage("ua")}
+            onClick={() => handleSelectLanguage("uk")}
             className={`block w-full text-left px-4 py-2 hover:bg-(--gray) `}
           >
             Українська

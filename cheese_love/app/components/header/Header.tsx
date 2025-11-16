@@ -1,13 +1,14 @@
 import HeaderDesktop from "./HeaderDesktop";
 import HeaderMobile from "./HeaderMobile";
+import "../../../lib/i18n";
 
 const Header = () => {
   return (
     <>
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <HeaderMobile />
       </div>
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <HeaderDesktop />
       </div>
     </>
