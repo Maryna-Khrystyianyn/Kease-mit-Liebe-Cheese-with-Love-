@@ -16,23 +16,24 @@ const NavMobile = () => {
       <ul className=" mt-5 py-10 bg-(--gray_dunkel) flex flex-col gap-5 px-6 text-2xl">
         <li>
           <Link className="link-underline " href={"#"}>
-          {t("rezepte")}
+            {t("rezepte")}
           </Link>
         </li>
         <li>
           <Link className="link-underline " href={"#"}>
-          {t("shop")}
+            {t("shop")}
           </Link>
         </li>
         <li>
           <Link className="link-underline " href={"#"}>
-          {t("tagebuch")}
+            {t("tagebuch")}
           </Link>
         </li>
       </ul>
       <div className="my-5 p-5 flex flex-col gap-5">
         <div className="text-base">
           <span
+            className="cursor-pointer"
             style={{ fontWeight: language === "de" ? "bold" : "" }}
             onClick={() => {
               i18n?.changeLanguage("de");
@@ -41,10 +42,13 @@ const NavMobile = () => {
             Deutsch
           </span>
           /
-          <span style={{ fontWeight: language === "uk" ? "bold" : "" }} 
-           onClick={() => {
-            i18n?.changeLanguage("uk");
-          }}>
+          <span
+            className="cursor-pointer"
+            style={{ fontWeight: language === "uk" ? "bold" : "" }}
+            onClick={() => {
+              i18n?.changeLanguage("uk");
+            }}
+          >
             Українська
           </span>
         </div>
