@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="">
       
-      hello world
+      hello world Das ist test!
     </div>
   );
 }
