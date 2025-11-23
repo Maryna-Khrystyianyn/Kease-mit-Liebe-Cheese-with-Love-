@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { ArrowDown } from "../icons/Arrows";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "@/node_modules/react-i18next";
 import "../../../lib/i18n";
 
 const LanguageSwitcher = () => {
@@ -25,7 +25,6 @@ const LanguageSwitcher = () => {
     setLanguage(lang);
     i18n?.changeLanguage(lang);
     setIsOpen(false);
-    
   };
   return (
     <div className="relative" ref={menuRef}>
