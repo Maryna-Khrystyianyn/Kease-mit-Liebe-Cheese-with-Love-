@@ -1,18 +1,18 @@
+
 generator client {
   provider = "prisma-client-js"
- // output   = "../app/generated/prisma"
+  //output   = "../app/generated/prisma"
 }
-
+// @ts-ignore
 datasource db {
   provider = "postgresql"
-  //url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
-
 model batch_coments {
   id             Int            @id @default(autoincrement())
   batche_id      Int
   user_nick      String         @db.VarChar
-  date           DateTime      @db.Timestamp(6) @default(now())
+  date           DateTime       @default(now()) @db.Timestamp(6)
   text           Json
   cheese_batches cheese_batches @relation(fields: [batche_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users          users          @relation(fields: [user_nick], references: [nick_name], onDelete: NoAction, onUpdate: NoAction)
@@ -21,7 +21,7 @@ model batch_coments {
 model batch_notes {
   id             Int            @id @default(autoincrement())
   batche_id      Int
-  date           DateTime?      @db.Timestamp(6) @default(now())
+  date           DateTime?      @default(now()) @db.Timestamp(6)
   title          Json
   text           Json?
   cheese_batches cheese_batches @relation(fields: [batche_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -47,7 +47,7 @@ model cheese_batches {
   id            Int             @id @default(autoincrement())
   recipe_id     Int
   user_nick     String          @db.VarChar
-  date_batch    DateTime?       @db.Timestamp(6) @default(now())
+  date_batch    DateTime?       @default(now()) @db.Timestamp(6)
   created_at    DateTime?       @db.Date
   ready_at      DateTime?       @db.Date
   description   Json?
@@ -103,7 +103,7 @@ model orders {
   id             Int          @id @default(autoincrement())
   user_nick      String       @db.VarChar
   order_items_id Int
-  date           DateTime     @db.Timestamp(6) @default(now())
+  date           DateTime     @default(now()) @db.Timestamp(6)
   total_price    Decimal      @db.Decimal(10, 2)
   discount       Decimal?     @db.Decimal(10, 2)
   comment        String?      @db.VarChar(500)
@@ -172,10 +172,10 @@ model users {
   username         String             @db.VarChar(100)
   email            String             @unique @db.VarChar(250)
   password         String             @db.VarChar(30)
-  created_at       DateTime           @db.Timestamp(6) @default(now())
+  created_at       DateTime           @default(now()) @db.Timestamp(6)
   telefon          String?            @db.VarChar(30)
   user_status      user_status        @default(user)
-  avatar            String?            @db.VarChar(50)
+  avatar           String?            @db.VarChar(50)
   mood             Json?
   info             Json?
   user_address     Json?
