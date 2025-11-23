@@ -5,7 +5,7 @@ export default function Home() {
     <div className="">
       
       hello world Das ist test!111
-      some text!
+    
     </div>
   );
 }
