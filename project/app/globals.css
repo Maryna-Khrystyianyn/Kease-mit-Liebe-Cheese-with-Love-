@@ -10,6 +10,8 @@
   --gray: #f4f4f4;
   --gray_dunkel: #e5e5e5;
   --orange: #f4b619;
+  --olive:#a8b6a6;
+  --olive_bright:#52814d;
 }
 
 [data-theme="dark"] {
@@ -17,6 +19,7 @@
   --gray_dunkel: #2b2b2b;;
   --text: #fff;
   --gray: #1b1b19;
+  --olive:#4F694C;
 }
 
 /* =======================

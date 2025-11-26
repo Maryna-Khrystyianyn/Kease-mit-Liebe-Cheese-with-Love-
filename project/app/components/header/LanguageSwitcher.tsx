@@ -5,10 +5,11 @@ import { useTranslation } from "@/node_modules/react-i18next";
 import "../../../lib/i18n";
 
 const LanguageSwitcher = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguage] = useState("de");
-  const menuRef = useRef<HTMLDivElement>(null);
   const { i18n } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [language, setLanguage] = useState(i18n.language);
+  const menuRef = useRef<HTMLDivElement>(null);
+  
 
   // закривати меню при кліку поза ним
   useEffect(() => {

@@ -1,0 +1,41 @@
+.customCheckbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+    user-select: none;
+  }
+  
+  /* ховаємо стандартний чекбокс */
+  .hiddenInput {
+    display: none;
+  }
+  
+  .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  
+  /* Активний стан */
+  .hiddenInput:checked + .checkmark {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  /* Біла галочка */
+  .hiddenInput:checked + .checkmark::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }

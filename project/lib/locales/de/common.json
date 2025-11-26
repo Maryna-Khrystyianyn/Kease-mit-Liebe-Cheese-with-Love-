@@ -4,5 +4,6 @@
   "tagebuch": "Tagebuch",
   "login":"login",
   "logout": "logout",
-  "warenkorb": "Warenkorb"
+  "warenkorb": "Warenkorb",
+  "inDev": "Die Website befindet sich derzeit im Aufbau. Bald erwartet Sie hier etwas Besonderes."
 }
