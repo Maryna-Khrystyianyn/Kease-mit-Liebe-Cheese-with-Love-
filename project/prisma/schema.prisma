@@ -171,16 +171,14 @@ model users {
   nick_name        String             @id @db.VarChar(100)
   username         String             @db.VarChar(100)
   email            String             @unique @db.VarChar(250)
-  password         String             @db.VarChar(30)
+  password         String             @db.VarChar(250)
   created_at       DateTime           @default(now()) @db.Timestamp(6)
   telefon          String?            @db.VarChar(30)
   user_status      user_status        @default(user)
-  avatar           String?            @db.VarChar(50)
+  avatar           String?            @db.VarChar(250)
   mood             Json?
   info             Json?
   user_address     Json?
-  latitude         Decimal?           @db.Decimal(9, 6)
-  longitude        Decimal?           @db.Decimal(9, 6)
   ispublic         Boolean?           @default(true)
   issubscribed     Boolean?           @default(true)
   batch_coments    batch_coments[]

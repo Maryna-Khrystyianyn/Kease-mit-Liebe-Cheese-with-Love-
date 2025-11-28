@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import styles from "./register.module.css";
+import { useTranslation } from "next-i18next";
+import "../../lib/i18n";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   nick_name: string;
@@ -16,9 +19,12 @@ interface FormData {
   mood: string;
   info: string;
   user_address: string;
+  lokale: string;
 }
 
 const Register = () => {
+  const { t, i18n } = useTranslation();
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     nick_name: "",
     username: "",
@@ -32,6 +38,7 @@ const Register = () => {
     mood: "",
     info: "",
     user_address: "",
+    lokale: i18n.language,
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -43,13 +50,11 @@ const Register = () => {
     >
   ) => {
     const { name, value, type } = e.target;
-  
+
     setFormData((prev) => ({
       ...prev,
       [name]:
-        type === "checkbox"
-          ? (e.target as HTMLInputElement).checked
-          : value,
+        type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
     }));
   };
 
@@ -67,7 +72,9 @@ const Register = () => {
     const data = await res.json();
 
     if (res.ok) {
-      setSuccess("Registrierung erfolgreich!");
+      setSuccess(t("registration_success"));
+      alert(t("registration_success"));
+      router.push("/");
       setFormData({
         nick_name: "",
         username: "",
@@ -81,6 +88,7 @@ const Register = () => {
         mood: "",
         info: "",
         user_address: "",
+        lokale: i18n.language,
       });
     } else {
       setError(data.message);
@@ -90,32 +98,33 @@ const Register = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className=" mx-auto lg:max-w-[1000px] max-w-[700px] p-6 bg-(--gray) rounded shadow space-y-4"
+      className="mx-auto lg:max-w-[1000px] max-w-[700px] p-6 bg-(--gray) rounded shadow space-y-4"
     >
-      <h2 className="text-2xl font-bold mb-4">Registrierung</h2>
+      <h2 className="text-2xl font-bold mb-4">{t("registration")}</h2>
 
       {error && <p className="text-red-600">{error}</p>}
       {success && <p className="text-green-600">{success}</p>}
 
-      <div className=" lg:grid grid-cols-2 flex flex-col lg:gap-10 gap-5 items-end">
+      <div className="lg:grid grid-cols-2 flex flex-col lg:gap-5 gap-3 items-end">
         <div className="w-full">
           <p className="text-(--orange)">*</p>
           <input
             type="text"
             name="nick_name"
-            placeholder="Spitzname"
+            placeholder={t("placeholder.nick_name")}
             value={formData.nick_name}
             onChange={handleChange}
             className="w-full border border-(--olive) px-3 py-2 rounded"
             required
           />
         </div>
+
         <div className="w-full">
           <p className="text-(--orange)">*</p>
           <input
             type="text"
             name="username"
-            placeholder="Benutzername"
+            placeholder={t("placeholder.username")}
             value={formData.username}
             onChange={handleChange}
             className="w-full border border-(--olive) px-3 py-2 rounded"
@@ -128,19 +137,20 @@ const Register = () => {
           <input
             type="email"
             name="email"
-            placeholder="E-Mail"
+            placeholder={t("placeholder.email")}
             value={formData.email}
             onChange={handleChange}
             className="w-full border border-(--olive) px-3 py-2 rounded"
             required
           />
         </div>
+
         <div className="w-full">
           <p className="text-(--orange)">*</p>
           <input
             type="password"
             name="password"
-            placeholder="Passwort"
+            placeholder={t("placeholder.password")}
             value={formData.password}
             onChange={handleChange}
             className="w-full border border-(--olive) px-3 py-2 rounded"
@@ -151,26 +161,26 @@ const Register = () => {
         <input
           type="tel"
           name="telefon"
-          placeholder="Telefon"
+          placeholder={t("placeholder.telefon")}
           value={formData.telefon}
           onChange={handleChange}
-          className="w-full border border-(--olive) px-3 py-2 rounded"
+          className="w-full border border-(--olive) px-3 py-2 lg:my-5 mt-5 rounded"
         />
+
         <input
           type="text"
           name="user_address"
-          placeholder="Adresse (Stadt)"
+          placeholder={t("placeholder.user_address")}
           value={formData.user_address}
           onChange={handleChange}
-          className="w-full border border-(--olive) px-3 py-2 rounded"
-        
+          className="w-full border border-(--olive) px-3 py-2 my-5 rounded"
         />
       </div>
 
       <input
         type="text"
         name="avatar"
-        placeholder="Avatar (URL)"
+        placeholder={t("placeholder.avatar")}
         value={formData.avatar}
         onChange={handleChange}
         className="w-full border border-(--olive) px-3 py-2 rounded"
@@ -178,19 +188,20 @@ const Register = () => {
 
       <textarea
         name="mood"
-        placeholder="Stimmung"
+        placeholder={t("placeholder.mood")}
         value={formData.mood}
         onChange={handleChange}
-        className="w-full border border-(--olive) px-3 py-2 rounded"
+        className="w-full border border-(--olive) px-3 py-2 mt-5 rounded"
       />
 
       <textarea
         name="info"
-        placeholder="Informationen über dich"
+        placeholder={t("placeholder.info")}
         value={formData.info}
         onChange={handleChange}
-        className="w-full border border-(--olive) px-3 py-2 rounded"
+        className="w-full border border-(--olive) px-3 py-2 mt-4 rounded"
       />
+
       <div className="flex items-center space-x-7 ">
         <label className={styles.customCheckbox}>
           <input
@@ -201,7 +212,7 @@ const Register = () => {
             onChange={handleChange}
           />
           <span className={styles.checkmark}></span>
-          Profil öffentlich
+          {t("public_profile")}
         </label>
 
         <label className={styles.customCheckbox}>
@@ -213,14 +224,15 @@ const Register = () => {
             onChange={handleChange}
           />
           <span className={styles.checkmark}></span>
-          Newsletter abonnieren
+          {t("subscribe_newsletter")}
         </label>
       </div>
+
       <button
         type="submit"
         className="px-5 bg-(--olive_bright) text-white py-2 rounded hover:bg-(--orange) transition"
       >
-        Registrieren
+        {t("register_button")}
       </button>
     </form>
   );

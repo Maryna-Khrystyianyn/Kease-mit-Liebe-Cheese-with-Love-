@@ -2,8 +2,26 @@
   "rezepte": "Rezepte",
   "shop": "Shop",
   "tagebuch": "Tagebuch",
-  "login":"login",
+  "login": "login",
   "logout": "logout",
   "warenkorb": "Warenkorb",
-  "inDev": "Die Website befindet sich derzeit im Aufbau. Bald erwartet Sie hier etwas Besonderes."
+  "inDev": "Die Website befindet sich derzeit im Aufbau. Bald erwartet Sie hier etwas Besonderes.",
+
+  "registration": "Registrierung",
+  "registration_success": "Registrierung erfolgreich!",
+  "register_button": "Registrieren",
+  "public_profile": "Profil öffentlich",
+  "subscribe_newsletter": "Newsletter abonnieren",
+
+  "placeholder": {
+    "nick_name": "Spitzname",
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "telefon": "Telefon",
+    "avatar": "Avatar (URL)",
+    "mood": "Stimmung",
+    "info": "Informationen über dich",
+    "user_address": "Adresse (Stadt)"
+  }
 }
