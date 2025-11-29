@@ -1,6 +1,6 @@
 "use client";
-
-import { useState } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import styles from "./register.module.css";
 import { useTranslation } from "next-i18next";
 import "../../lib/i18n";
@@ -58,6 +58,31 @@ const Register = () => {
     }));
   };
 
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+    const file = e.target.files[0];
+
+    if (file.size > 500 * 1024) {
+      alert("Файл занадто великий, максимум 500 KB");
+      return;
+    }
+
+    const formDataUpload = new FormData();
+    formDataUpload.append("file", file);
+
+    const res = await fetch("/api/upload-avatar", {
+      method: "POST",
+      body: formDataUpload,
+    });
+
+    const data = await res.json();
+    if (data.url) {
+      setFormData((prev) => ({ ...prev, avatar: data.url }));
+    } else {
+      alert(data.error || "Upload failed");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -104,8 +129,32 @@ const Register = () => {
 
       {error && <p className="text-red-600">{error}</p>}
       {success && <p className="text-green-600">{success}</p>}
+      <div className="avatar-upload flex items-center space-x-4 mt-4">
+        <img
+          src={formData.avatar || "/user.png"}
+          alt="Avatar preview"
+          className="w-30 h-30 rounded-full object-cover"
+        />
 
+        <div>
+          <input
+            type="file"
+            accept="image/*"
+            id="avatarFile"
+            className="hidden"
+            onChange={handleAvatarChange}
+          />
+          <label
+            htmlFor="avatarFile"
+            className="px-3 py-2 bg-(--orange) text-white rounded cursor-pointer hover:bg-(--olive_bright) transition"
+          >
+            {t("upload_avatar")}
+          </label>
+        </div>
+      </div>
       <div className="lg:grid grid-cols-2 flex flex-col lg:gap-5 gap-3 items-end">
+
+        
         <div className="w-full">
           <p className="text-(--orange)">*</p>
           <input
@@ -177,14 +226,7 @@ const Register = () => {
         />
       </div>
 
-      <input
-        type="text"
-        name="avatar"
-        placeholder={t("placeholder.avatar")}
-        value={formData.avatar}
-        onChange={handleChange}
-        className="w-full border border-(--olive) px-3 py-2 rounded"
-      />
+      
 
       <textarea
         name="mood"

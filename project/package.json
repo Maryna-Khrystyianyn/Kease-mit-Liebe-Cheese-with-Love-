@@ -9,8 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.17.3",
     "@prisma/client": "^6.19.0",
     "bcrypt": "^6.0.0",
+    "browser-image-compression": "^2.0.2",
+    "formidable": "^2.1.5",
     "i18next": "^25.6.2",
     "i18next-browser-languagedetector": "^8.2.0",
     "next": "16.0.0",
@@ -19,11 +22,13 @@
     "openai": "^6.9.1",
     "prisma": "^6.19.0",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "react-easy-crop": "^5.5.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^6.0.0",
+    "@types/formidable": "^3.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
