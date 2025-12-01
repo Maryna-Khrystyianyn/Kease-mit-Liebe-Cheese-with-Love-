@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+
+import {  useState } from "react";
 import styles from "./register.module.css";
 import { useTranslation } from "next-i18next";
 import "../../lib/i18n";
