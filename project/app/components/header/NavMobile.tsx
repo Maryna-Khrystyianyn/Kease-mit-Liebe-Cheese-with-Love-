@@ -3,12 +3,24 @@ import Link from "next/link";
 import ThemeSwitcher from "../theme/ThemeSwitcher";
 import { Cart } from "../icons/Cart";
 import { useTranslation } from "next-i18next";
+import { useEffect } from "react";
+import { User } from "@/types/global";
+import Login from "./Login";
 
-const NavMobile = () => {
+const NavMobile = ({ user }: { user: User | null }) => {
   const { i18n } = useTranslation();
   const { t } = useTranslation();
-  const language = i18n.language;
-  console.log(" language ------", language);
+
+  useEffect(() => {
+    i18n.changeLanguage("de"); // immer de
+  }, []);
+
+  async function handleLogout() {
+    console.log("TRAY LogAut");
+    await fetch("/api/logout", { method: "POST", credentials: "include" });
+    window.location.href = "/";
+  }
+
   return (
     <div className=" w-[300px] bg-(--gray)">
       <div className="mt-20 italic text-base  px-5"></div>
@@ -31,7 +43,7 @@ const NavMobile = () => {
         </li>
       </ul>
       <div className="my-5 p-5 flex flex-col gap-5">
-        <div className="text-base">
+        {/* <div className="text-base">
           <span
             className="cursor-pointer"
             style={{ fontWeight: language === "de" ? "bold" : "" }}
@@ -51,7 +63,7 @@ const NavMobile = () => {
           >
             Українська
           </span>
-        </div>
+        </div> */}
         <div>
           <ThemeSwitcher />
         </div>
@@ -59,8 +71,24 @@ const NavMobile = () => {
         <div className="link-underline text-base flex gap-2 items-center  w-30">
           <span>{Cart}</span> {t("warenkorb")}
         </div>
-        <button className=" link-underline text-left w-10">
-          <span className="text-[14px]">{t("logout")} </span>
+        <button className=" text-left w-10">
+          {user ? (
+            <button onClick={handleLogout} className="text-[14px] link-underline ">
+              {t("logout")}{" "}
+            </button>
+          ) : (
+            <div className="flex flex-col gap-3 mt-5">
+              <Link href="/login" className=" border-b-2  w-13 border-[#4F694C]">
+                <Login />
+              </Link>
+              <Link
+                href="/register"
+                className="sm:text-[22px] lg:text-[18px] w-32 link-underline "
+              >
+                Registrieren
+              </Link>
+            </div>
+          )}
         </button>
       </div>
     </div>

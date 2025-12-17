@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import NavMobile from "./NavMobile";
+import { User } from "@/types/global";
 
-const BurgerMenu = () => {
+const BurgerMenu = ({user}:{user:User|null}) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +49,7 @@ const BurgerMenu = () => {
         <span className="block w-6 h-0.5 bg-(--text) group-hover:bg-[#F4B619] opacity-0 group-hover:opacity-100" />
         <span className="block w-6 h-0.5 bg-(--text) group-hover:bg-[#F4B619] transition-transform duration-300 -rotate-45 translate-y-[-2px] group-hover:translate-x-[15px] group-hover:translate-y-[2px] group-hover:w-3" />
       </button>
-        <NavMobile />
+        <NavMobile user={user}/>
       </div>
     </div>
   );

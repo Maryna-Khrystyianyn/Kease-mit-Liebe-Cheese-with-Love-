@@ -20,6 +20,8 @@ export async function GET(
         email: true,
         telefon: true,
         user_status: true,
+        mood:true,
+        info:true,
         avatar: true,
         ispublic: true,
         issubscribed: true,

@@ -24,5 +24,9 @@
     "mood": "Stimmung",
     "info": "Informationen über dich",
     "user_address": "Adresse (Stadt)"
+  },
+  "user":{
+    "info": "Informationen über mich"
   }
+  
 }

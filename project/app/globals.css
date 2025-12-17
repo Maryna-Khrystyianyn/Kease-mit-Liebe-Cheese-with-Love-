@@ -10,16 +10,19 @@
   --gray: #f4f4f4;
   --gray_dunkel: #e5e5e5;
   --orange: #f4b619;
-  --olive:#a8b6a6;
-  --olive_bright:#52814d;
+  --olive: #a8b6a6;
+  --olive_bright: #52814d;
+  --shadow_color: #d4d2d2;
 }
 
 [data-theme="dark"] {
   --bg: #0f0f0f;
-  --gray_dunkel: #2b2b2b;;
+  --gray_dunkel: #2b2b2b;
   --text: #fff;
+  --text_gray: #c0bebe;
   --gray: #1b1b19;
-  --olive:#4F694C;
+  --olive: #4f694c;
+  --shadow_color: #838181;
 }
 
 /* =======================
@@ -58,4 +61,45 @@ body {
 
 .link-underline:hover::after {
   width: 100%;
+}
+
+.main-shadow {
+  box-shadow: 0 2px 4px var(--shadow_color);
+}
+/*=========== ReactQuill =====================*/
+.ql-toolbar .ql-picker-label,
+.ql-toolbar .ql-picker-item {
+  color: var(--text_gray) !important;
+}
+/* .ql-snow .ql-picker-options {
+  background-color: var(--bg) !important;
+} */
+.my-editor .ql-toolbar .ql-picker-label,
+.my-editor .ql-toolbar .ql-picker-item {
+  color: var(--text_gray)  !important;
+}
+.my-editor .ql-toolbar .ql-stroke {
+  stroke: var(--text_gray) !important;
+}
+.my-editor .ql-toolbar .ql-fill {
+  fill: var(--text_gray)  !important;
+}
+
+/* Активні кнопки (B, I, U, списки, цитати...) */
+.my-editor .ql-toolbar button.ql-active .ql-stroke {
+  stroke: orange !important;
+}
+
+.my-editor .ql-toolbar button.ql-active .ql-fill {
+  fill: orange !important;
+}
+
+/* Активний елемент у dropdown (наприклад Normal / Heading) */
+.my-editor .ql-toolbar .ql-picker-label.ql-active {
+  color: orange !important;
+}
+
+/* Виділений пункт у списку dropdown */
+.my-editor .ql-toolbar .ql-picker-item.ql-selected {
+  color: orange !important;
 }

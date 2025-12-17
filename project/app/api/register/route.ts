@@ -1,39 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import OpenAI from "openai";
 import bcrypt from "bcrypt";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-// Функція перекладу через OpenAI
-async function translate(text: string, target: "uk" | "de") {
-  if (!text || text.trim() === "") return text;
-  console.log("Wir sind in TRANSLATE.... text", text, "language - ", target);
-  const prompt = `
-  Translate the following text into ${target === "uk" ? "Ukrainian" : "German"}.
-  Return ONLY the translation, no explanations.
-  
-  Text:
-  "${text}"
-  `;
-
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [{ role: "user", content: prompt }],
-  });
-  console.log("Translate - ", completion.choices[0]);
-  const msg = completion.choices[0].message?.content;
-  if (!msg) {
-    return ""; // або null, або текст помилки
-  }
-  return msg.trim();
-}
-
+import { generateToken } from "../../utils/generateToken"
+import { users } from "@prisma/client";
 
 export async function POST(req: Request) {
-  console.log("wir sind in POST");
   try {
     const body = await req.json();
 
@@ -50,47 +21,29 @@ export async function POST(req: Request) {
       mood,
       info,
       user_address,
-      locale, // "de" або "uk"
     } = body;
 
-    if (!password) {
+    if (!email || !password) {
       return NextResponse.json(
-        { message: "Password is required" },
+        { message: "E-Mail und Passwort sind erforderlich" },
         { status: 400 }
       );
     }
+
+    // Перевіряємо, чи такий email вже існує
+    const existingUser = await prisma.users.findUnique({ where: { email } });
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "Benutzer mit dieser E-Mail existiert bereits" },
+        { status: 400 }
+      );
+    }
+
     // Хешуємо пароль
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Визначаємо напрям перекладу
-    const targetLang = locale === "de" ? "uk" : "de";
-
-    // Автоматичний переклад
-
-    const translatedMood = mood ? await translate(mood, targetLang) : "";
-    const translatedInfo = info ? await translate(info, targetLang) : "";
-    const translatedAddress = user_address
-      ? await translate(user_address, targetLang)
-      : "";
-
-    // Формуємо JSON об'єкти з двома мовами
-    const moodJson =
-      locale === "de"
-        ? { de: mood || "", uk: translatedMood }
-        : { uk: mood || "", de: translatedMood };
-
-    const infoJson =
-      locale === "de"
-        ? { de: info || "", uk: translatedInfo }
-        : { uk: info || "", de: translatedInfo };
-
-    const addressJson =
-      locale === "de"
-        ? { de: user_address || "", uk: translatedAddress }
-        : { uk: user_address || "", de: translatedAddress };
-
     // Створюємо користувача
-    const newUser = await prisma.users.create({
+    const newUser:users = await prisma.users.create({
       data: {
         nick_name,
         username,
@@ -101,27 +54,42 @@ export async function POST(req: Request) {
         user_status,
         ispublic,
         issubscribed,
-        mood: moodJson,
-        info: infoJson,
-        user_address: addressJson,
+        mood,
+        info,
+        user_address,
       },
     });
 
-    return NextResponse.json(
-      { message: "User created successfully!", user: newUser },
+    // Створюємо JWT токен для автоматичного логіну
+    const token = generateToken(newUser);
+
+    // Встановлюємо HttpOnly cookie
+    const response = NextResponse.json(
+      { message: "Benutzer erfolgreich erstellt!", user: { email: newUser.email, username: newUser.username , avatar:newUser.avatar } },
       { status: 200 }
     );
+    response.cookies.set({
+      name: "token",
+      value: token,
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 днів
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    return response;
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("REGISTER ERROR:", error.message);
       return NextResponse.json(
-        { message: "Error creating user", error: error.message },
+        { message: "Fehler bei der Registrierung", error: error.message },
         { status: 500 }
       );
     } else {
       console.error("REGISTER ERROR:", error);
       return NextResponse.json(
-        { message: "Error creating user", error: String(error) },
+        { message: "Fehler bei der Registrierung", error: String(error) },
         { status: 500 }
       );
     }

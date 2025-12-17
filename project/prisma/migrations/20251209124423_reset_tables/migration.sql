@@ -1,0 +1,37 @@
+-- AlterTable
+ALTER TABLE "batch_coments" ALTER COLUMN "text" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "batch_notes" ALTER COLUMN "title" SET DATA TYPE TEXT,
+ALTER COLUMN "text" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "cheese_batches" ALTER COLUMN "description" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "ingredients" ALTER COLUMN "name" SET DATA TYPE TEXT,
+ALTER COLUMN "description" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "orders" ALTER COLUMN "shipp_address" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "products" ALTER COLUMN "name" SET DATA TYPE TEXT,
+ALTER COLUMN "description" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "products_categories" ALTER COLUMN "name" SET DATA TYPE TEXT,
+ALTER COLUMN "body" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "recipes" ALTER COLUMN "name" SET DATA TYPE TEXT,
+ALTER COLUMN "body" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "recipes_categories" ALTER COLUMN "name" SET DATA TYPE TEXT,
+ALTER COLUMN "body" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "mood" SET DATA TYPE TEXT,
+ALTER COLUMN "info" SET DATA TYPE TEXT,
+ALTER COLUMN "user_address" SET DATA TYPE TEXT;

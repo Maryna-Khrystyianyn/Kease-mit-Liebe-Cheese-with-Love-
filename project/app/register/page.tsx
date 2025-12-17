@@ -1,6 +1,6 @@
 "use client";
 
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./register.module.css";
 import { useTranslation } from "next-i18next";
 import "../../lib/i18n";
@@ -19,11 +19,15 @@ interface FormData {
   mood: string;
   info: string;
   user_address: string;
-  lokale: string;
 }
 
 const Register = () => {
   const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    i18n.changeLanguage("de"); // immer de
+  }, []);
+
   const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     nick_name: "",
@@ -38,7 +42,6 @@ const Register = () => {
     mood: "",
     info: "",
     user_address: "",
-    lokale: i18n.language,
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -99,7 +102,7 @@ const Register = () => {
     if (res.ok) {
       setSuccess(t("registration_success"));
       alert(t("registration_success"));
-      router.push("/");
+      window.location.href = "/";
       setFormData({
         nick_name: "",
         username: "",
@@ -113,7 +116,6 @@ const Register = () => {
         mood: "",
         info: "",
         user_address: "",
-        lokale: i18n.language,
       });
     } else {
       setError(data.message);
@@ -153,8 +155,6 @@ const Register = () => {
         </div>
       </div>
       <div className="lg:grid grid-cols-2 flex flex-col lg:gap-5 gap-3 items-end">
-
-        
         <div className="w-full">
           <p className="text-(--orange)">*</p>
           <input
@@ -225,8 +225,6 @@ const Register = () => {
           className="w-full border border-(--olive) px-3 py-2 my-5 rounded"
         />
       </div>
-
-      
 
       <textarea
         name="mood"

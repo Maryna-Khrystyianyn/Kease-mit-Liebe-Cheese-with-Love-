@@ -1,9 +1,17 @@
 "use client";
 import { useTranslation } from "@/node_modules/react-i18next";
-
+import "../../../lib/i18n";
+import { useEffect } from "react";
 const Login = () => {
   const { t } = useTranslation();
-  console.log("Language", t);
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    i18n.changeLanguage("de"); // immer de
+  }, []);
+
+
+ 
   return (
     <div className="sm:text-[22px] lg:text-[18px] link-underline ">
       {" "}
