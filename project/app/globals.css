@@ -9,10 +9,11 @@
   --text_gray: #393939;
   --gray: #f4f4f4;
   --gray_dunkel: #e5e5e5;
-  --orange: #f4b619;
+  --orange: #e29b03;
   --olive: #a8b6a6;
   --olive_bright: #52814d;
   --shadow_color: #d4d2d2;
+  --shadow_color2:#ececec;
 }
 
 [data-theme="dark"] {
@@ -21,8 +22,10 @@
   --text: #fff;
   --text_gray: #c0bebe;
   --gray: #1b1b19;
+  --orange: #f4b619;
   --olive: #4f694c;
   --shadow_color: #838181;
+  --shadow_color2:rgb(39, 41, 39);
 }
 
 /* =======================
@@ -33,13 +36,61 @@ body {
   color: var(--text);
   transition: background-color 0.18s ease, color 0.18s ease;
 }
+h1{
+  font-size: 2.5em;
+}
+h2{
+  font-size: 2em;
+}
+h3{
+  font-size: 1.5em;
+}
+
+@media (max-width:900px ) {
+  h1{
+    font-size: 2em;
+  }
+  h2{
+    font-size: 1.6em;
+  }
+  h3{
+    font-size: 1.3em;
+  }
+
+
+}
+
+
+@media (max-width:600px ) {
+  h1{
+    font-size: 1.5em;
+  }
+  h2{
+    font-size: 1.2em;
+  }
+  h3{
+    font-size: 1em;
+  }
+
+
+}
+
+/* =======================
+     Custom List
+     ======================= */
+.custom-list ul{
+  @apply list-disc list-inside;
+}
+
+.custom-list ol{
+  @apply list-disc list-inside;
+}
 
 /* ======================
     Underline Orange
   ========================*/
 .link-underline {
   position: relative;
-  color: inherit;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -51,12 +102,12 @@ body {
   bottom: -2px; /* можна трохи підняти чи опустити */
   width: 0;
   height: 2px;
-  background-color: #f4b619; /* оранжевий (Tailwind orange-500) */
+  background-color: var(--orange); /* оранжевий (Tailwind orange-500) */
   transition: width 0.3s ease;
 }
 
 .link-underline:hover {
-  color: #f4b619;
+  color: var(--orange);
 }
 
 .link-underline:hover::after {
@@ -66,7 +117,17 @@ body {
 .main-shadow {
   box-shadow: 0 2px 4px var(--shadow_color);
 }
-/*=========== ReactQuill =====================*/
+@media (max-width:600px ) {
+  .main-shadow {
+    box-shadow: none;
+  }
+}
+.side-bar-button-shadow  {
+  box-shadow: 0 2px 4px  var(--shadow_color2);
+}
+/*======================================== 
+          ReactQuill 
+=========================================*/
 .ql-toolbar .ql-picker-label,
 .ql-toolbar .ql-picker-item {
   color: var(--text_gray) !important;
@@ -76,30 +137,24 @@ body {
 } */
 .my-editor .ql-toolbar .ql-picker-label,
 .my-editor .ql-toolbar .ql-picker-item {
-  color: var(--text_gray)  !important;
+  color: var(--text_gray) !important;
 }
 .my-editor .ql-toolbar .ql-stroke {
   stroke: var(--text_gray) !important;
 }
 .my-editor .ql-toolbar .ql-fill {
-  fill: var(--text_gray)  !important;
+  fill: var(--text_gray) !important;
 }
 
-/* Активні кнопки (B, I, U, списки, цитати...) */
 .my-editor .ql-toolbar button.ql-active .ql-stroke {
   stroke: orange !important;
 }
-
 .my-editor .ql-toolbar button.ql-active .ql-fill {
   fill: orange !important;
 }
-
-/* Активний елемент у dropdown (наприклад Normal / Heading) */
 .my-editor .ql-toolbar .ql-picker-label.ql-active {
   color: orange !important;
 }
-
-/* Виділений пункт у списку dropdown */
 .my-editor .ql-toolbar .ql-picker-item.ql-selected {
   color: orange !important;
 }

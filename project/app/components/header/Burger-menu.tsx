@@ -21,7 +21,7 @@ const BurgerMenu = ({user}:{user:User|null}) => {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative z-10 opacity-95">
       {/* Кнопка бургер/стрілка */}
       <button
         onClick={() => setIsOpen(!isOpen)}

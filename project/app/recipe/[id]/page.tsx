@@ -1,4 +1,7 @@
+import RecipeList from "@/app/recipe/RecipeList";
 import RecipeItem from "./RecipeItem";
+import RecipeSidebar from "../RecipeSidebar";
+import MobileRecipeBar from "../MobileRecipeBar";
 
 interface PageProps {
   params: { id: string };
@@ -22,11 +25,20 @@ export default async function RecipePage({ params }: PageProps) {
 
   const recipeData = await res.json();
 
- 
-
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <RecipeItem recipe={recipeData} />
+    <>
+<MobileRecipeBar recipeId={recipeId} />
+
+    <div className="md:flex md:pl-5 ">
+      <div className=" md:block hidden">
+        <RecipeSidebar recipeId={recipeId} />
+      </div>
+
+      <div className=" mx-auto p-6">
+        <RecipeItem recipe={recipeData} />
+      </div>
     </div>
+    </>
+    
   );
 }

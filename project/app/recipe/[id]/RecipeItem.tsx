@@ -91,7 +91,7 @@ export default function RecipeItem({ recipe }: RecipeProps) {
 
       {recipe.body && (
         <div
-          className="prose"
+          className="prose custom-list"
           dangerouslySetInnerHTML={{ __html: recipe.body }}
         />
       )}

@@ -58,3 +58,30 @@ export async function POST(req: Request) {
     );
   }
 }
+
+//============ GET ========================================
+
+export async function GET() {
+    try {
+      const recipes = await prisma.recipes.findMany({
+        include: {
+          recipe_ingredients: { include: { ingredients: true } },
+          recipes_categories: true,
+        },
+      });
+  
+      if (!recipes)
+        return NextResponse.json(
+          { message: "Rezepten nicht gefunden" },
+          { status: 404 }
+        );
+     
+      return NextResponse.json(recipes);
+    } catch (err) {
+      console.error(err);
+      return NextResponse.json(
+        { message: "Fehler beim Abrufen den Rezepten" },
+        { status: 500 }
+      );
+    }
+  }
