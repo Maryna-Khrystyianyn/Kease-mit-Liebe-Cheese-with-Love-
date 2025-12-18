@@ -17,9 +17,6 @@ export async function middleware(req: NextRequest) {
       token,
       new TextEncoder().encode(JWT_SECRET)
     );
-
-    
-
     
     if (payload.user_status !== "admin") {
       return NextResponse.redirect(new URL("/forbidden", req.url));
