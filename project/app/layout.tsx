@@ -28,10 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider> 
-          <Header/>
-          <main>{children}</main>
-          </ThemeProvider>
+        <ThemeProvider>
+          <Header />
+          <main className="mt-12 md:mt-25 sm:mt-20"> {children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -93,7 +93,8 @@ export async function PATCH(
       where: { id: recipeId },
       data: {
         name: body.name,
-        body: body.body,
+        body: body.body ?? null,
+        description: body.description ?? null,
         aging: body.aging ?? null,
         category_id: body.category_id,
         ispublic: body.ispublic,

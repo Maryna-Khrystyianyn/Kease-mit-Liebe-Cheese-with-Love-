@@ -129,6 +129,13 @@ h3{
 .side-bar-button-shadow  {
   box-shadow: 0 2px 4px  var(--shadow_color2);
 }
+.recipe-shadow  {
+  box-shadow: 0 2px 4px  var(--shadow_color2);
+  transition: box-shadow 0.5s ease;
+}
+.recipe-shadow:hover {
+  box-shadow: 0 2px 4px  var(--orange);
+}
 /*======================================== 
           ReactQuill 
 =========================================*/

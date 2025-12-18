@@ -6,6 +6,7 @@ interface RecipeProps {
   recipe: {
     id: number;
     name: string;
+    description?: string;
     body?: string;
     aging?: number;
     ispublic: boolean;
@@ -39,7 +40,11 @@ export default function RecipeItem({ recipe }: RecipeProps) {
   const isAdmin = user?.user_status === "admin";
 
   if (!recipe.ispublic && !isAdmin) {
-    return <p className="text-3xl text-center my-10">Rezept noch in der Entwicklung</p>;
+    return (
+      <p className="text-3xl text-center my-10">
+        Rezept noch in der Entwicklung
+      </p>
+    );
   }
   return (
     <article className="bg-(--bg) rounded main-shadow p-10">
@@ -53,7 +58,7 @@ export default function RecipeItem({ recipe }: RecipeProps) {
       <h1 className="text-2xl font-bold mb-4">{recipe.name}</h1>
 
       <p className="text-sm text-(--text-gray) mb-2">
-        Kategorie:{" "}
+        Kategorie:
         <span className="font-semibold">{recipe.recipes_categories.name}</span>
       </p>
 
@@ -67,28 +72,28 @@ export default function RecipeItem({ recipe }: RecipeProps) {
         <img
           src={recipe.image}
           alt={recipe.name}
-          className="w-full max-h-96 object-cover rounded mb-4"
+          className="w-full max-h-96 xl:max-h-130 object-cover rounded mb-4"
         />
       )}
 
-<section className="mb-6 max-w-md">
-  <h2 className="text-lg font-bold mb-2">Zutaten</h2>
+      <section className="mb-6 max-w-md">
+        <h2 className="text-lg font-bold mb-2">Zutaten</h2>
 
-  <ul className="space-y-1">
-    {recipe.recipe_ingredients.map((item) => (
-      <li
-        key={item.ingredient_id}
-        className="flex justify-between border-b py-1 text-sm"
-      >
-        <span>{item.ingredients.name}</span>
-        <span className="font-semibold">
-          {item.amount} {item.ingredients.unit}
-        </span>
-      </li>
-    ))}
-  </ul>
-</section>
-
+        <ul className="space-y-1">
+          {recipe.recipe_ingredients.map((item) => (
+            <li
+              key={item.ingredient_id}
+              className="flex justify-between border-b py-1 text-sm"
+            >
+              <span>{item.ingredients.name}</span>
+              <span className="font-semibold">
+                {item.amount} {item.ingredients.unit}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <h3 className="my-3">{recipe.description}</h3>
       {recipe.body && (
         <div
           className="prose custom-list"
@@ -105,7 +110,6 @@ export default function RecipeItem({ recipe }: RecipeProps) {
           >
             Bearbeiten
           </a>
-
         </div>
       )}
     </article>

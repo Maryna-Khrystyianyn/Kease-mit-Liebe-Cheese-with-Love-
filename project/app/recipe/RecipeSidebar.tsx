@@ -2,6 +2,7 @@
 import { useState } from "react";
 import RecipeList from "./RecipeList";
 import { LayoutIcon, ArrowBigLeft } from "lucide-react";
+import Link from "next/link";
 
 interface SidebarProps {
   recipeId?: number;
@@ -38,8 +39,9 @@ export default function RecipeSidebar({ recipeId }: SidebarProps) {
             transition-opacity duration-500 ease-in-out
             ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
           `}
-        >
-          <h3 className="font-bold mb-3">Alle Rezepte</h3>
+        ><Link href="/recipe">
+        <h3 className="font-bold mb-3">Alle Rezepte</h3>
+        </Link>
           <RecipeList id={recipeId} />
         </div>
       </div>

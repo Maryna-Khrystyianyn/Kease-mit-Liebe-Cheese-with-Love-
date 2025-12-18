@@ -10,6 +10,7 @@ interface RecipeInput {
   name: string;
   body?: string;
   aging?: number;
+  description?:string;
   category_id: number;
   ispublic: boolean;
   image?: string;
@@ -32,6 +33,7 @@ export async function POST(req: Request) {
       data: {
         name: body.name,
         body: body.body,
+        description:body.description,
         aging: body.aging ?? null,
         category_id: body.category_id,
         ispublic: body.ispublic,
@@ -64,6 +66,9 @@ export async function POST(req: Request) {
 export async function GET() {
     try {
       const recipes = await prisma.recipes.findMany({
+        orderBy: {
+            created_at: "desc",
+          },
         include: {
           recipe_ingredients: { include: { ingredients: true } },
           recipes_categories: true,

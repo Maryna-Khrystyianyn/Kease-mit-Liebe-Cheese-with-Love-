@@ -12,8 +12,8 @@ export default function MainComponent() {
   }
 
   return (
-    <section className="w-full bg-(--bg) text-(--text)">
-      <div className="mx-auto flex  flex-col px-4 py-10 gap-8  md:flex-row md:items-center ">
+    <section className="w-full bg-(--bg) text-(--text) 2xl:px-20">
+      <div className="mx-auto flex  flex-col px-4 py-10 gap-8  xl:gap-12 md:flex-row md:items-center ">
         {/* IMAGE — mobile first */}
         <div className="order-1 md:order-2 md:w-1/2">
           <div className="relative  lg:h-90 xl:h-110 h-80 w-full overflow-hidden rounded-3xl shadow-lg ">
@@ -32,9 +32,11 @@ export default function MainComponent() {
           <div className="mb-6 font-bold text-3xl  md:text-5xl lg:text-6xl  xl:text-[80px] 2xl:text-[100px] md:pr-10">
             Gemeinschaft der Käser
           </div>
-          <p className="text-(--text_gray)  lg:text-xl mb-6 md:pr-10">
+          <p className="text-(--text_gray)  lg:text-base text-sm mb-6 md:pr-10">
             Gemeinsam für den perfekten Käse. Ein Ort, an dem Käser ihr Wissen
-            Teilen. Hier finden Sie alles, was Sie zur Herstellung von köstlichem Käse benötigen.
+            Teilen. 
+            <br />
+            Hier finden Sie alles, was Sie zur Herstellung von köstlichem Käse benötigen: Rezepte, Zutaten, Werkzeuge und Unterstützung 
           </p>
           <form
             onSubmit={handleSubmit}
@@ -50,7 +52,7 @@ export default function MainComponent() {
 
             <button
               type="submit"
-              className="w-[200px]  rounded-lg bg-(--green-orange) px-4 py-2 font-medium text-(--bg) shadow-sm transition hover:bg-(--green-orange-hover)"
+              className="w-[200px]  rounded-lg bg-(--green-orange) px-4 py-2 text-sm lg:text-base font-medium text-(--bg) shadow-sm transition hover:bg-(--green-orange-hover)"
             >
               Rezept suhen
             </button>

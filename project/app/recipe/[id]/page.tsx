@@ -2,6 +2,7 @@ import RecipeList from "@/app/recipe/RecipeList";
 import RecipeItem from "./RecipeItem";
 import RecipeSidebar from "../RecipeSidebar";
 import MobileRecipeBar from "../MobileRecipeBar";
+import PageWrapper from "@/app/PageWraper";
 
 interface PageProps {
   params: { id: string };
@@ -26,7 +27,7 @@ export default async function RecipePage({ params }: PageProps) {
   const recipeData = await res.json();
 
   return (
-    <>
+    <PageWrapper>
 <MobileRecipeBar recipeId={recipeId} />
 
     <div className="md:flex md:pl-5 ">
@@ -38,7 +39,7 @@ export default async function RecipePage({ params }: PageProps) {
         <RecipeItem recipe={recipeData} />
       </div>
     </div>
-    </>
+    </PageWrapper>
     
   );
 }

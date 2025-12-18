@@ -27,7 +27,7 @@ const NavMobile = ({ user }: { user: User | null }) => {
 
       <ul className=" mt-5 py-10 bg-(--gray_dunkel) flex flex-col gap-5 px-6 text-2xl">
         <li>
-          <Link className="link-underline " href={"#"}>
+          <Link className="link-underline " href="/recipe">
             {t("rezepte")}
           </Link>
         </li>

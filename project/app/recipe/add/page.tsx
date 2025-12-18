@@ -17,6 +17,7 @@ type SelectedIngredient = {
 
 export default function AddRecipePage() {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [steps, setSteps] = useState("");
   const [aging, setAging] = useState<number | "">("");
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -85,6 +86,7 @@ export default function AddRecipePage() {
     const recipeData = {
       name: title,
       body: steps,
+      description: description,
       aging: aging ? Number(aging) : null,
       category_id: categoryId,
       ispublic: isPublic,
@@ -134,37 +136,35 @@ export default function AddRecipePage() {
       />
       <div className="grid md:grid-cols-2 md:gap-10">
         <div>
-         <h2 className="font-semibold mb-2">Kategorie</h2>
-        <select
-          value={categoryId}
-          onChange={(e) => setCategoryId(Number(e.target.value))}
-          className="w-full p-2 border border-(--olive) mb-4 rounded h-11 bg-(--gray)"
-        >
-          <option value={0} >Kategorie wählen</option>
-          {allCategories.map((c) => (
-            <option key={c.id} value={c.id} className="bg-(--gray_dunkel)">
-              {c.name}
-            </option>
-          ))}
-        </select>   
+          <h3 className="font-semibold mb-2">Kategorie</h3>
+          <select
+            value={categoryId}
+            onChange={(e) => setCategoryId(Number(e.target.value))}
+            className="w-full p-2 border border-(--olive) mb-4 rounded h-11 bg-(--gray)"
+          >
+            <option value={0}>Kategorie wählen</option>
+            {allCategories.map((c) => (
+              <option key={c.id} value={c.id} className="bg-(--gray_dunkel)">
+                {c.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <h2 className="font-semibold mb-2">Trocknungszeit (in Tagen)</h2>
-        <input
-          type="number"
-          placeholder="Tage"
-          value={aging}
-          onChange={(e) =>
-            setAging(e.target.value ? Number(e.target.value) : "")
-          }
-          className="w-full p-2 border border-(--olive) mb-4 rounded"
-        />  
+          <h3 className="font-semibold mb-2">Trocknungszeit (in Tagen)</h3>
+          <input
+            type="number"
+            placeholder="Tage"
+            value={aging}
+            onChange={(e) =>
+              setAging(e.target.value ? Number(e.target.value) : "")
+            }
+            className="w-full p-2 border border-(--olive) mb-4 rounded"
+          />
         </div>
-
-        
       </div>
 
-      <h2 className="font-semibold mb-2">Zutaten</h2>
+      <h3 className="font-semibold mb-2">Zutaten</h3>
       {selectedIngredients.map((ing, index) => (
         <div key={index} className="flex gap-2 mb-2  ">
           <select
@@ -203,7 +203,15 @@ export default function AddRecipePage() {
         Zutat hinzufügen
       </button>
 
-      <h2 className="font-semibold mb-2">Schritte</h2>
+      <h3 className="font-semibold mb-2">Käsebeschreibung</h3>
+      <textarea
+        rows={6}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="w-full p-2 border border-(--olive) mb-4 rounded"
+      />
+
+      <h3 className="font-semibold mb-2">Schritte</h3>
       <ReactQuill
         theme="snow"
         value={steps}
@@ -211,12 +219,11 @@ export default function AddRecipePage() {
         className="mb-4 my-editor"
       />
 
-      
       <img
-          src={imageFile ? URL.createObjectURL(imageFile): "/cheese.png"}
-          alt="Avatar preview"
-          className="w-50 h-50 bg-white rounded object-cover mb-5"
-        />
+        src={imageFile ? URL.createObjectURL(imageFile) : "/cheese.png"}
+        alt="Avatar preview"
+        className="w-50 h-50 bg-white rounded object-cover mb-5"
+      />
       <input
         type="file"
         id="cheeseFoto"
@@ -224,12 +231,12 @@ export default function AddRecipePage() {
         onChange={handleImageChange}
         className="mb-4 hidden"
       />
-       <label
-            htmlFor="cheeseFoto"
-            className="px-3 py-2 bg-(--orange) font-bold text-white rounded cursor-pointer hover:bg-(--olive_bright) transition"
-          >
-            Bild hochladen
-          </label>
+      <label
+        htmlFor="cheeseFoto"
+        className="px-3 py-2 bg-(--orange) font-bold text-white rounded cursor-pointer hover:bg-(--olive_bright) transition"
+      >
+        Bild hochladen
+      </label>
 
       <div className="flex gap-4 mt-10">
         <button

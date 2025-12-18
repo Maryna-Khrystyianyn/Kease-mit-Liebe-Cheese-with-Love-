@@ -20,6 +20,7 @@ interface EditRecipeFormProps {
     id: number;
     name: string;
     body?: string;
+    description?:string;
     aging?: number;
     category_id: number;
     ispublic: boolean;
@@ -31,6 +32,7 @@ interface EditRecipeFormProps {
 export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
   const [title, setTitle] = useState(recipe.name);
   const [steps, setSteps] = useState(recipe.body || "");
+  const [description, setDescription] = useState(recipe.description || "");
   const [aging, setAging] = useState<number | "">(recipe.aging ?? "");
   const [categoryId, setCategoryId] = useState<number>(recipe.category_id);
   const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
@@ -102,6 +104,7 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
     const recipeData = {
       name: title,
       body: steps,
+      description:description,
       aging: aging ? Number(aging) : null,
       category_id: categoryId,
       ispublic: isPublic,
@@ -160,7 +163,7 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
 
       <div className="grid md:grid-cols-2 md:gap-10">
         <div>
-          <h2 className="font-semibold mb-2">Kategorie</h2>
+          <h3 className="font-semibold mb-2">Kategorie</h3>
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(Number(e.target.value))}
@@ -175,7 +178,7 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
           </select>
         </div>
         <div>
-          <h2 className="font-semibold mb-2">Trocknungszeit (in Tagen)</h2>
+          <h3 className="font-semibold mb-2">Trocknungszeit (in Tagen)</h3>
           <input
             type="number"
             placeholder="Tage"
@@ -188,7 +191,7 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
         </div>
       </div>
 
-      <h2 className="font-semibold mb-2">Zutaten</h2>
+      <h3 className="font-semibold mb-2">Zutaten</h3>
       {selectedIngredients.map((ing, index) => (
         <div key={index} className="flex gap-2 mb-2">
           <select
@@ -223,7 +226,15 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
         Zutat hinzufügen
       </button>
 
-      <h2 className="font-semibold mb-2">Schritte</h2>
+      <h3 className="font-semibold mb-2">Käsebeschreibung</h3>
+      <textarea
+      rows={6}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="w-full p-2 border border-(--olive) mb-4 rounded"
+      />
+
+      <h3 className="font-semibold mb-2">Schritte</h3>
 
       <ReactQuill theme="snow" value={steps} onChange={setSteps} className="mb-4 my-editor" />
 
