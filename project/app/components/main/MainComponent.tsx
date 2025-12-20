@@ -52,7 +52,7 @@ export default function MainComponent() {
 
             <button
               type="submit"
-              className="w-[200px]  rounded-lg bg-(--green-orange) px-4 py-2 text-sm lg:text-base font-medium text-(--bg) shadow-sm transition hover:bg-(--green-orange-hover)"
+              className="w-[200px]  main-button"
             >
               Rezept suhen
             </button>

@@ -80,6 +80,71 @@ h3{
 }
 
 /* =======================
+     CHECK BOX
+     ======================= */
+.my-check input[type="checkbox"] {
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--olive); 
+  border-radius: 4px;
+  background-color:var(--bg);
+  cursor: pointer;
+  position: relative;
+}
+
+
+.my-check input[type="checkbox"]:hover {
+  border-color: var(--olive_bright);
+}
+
+
+.my-check input[type="checkbox"]:checked {
+  background-color: var(--olive_bright); /* зелений квадратик */
+  border-color: var(--olive_bright);
+}
+
+
+.my-check input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* =======================
+    BUTTON
+     ======================= */
+
+.main-button {
+  border-radius: 0.5rem; /* rounded-lg */
+  background-color: var(--green-orange); /* bg-(--green-orange) */
+  padding: 0.5rem 1rem; /* py-2 px-4 */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: var(--bg); /* text-(--bg) */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow-sm */
+  transition: background-color 0.2s ease-in-out; /* transition */
+}
+
+.main-button:hover {
+  background-color: var(--green-orange-hover); /* hover:bg-(--green-orange-hover) */
+}
+
+@media (min-width: 1024px) {
+  .main-button {
+    font-size: 1rem; /* lg:text-base */
+  }
+}
+
+/* =======================
      Custom List
      ======================= */
 .custom-list ul{

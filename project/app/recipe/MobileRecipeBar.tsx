@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import MobileRecipeList from "./MobileRecipeList";
+import Link from "next/link";
 
 interface SidebarProps {
   recipeId?: number;
@@ -14,7 +15,10 @@ export default function MobileRecipeBar({ recipeId }: SidebarProps) {
     <div className="md:hidden pt-8 block border-b border-(--olive) bg-(--bg)">
      
       <div className="flex items-center justify-between px-6 py-3">
+        <Link href="/recipe">
         <span className="text-[18px] font-bold">Alle Rezepte</span>
+        </Link>
+        
 
         <button
           onClick={() => setIsOpen(!isOpen)}

@@ -40,15 +40,15 @@ export default function RecipeItem({ recipe }: RecipeItemProps) {
       <h2 className="text-xl font-bold">{recipe.name}</h2>
 
       {/* Категорія та тривалість визрівання */}
-      <div className="text-sm text-(--text_gray) flex justify-between">
-        <span>Kategorie: {recipe.recipes_categories?.name}</span>
-        {recipe.aging && <span>Reifezeit: {recipe.aging} Tage</span>}
+      <div className="text-sm text-(--text_gray) flex justify-between gap-1 flex-col md:flex-row">
+        <span > <span className="font-semibold">Kategorie:</span> {recipe.recipes_categories?.name}</span>
+        {recipe.aging && <span> <span className="font-semibold">Reifezeit:</span> {recipe.aging} Tage</span>}
       </div>
 
-      {/* Опис */}
+      {/* DESCRIPTION */}
       
         <div
-          className="text-(--text)  prose max-w-none"
+          className="text-(--text) sm:block hidden"
           
         >
             {recipe.description }
