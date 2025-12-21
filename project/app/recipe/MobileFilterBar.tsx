@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import ContentMobileFilterBar from "./ContentMobileFilterBar";
+import Search from "./Search";
 
 interface FilterState {
   category: string;
@@ -13,6 +14,8 @@ interface MobileFilterBarProps {
   categories: string[];
   filters: FilterState;
   setFilters: (filters: FilterState) => void;
+  searchQuery: string;
+  setSearchQuery: (q: string) => void;
   onApply: () => void;
 }
 
@@ -20,6 +23,8 @@ export default function MobileFilterBar({
   categories,
   filters,
   setFilters,
+  searchQuery,
+  setSearchQuery,
   onApply,
 }: MobileFilterBarProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,16 +44,32 @@ export default function MobileFilterBar({
 
       {/* COLLAPSIBLE CONTENT */}
       <div
-        className={`overflow-hidden transition-all duration-700 ease-in-out ${
-          isOpen ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
+        className={`overflow-hidden transition-all duration-700 ease-in-out mb-5 ${
+          isOpen ? "max-h-[620px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
+        <Search
+          value={searchQuery}
+          onChange={setSearchQuery}
+          onSubmit={onApply}
+        />
         <ContentMobileFilterBar
           categories={categories}
           filters={filters}
           setFilters={setFilters}
           onApply={onApply}
         />
+
+        {/* RESET BUTTON*/}
+        <button
+          onClick={() => {
+            setFilters({ category: "", milk: "", aging: "" });
+            setSearchQuery("");
+          }}
+          className="flex-1 w-[140px] m-3 border-2 py-1 rounded-lg border-(--olive) "
+        >
+          Reset
+        </button>
       </div>
     </div>
   );

@@ -2,21 +2,26 @@
 
 import Image from "next/image";
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 export default function MainComponent() {
   const [query, setQuery] = useState("");
+  const router = useRouter();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log("Searching:", query);
+
+    if (!query.trim()) return;
+
+    router.push(`/recipe?search=${encodeURIComponent(query)}`);
   }
 
   return (
     <section className="w-full bg-(--bg) text-(--text) 2xl:px-20">
-      <div className="mx-auto flex  flex-col px-4 py-10 gap-8  xl:gap-12 md:flex-row md:items-center ">
-        {/* IMAGE — mobile first */}
+      <div className="mx-auto flex flex-col px-4 py-10 gap-8 xl:gap-12 md:flex-row md:items-center">
+        {/* IMAGE */}
         <div className="order-1 md:order-2 md:w-1/2">
-          <div className="relative  lg:h-90 xl:h-110 h-80 w-full overflow-hidden rounded-3xl shadow-lg ">
+          <div className="relative lg:h-90 xl:h-110 h-80 w-full overflow-hidden rounded-3xl shadow-lg">
             <Image
               src="/kase-main.jpg"
               alt="Cheese"
@@ -29,19 +34,15 @@ export default function MainComponent() {
 
         {/* TEXT + SEARCH */}
         <div className="order-2 md:order-1 md:w-1/2">
-          <div className="mb-6 font-bold text-3xl  md:text-5xl lg:text-6xl  xl:text-[80px] 2xl:text-[100px] md:pr-10">
+          <div className="mb-6 font-bold text-3xl md:text-5xl lg:text-6xl xl:text-[80px] 2xl:text-[100px] md:pr-10">
             Gemeinschaft der Käser
           </div>
-          <p className="text-(--text_gray)  lg:text-base text-sm mb-6 md:pr-10">
-            Gemeinsam für den perfekten Käse. Ein Ort, an dem Käser ihr Wissen
-            Teilen. 
-            <br />
-            Hier finden Sie alles, was Sie zur Herstellung von köstlichem Käse benötigen: Rezepte, Zutaten, Werkzeuge und Unterstützung 
+
+          <p className="text-(--text_gray) lg:text-base text-sm mb-6 md:pr-10">
+            Gemeinsam für den perfekten Käse.
           </p>
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-3 sm:flex-row"
-          >
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
             <input
               type="text"
               value={query}
@@ -50,11 +51,8 @@ export default function MainComponent() {
               className="w-full rounded-lg border border-(--orange) bg-gray-100 px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
             />
 
-            <button
-              type="submit"
-              className="w-[200px]  main-button"
-            >
-              Rezept suhen
+            <button type="submit" className="w-[200px] main-button">
+              Rezept suchen
             </button>
           </form>
         </div>

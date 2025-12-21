@@ -127,13 +127,7 @@ export default function FilterBar({
         ))}
       </div>
       
-      {/* BUTTONS */}
-      <button
-          onClick={resetFilters}
-          className="flex-1 border-2 py-2 rounded-lg border-(--olive) w-full"
-        >
-          Reset
-        </button>
+      
 
       
       
