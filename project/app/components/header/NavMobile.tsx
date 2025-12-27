@@ -37,7 +37,7 @@ const NavMobile = ({ user }: { user: User | null }) => {
           </Link>
         </li>
         <li>
-          <Link className="link-underline " href={"#"}>
+          <Link className="link-underline " href="/cheese-batches">
             {t("tagebuch")}
           </Link>
         </li>

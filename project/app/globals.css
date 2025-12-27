@@ -234,3 +234,14 @@ h3{
 .my-editor .ql-toolbar .ql-picker-item.ql-selected {
   color: orange !important;
 }
+
+/*======================================== 
+         CUT TEXT
+=========================================*/
+.description-preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  size: 16px !important;
+}

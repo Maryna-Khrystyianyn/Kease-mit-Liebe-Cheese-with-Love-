@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { prisma } from "@/lib/prisma";
 import { t } from "i18next";
+import { requireUserStatus } from "../../../utils/auth";
 
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
@@ -29,32 +30,6 @@ export async function GET(
         { message: "Rezept nicht gefunden" },
         { status: 404 }
       );
-    //wenn das Rezept ein Entwurf ist (ispublic=false)
-    /* if (!recipe.ispublic) {
-    
-      const cookieStore = await cookies();
-      console.log("COOCIS",cookieStore)
-      const token = cookieStore.get("token")?.value;
-      //const token = (await cookieStore).get("token")?.value;
-      console.log("NOT PUBLICK token - ",token)
-      if (!token) {
-        return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
-      }
-
-      try {
-        const payload = jwt.verify(token, JWT_SECRET) as {
-          user_status: string;
-        };
-
-        if (payload.user_status !== "admin") {
-          console.log("user Status",payload.user_status)  
-          return NextResponse.json({ message: "Forbidden" }, { status: 403 });
-        }
-      } catch (err) {
-        return NextResponse.json({ message: "Invalid token" }, { status: 403 });
-      }
-    } */
-    //return RECIPE
     return NextResponse.json(recipe);
   } catch (err) {
     console.error(err);
@@ -71,19 +46,8 @@ export async function PATCH(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("token")?.value;
-
-  if (!token)
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const payload: any = jwt.verify(token, JWT_SECRET);
-
-    if (payload.user_status !== "admin") {
-      return NextResponse.json({ message: "Forbidden" }, { status: 403 });
-    }
+    await requireUserStatus("admin");
 
     const { id } = await params;
     const recipeId = Number(id);
@@ -131,20 +95,8 @@ export async function DELETE(
   req: Request,
   { params }: { params: { id: string } }
 ) {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("token")?.value;
-
-  if (!token)
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const payload: any = jwt.verify(token, JWT_SECRET);
-
-    if (payload.user_status !== "admin") {
-      return NextResponse.json({ message: "Forbidden" }, { status: 403 });
-    }
-
+    await requireUserStatus("admin");
     const { id } = await params;
     const recipeId = Number(id);
     console.log("id for DELETE", recipeId);

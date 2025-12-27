@@ -52,7 +52,7 @@ model cheese_batches {
   created_at    DateTime?       @db.Date
   ready_at      DateTime?       @db.Date
   description   String?
-  foto          String?         @db.VarChar(50)
+  foto          String?         @db.Text         
   cheeseweight  Decimal?        @db.Decimal(10, 3)
   ispublic      Boolean?        @default(false)
   batch_coments batch_coments[]

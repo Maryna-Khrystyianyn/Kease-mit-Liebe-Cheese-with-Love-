@@ -2,9 +2,16 @@
 
 import { useEffect, useState } from "react";
 
+interface RecipeShort {
+  id: number;
+  name: string;
+  aging?: number | null;
+}
+
+
 interface Props {
-  value: { id: number; name: string } | null;
-  onSelect: (r: { id: number; name: string }) => void;
+  value: RecipeShort | null;
+  onSelect: (r: RecipeShort) => void;
 }
 
 export default function RecipeSelector({ value, onSelect }: Props) {
@@ -32,7 +39,7 @@ export default function RecipeSelector({ value, onSelect }: Props) {
     return () => clearTimeout(timeout);
   }, [inputValue, selectedRecipe]);
 
-  function handleSelect(r: { id: number; name: string }) {
+  function handleSelect(r: RecipeShort) {
     setSelectedRecipe(r);
     setInputValue(r.name);
     setResults([]);

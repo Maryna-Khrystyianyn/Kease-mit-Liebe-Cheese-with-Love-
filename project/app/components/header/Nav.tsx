@@ -22,7 +22,7 @@ const Nav = () => {
         <Link href={"/shop"}>{t("shop")}</Link>
       </li>
       <li className="link-underline">
-        <Link href={"/tagebuch"}>{t("tagebuch")}</Link>
+        <Link href={"/cheese-batches"}>{t("tagebuch")}</Link>
       </li>
     </ul>
   );
