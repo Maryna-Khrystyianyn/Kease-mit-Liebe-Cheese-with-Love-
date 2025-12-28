@@ -113,7 +113,8 @@ export default function CreateBatchPage() {
     }
 
     const data = await res.json();
-    window.location.href = `/cheese-batch/${data.id}`;
+    if(isPublic){window.location.href = `/cheese-batch/${data.id}`;}
+    
   }
 
   return (

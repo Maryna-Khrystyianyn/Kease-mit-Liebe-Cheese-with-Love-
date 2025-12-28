@@ -15,6 +15,7 @@ export type Batch = {
   id: number;
   image: string | null;
   date: string;
+  isPublick?:boolean;
   recipeName: string;
   recipeId: number;
   recipeCategory: string;

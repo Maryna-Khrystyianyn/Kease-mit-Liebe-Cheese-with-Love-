@@ -102,7 +102,7 @@ h3{
 
 
 .my-check input[type="checkbox"]:checked {
-  background-color: var(--olive_bright); /* зелений квадратик */
+  background-color: var(--olive_bright);
   border-color: var(--olive_bright);
 }
 
@@ -118,6 +118,40 @@ h3{
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+
+/* =======================
+     RADIO 
+     ======================= */
+.my-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid  var(--olive_bright);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  background: var(--bg);;
+}
+
+.custom-radio:checked {
+  border-color:  var(--olive_bright);
+}
+
+.my-radio:checked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background:  var(--olive_bright);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
 
 /* =======================
     BUTTON

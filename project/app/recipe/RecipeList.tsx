@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { User } from "@/types/global"; // твій тип User
+import { User } from "@/types/global"; 
 
 interface Recipe {
   id: number;
@@ -10,7 +10,7 @@ interface Recipe {
 }
 
 interface RecipeListProps {
-  id?: number; // поточний відкритий рецепт
+  id?: number; 
 }
 
 export default function RecipeList({ id: activeId }: RecipeListProps) {

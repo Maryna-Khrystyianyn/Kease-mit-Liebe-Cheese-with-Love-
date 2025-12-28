@@ -13,23 +13,18 @@ export async function GET(
 
   const batch = await prisma.cheese_batches.findUnique({
     where: { id: batchId },
-    include: { 
-      recipes: {
-        select: {
-          id: true,
-          name: true,
-          
-        },
-      },
+    include: {
+      recipes: { include: { recipes_categories: true } },
       users: {
         select: {
           nick_name: true,
-          username:true,
+          username: true,
           avatar: true,
         },
       },
-      
-      milk_in_batch: true,},
+
+      milk_in_batch: { include: { ingredients: true } },
+    },
   });
 
   if (!batch) {

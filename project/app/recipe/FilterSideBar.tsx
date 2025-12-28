@@ -86,7 +86,7 @@ export default function FilterSidebar({
           }}
           className="flex-1 border-2 py-2 rounded-lg border-(--olive) w-full"
         >
-          Reset
+          Zurücksetzen
         </button>
         </div>
       </div>
