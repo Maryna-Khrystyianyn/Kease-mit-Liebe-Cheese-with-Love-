@@ -13,9 +13,10 @@
   --olive: #a8b6a6;
   --olive_bright: #52814d;
   --shadow_color: #d4d2d2;
-  --shadow_color2:#ececec;
-  --green-orange:#52814d;
-  --green-orange-hover:#2f5e2a;
+  --shadow_color2: #ececec;
+  --green-orange: #52814d;
+  --green-orange-hover: #2f5e2a;
+  --swiper-navigation-color:rgb(235, 232, 232);
 }
 
 [data-theme="dark"] {
@@ -27,9 +28,10 @@
   --orange: #f4b619;
   --olive: #4f694c;
   --shadow_color: #838181;
-  --shadow_color2:rgb(39, 41, 39);
-  --green-orange:#f4b619;
-  --green-orange-hover:#cf9604;
+  --shadow_color2: rgb(39, 41, 39);
+  --green-orange: #f4b619;
+  --green-orange-hover: #cf9604;
+  --swiper-navigation-color:white;
 }
 
 /* =======================
@@ -40,75 +42,67 @@ body {
   color: var(--text);
   transition: background-color 0.18s ease, color 0.18s ease;
 }
-h1{
+h1 {
   font-size: 2.5em;
 }
-h2{
-  font-size: 2em;
+h2 {
+  font-size: 2.2em;
 }
-h3{
+h3 {
   font-size: 1.5em;
 }
 
-@media (max-width:900px ) {
-  h1{
+@media (max-width: 900px) {
+  h1 {
     font-size: 2em;
   }
-  h2{
+  h2 {
     font-size: 1.6em;
   }
-  h3{
+  h3 {
     font-size: 1.3em;
   }
-
-
 }
 
-
-@media (max-width:600px ) {
-  h1{
+@media (max-width: 600px) {
+  h1 {
     font-size: 1.5em;
   }
-  h2{
+  h2 {
     font-size: 1.2em;
   }
-  h3{
+  h3 {
     font-size: 1em;
   }
-
-
 }
 
 /* =======================
      CHECK BOX
      ======================= */
 .my-check input[type="checkbox"] {
-  -webkit-appearance: none; 
+  -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   width: 20px;
   height: 20px;
-  border: 2px solid var(--olive); 
+  border: 2px solid var(--olive);
   border-radius: 4px;
-  background-color:var(--bg);
+  background-color: var(--bg);
   cursor: pointer;
   position: relative;
 }
 
-
 .my-check input[type="checkbox"]:hover {
   border-color: var(--olive_bright);
 }
-
 
 .my-check input[type="checkbox"]:checked {
   background-color: var(--olive_bright);
   border-color: var(--olive_bright);
 }
 
-
 .my-check input[type="checkbox"]:checked::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 5px;
   top: 1px;
@@ -127,15 +121,15 @@ h3{
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
-  border: 2px solid  var(--olive_bright);
+  border: 2px solid var(--olive_bright);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
-  background: var(--bg);;
+  background: var(--bg);
 }
 
 .custom-radio:checked {
-  border-color:  var(--olive_bright);
+  border-color: var(--olive_bright);
 }
 
 .my-radio:checked::before {
@@ -145,13 +139,10 @@ h3{
   left: 50%;
   width: 8px;
   height: 8px;
-  background:  var(--olive_bright);
+  background: var(--olive_bright);
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
-
-
-
 
 /* =======================
     BUTTON
@@ -169,7 +160,9 @@ h3{
 }
 
 .main-button:hover {
-  background-color: var(--green-orange-hover); /* hover:bg-(--green-orange-hover) */
+  background-color: var(
+    --green-orange-hover
+  ); /* hover:bg-(--green-orange-hover) */
 }
 
 @media (min-width: 1024px) {
@@ -181,11 +174,11 @@ h3{
 /* =======================
      Custom List
      ======================= */
-.custom-list ul{
+.custom-list ul {
   @apply list-disc list-inside;
 }
 
-.custom-list ol{
+.custom-list ol {
   @apply list-disc list-inside;
 }
 
@@ -220,20 +213,23 @@ h3{
 .main-shadow {
   box-shadow: 0 2px 4px var(--shadow_color);
 }
-@media (max-width:600px ) {
+@media (max-width: 600px) {
   .main-shadow {
     box-shadow: none;
   }
 }
-.side-bar-button-shadow  {
-  box-shadow: 0 2px 4px  var(--shadow_color2);
+.side-bar-button-shadow {
+  box-shadow: 0 2px 4px var(--shadow_color2);
 }
-.recipe-shadow  {
-  box-shadow: 0 2px 4px  var(--shadow_color2);
+.recipe-shadow {
+  box-shadow: 0 2px 4px var(--shadow_color2);
   transition: box-shadow 0.5s ease;
 }
 .recipe-shadow:hover {
-  box-shadow: 0 2px 4px  var(--orange);
+  box-shadow: 0 2px 4px var(--orange);
+}
+.orange-shadow {
+  box-shadow: 0 0 5px 4px var(--orange);
 }
 /*======================================== 
           ReactQuill 
@@ -274,8 +270,41 @@ h3{
 =========================================*/
 .description-preview {
   display: -webkit-box;
-  -webkit-line-clamp: 3; 
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   size: 16px !important;
+}
+
+.description-preview-carousel {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  size: 16px !important;
+}
+
+/*======================================== 
+        SWIPER
+=========================================*/
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
+
+
+.swiper-button-next,
+.swiper-button-prev {
+  margin: 5px;
+  box-shadow: 0 0 6px 6px var(--orange);
+  background:var(--orange); 
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
