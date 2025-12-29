@@ -34,9 +34,10 @@ export default function BatchesList({ nickName, activeId }: BatchesListProps) {
       {visibleBatches.slice(0, 10).map((batch) => {
         const isActive = activeId === batch.id;
         return (
+
           <li key={batch.id}>
             <Link
-              href={`/cheese-batches/${batch.id}`}
+             href={batch.isPublick ? `/cheese-batches/${batch.id}` : `/cheese-batches/edit/${batch.id}`}
               className={`block px-2 py-1  link-underline text-(--text_gray)
                 ${isActive ? "font-bold text-(--text)" : ""}`}
             >
@@ -51,7 +52,7 @@ export default function BatchesList({ nickName, activeId }: BatchesListProps) {
                 <img
                   src={batch.image}
                   alt={batch.recipeName}
-                  className="mx-auto rounded-2xl h-[100px] "
+                  className="mx-auto rounded-2xl h-[100px]  aspect-[4/3]"
                 />
               )}
               {!batch.isPublick && isOuner && (
@@ -59,6 +60,7 @@ export default function BatchesList({ nickName, activeId }: BatchesListProps) {
                   ENTWURF
                 </span>
               )}
+             
             </Link>
           </li>
         );

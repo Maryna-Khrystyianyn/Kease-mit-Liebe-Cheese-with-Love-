@@ -16,7 +16,12 @@
   --shadow_color2: #ececec;
   --green-orange: #52814d;
   --green-orange-hover: #2f5e2a;
+  /*Swiper*/
   --swiper-navigation-color:rgb(235, 232, 232);
+  --swiper-pagination-color: #f59e0b;        
+  --swiper-pagination-bullet-inactive-color: #d1d5db;
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-pagination-bullet-size: 8px;
 }
 
 [data-theme="dark"] {

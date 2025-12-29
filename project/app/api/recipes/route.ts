@@ -66,38 +66,44 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const query = searchParams.get("q")?.trim() || "";
+
+    const search = searchParams.get("q")?.trim() || "";
+    const onlyPublic = searchParams.get("public") === "true";
 
     const recipes = await prisma.recipes.findMany({
-      where: query
-        ? {
-            name: {
-              contains: query,
-              mode: "insensitive", // пошук незалежно від регістру
-            },
-          }
-        : undefined, // якщо query порожній, не застосовуємо фільтр
+      where: {
+        // SEARCH
+        ...(search && {
+          name: {
+            contains: search,
+            mode: "insensitive",
+          },
+        }),
+
+        // ONLY PUBLICK
+        ...(onlyPublic && {
+          ispublic: true,
+        }),
+      },
+
       orderBy: {
         created_at: "desc",
       },
+
       include: {
-        recipe_ingredients: { include: { ingredients: true } },
+        recipe_ingredients: {
+          include: { ingredients: true },
+        },
         recipes_categories: true,
       },
     });
 
-    if (!recipes || recipes.length === 0) {
-      return NextResponse.json(
-        { message: "Rezepten nicht gefunden" },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(recipes);
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+
     return NextResponse.json(
-      { message: "Fehler beim Abrufen den Rezepten" },
+      { message: "Fehler beim Abrufen der Rezepte" },
       { status: 500 }
     );
   }

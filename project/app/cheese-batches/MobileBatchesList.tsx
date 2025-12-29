@@ -36,7 +36,7 @@ export default function MobileBatchesList({ nickName, activeId }: BatchesListPro
         return (
           <div key={batch.id}>
             <Link
-              href={`/cheese-batches/${batch.id}`}
+              href={batch.isPublick ? `/cheese-batches/${batch.id}` : `/cheese-batches/edit/${batch.id}`}
               className={`block px-2 py-1  link-underline text-(--text_gray)
                 ${isActive ? "font-bold text-(--text)" : ""}`}
             >
