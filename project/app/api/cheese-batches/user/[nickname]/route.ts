@@ -45,6 +45,7 @@ export async function GET(req: Request, { params }: Params) {
     image: b.foto,
     date: b.date_batch,
     isPublick: b.ispublic,
+    onTimeLine: b.onTimeLine,
     recipeName: b.recipes.name,
     recipeId: b.recipe_id,
     agingDays: b.recipes.aging ?? 0,

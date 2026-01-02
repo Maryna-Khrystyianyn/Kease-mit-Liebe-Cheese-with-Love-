@@ -6,9 +6,11 @@ import { ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function UserMenu({
+  nick,
   username,
   avatar,
 }: {
+  nick: string;
   username: string;
   avatar: string | null;
 }) {
@@ -29,17 +31,18 @@ export default function UserMenu({
 
   async function handleLogout() {
     console.log("TRAY LogAut");
-    await fetch("/api/logout", { method: "POST", credentials:"include" });
+    await fetch("/api/logout", { method: "POST", credentials: "include" });
     window.location.href = "/";
   }
   return (
     <div className="relative flex gap-2" ref={menuRef}>
-      <img
-        src={avatar || "/user.png"}
-        alt={`${username} avatar`}
-        className="rounded-full shadow-xl object-cover border-2 border-(--olive_bright)  w-7 h-7"
-      />
-
+      <Link href={`/user/${nick}`}>
+        <img
+          src={avatar || "/user.png"}
+          alt={`${username} avatar`}
+          className="rounded-full shadow-xl object-cover border-2 border-(--olive_bright)  w-7 h-7"
+        />
+      </Link>
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center gap-1 sm:text-[22px] lg:text-[18px] opacity-60 hover:opacity-100"

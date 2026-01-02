@@ -1,13 +1,29 @@
-import {
-  ThemeProvider as NextThemesProvider,
-  ThemeProviderProps,
-} from "next-themes";
-import React, { ReactNode } from "react";
+"use client";
 
-interface Props extends ThemeProviderProps {
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { ReactNode, useEffect, useState } from "react";
+
+interface Props {
   children: ReactNode;
 }
 
-export function ThemeProvider({ children, ...props }: Props) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
+export function ThemeProvider({ children }: Props) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // Сервер рендерить нейтральне дерево без theme-dependent атрибутів
+    return <>{children}</>;
+  }
+
+  // Клієнт вже може безпечно додавати data-theme
+  return (
+    <NextThemesProvider attribute="data-theme" defaultTheme="system" enableSystem>
+      {children}
+    </NextThemesProvider>
+  );
 }

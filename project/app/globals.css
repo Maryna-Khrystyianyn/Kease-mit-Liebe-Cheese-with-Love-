@@ -17,8 +17,8 @@
   --green-orange: #52814d;
   --green-orange-hover: #2f5e2a;
   /*Swiper*/
-  --swiper-navigation-color:rgb(235, 232, 232);
-  --swiper-pagination-color: #f59e0b;        
+  --swiper-navigation-color: rgb(235, 232, 232);
+  --swiper-pagination-color: #f59e0b;
   --swiper-pagination-bullet-inactive-color: #d1d5db;
   --swiper-pagination-bullet-inactive-opacity: 1;
   --swiper-pagination-bullet-size: 8px;
@@ -36,7 +36,7 @@
   --shadow_color2: rgb(39, 41, 39);
   --green-orange: #f4b619;
   --green-orange-hover: #cf9604;
-  --swiper-navigation-color:white;
+  --swiper-navigation-color: white;
 }
 
 /* =======================
@@ -45,8 +45,9 @@
 body {
   background: var(--bg);
   color: var(--text);
-  transition: background-color 0.18s ease, color 0.18s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 h1 {
   font-size: 2.5em;
 }
@@ -217,6 +218,7 @@ h3 {
 
 .main-shadow {
   box-shadow: 0 2px 4px var(--shadow_color);
+  transition: box-shadow 0.3s ease;
 }
 @media (max-width: 600px) {
   .main-shadow {
@@ -225,6 +227,7 @@ h3 {
 }
 .side-bar-button-shadow {
   box-shadow: 0 2px 4px var(--shadow_color2);
+  transition: box-shadow 0.3s ease;
 }
 .recipe-shadow {
   box-shadow: 0 2px 4px var(--shadow_color2);
@@ -235,6 +238,7 @@ h3 {
 }
 .orange-shadow {
   box-shadow: 0 0 5px 4px var(--orange);
+  transition: box-shadow 0.3s ease;
 }
 /*======================================== 
           ReactQuill 
@@ -302,14 +306,48 @@ h3 {
   background-size: cover;
 }
 
-
 .swiper-button-next,
 .swiper-button-prev {
   margin: 5px;
   box-shadow: 0 0 6px 6px var(--orange);
-  background:var(--orange); 
+  background: var(--orange);
   opacity: 0.9;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/*======================================== 
+        TIMELINE
+=========================================*/
+
+.vis-item.aging {
+  background: #facc15 !important;
+  border-color: #eab308 !important;
+}
+.vis-item.ready {
+  background: var(--olive_bright) !important;
+  border-color: var(--olive_bright) !important;
+  color: white ;
+}
+
+.vis-ltr .vis-label.vis-nested-group .vis-inner {
+  padding-left: 10px !important;
+}
+.vis-group-level-unknown-but-gte1 {
+  border: none !important;
+}
+.vis-label.vis-nested-group.vis-group-level-unknown-but-gte1 {
+  background-color: var(--gray) !important;
+  color: var(--text) !important;
+  font-weight: normal;
+}
+.vis-labelset .vis-label {
+  color: var(--olive_bright) !important;
+  font-weight: bold;
+}
+
+.vis-time-axis .vis-text {
+  color: var(--text)!important;
+  font-weight: 600; /* жирний шрифт */
 }

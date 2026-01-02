@@ -26,11 +26,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <body>
         <ThemeProvider>
           <Header />
-          <main className="mt-12 md:mt-25 sm:mt-20"> {children}</main>
+          <main className="mt-12 md:mt-25 sm:mt-20"> 
+            {children}</main>
         </ThemeProvider>
       </body>
     </html>

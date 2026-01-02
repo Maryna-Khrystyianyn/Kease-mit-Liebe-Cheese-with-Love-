@@ -6,16 +6,17 @@ export type User = {
   user_status: "admin" | "basic" | "standard" | "premium" | "user";
 };
 
-type Milck={
-  type:string;
-  amount:number;
-}
+type Milck = {
+  type: string;
+  amount: number;
+};
 
 export type Batch = {
   id: number;
   image: string | null;
   date: string;
-  isPublick?:boolean;
+  isPublick?: boolean;
+  onTimeLine?: boolean;
   recipeName: string;
   recipeId: number;
   recipeCategory: string;
@@ -31,4 +32,4 @@ export type Batch = {
     username: string;
     avatar: string | null;
   };
-}
+};

@@ -4,7 +4,7 @@ import "../../../lib/i18n";
 
 const Header = () => {
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-(--bg) side-bar-button-shadow ">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-(--bg) side-bar-button-shadow transition-colors duration-300">
       <div className="lg:hidden">
         <HeaderMobile />
       </div>

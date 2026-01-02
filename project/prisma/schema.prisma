@@ -55,6 +55,7 @@ model cheese_batches {
   foto          String?         @db.Text         
   cheeseweight  Decimal?        @db.Decimal(10, 3)
   ispublic      Boolean?        @default(false)
+  onTimeLine    Boolean         @default(true) //added this field to display the cheese ripening schedule
   batch_coments batch_coments[]
   batch_notes   batch_notes[]
   recipes       recipes         @relation(fields: [recipe_id], references: [id], onDelete: NoAction, onUpdate: NoAction)

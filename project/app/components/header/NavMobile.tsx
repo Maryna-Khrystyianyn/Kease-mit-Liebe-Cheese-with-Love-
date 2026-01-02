@@ -71,7 +71,7 @@ const NavMobile = ({ user }: { user: User | null }) => {
         <div className="link-underline text-base flex gap-2 items-center  w-30">
           <span>{Cart}</span> {t("warenkorb")}
         </div>
-        <button className=" text-left w-10">
+        <div className=" text-left w-10">
           {user ? (
             <button onClick={handleLogout} className="text-[14px] link-underline ">
               {t("logout")}{" "}
@@ -89,7 +89,7 @@ const NavMobile = ({ user }: { user: User | null }) => {
               </Link>
             </div>
           )}
-        </button>
+        </div>
       </div>
     </div>
   );
