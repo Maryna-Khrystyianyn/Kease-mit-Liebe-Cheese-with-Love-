@@ -1,7 +1,5 @@
 "use client";
 
-
-
 import RecipeSelector from "@/app/components/batsh/RecipeSelector";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
@@ -14,8 +12,6 @@ interface RecipeShort {
   name: string;
   aging?: number | null;
 }
-
-
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -32,7 +28,6 @@ export default function CreateBatchPage() {
   const recipeName = searchParams.get("name");
   const recipeAging = searchParams.get("aging");
 
-
   const [recipe, setRecipe] = useState<RecipeShort | null>(null);
   const [description, setDescription] = useState("");
   const [cheeseweight, setCheeseweight] = useState("");
@@ -43,6 +38,7 @@ export default function CreateBatchPage() {
   const [batchDate, setBatchDate] = useState<string>("");
   const [readyDate, setReadyDate] = useState<string>("");
   const [agingDays, setAgingDays] = useState<number>(0);
+  const [onTimeLine, setOnTimeLine] = useState(true);
 
   useEffect(() => {
     if (!recipeId) return;
@@ -120,6 +116,7 @@ export default function CreateBatchPage() {
         recipe_id: recipe.id,
         description,
         ispublic: isPublic,
+        onTimeLine,
         cheeseweight: cheeseweight ? Number(cheeseweight) : null,
         foto: imageUrl,
         milk_in_batch: milks,
@@ -146,7 +143,11 @@ export default function CreateBatchPage() {
       <h1 className="text-2xl font-bold mb-4">Käsecharge erstellen</h1>
 
       {/* Recipe */}
-      <RecipeSelector key={recipe?.id ?? "empty"} value={recipe} onSelect={setRecipe} />
+      <RecipeSelector
+        key={recipe?.id ?? "empty"}
+        value={recipe}
+        onSelect={setRecipe}
+      />
 
       {/* Reifen*/}
       <div className="flex flex-col md:flex-row gap-5 md:gap-15 items-start mt-6">
@@ -226,6 +227,21 @@ export default function CreateBatchPage() {
         Bild hochladen
       </label>
 
+      {/* CHECKBOX ON TIMELINE */}
+      <div className="mt-4 flex items-center gap-2 my-check">
+        <input
+          type="checkbox"
+          id="onTimeLine"
+          checked={onTimeLine}
+          onChange={(e) => setOnTimeLine(e.target.checked)}
+          className="w-4 h-4 accent-(--orange)"
+        />
+        <label htmlFor="onTimeLine" className="text-(--text_gray)">
+          Auf Timeline anzeigen
+        </label>
+      </div>
+
+      {/* BUTTONS */}
       <div className="flex gap-4 mt-10">
         <button
           onClick={() => handleSubmit(false)}

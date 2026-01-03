@@ -1,11 +1,22 @@
-import type { Batch } from "@/types/global";
+"use client";
+import type { Batch, User } from "@/types/global";
 import { Milk, Scale, CalendarDays, CalendarCheck } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface BatchProps {
   batch: Batch;
 }
 
 export function BatchItem({ batch }: BatchProps) {
+  
+  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    fetch("/api/me")
+      .then((res) => res.json())
+      .then((data) => setUser(data.user));
+  }, []);
+
+  const canEdit = user && user.nick_name === batch.user.nickName;
   return (
     <article className="bg-(--bg) rounded main-shadow p-10">
       {/* HEADER */}
@@ -78,6 +89,18 @@ export function BatchItem({ batch }: BatchProps) {
           />
         )}
       </div>
+
+      {/* EDIT BUTTON */}
+      {canEdit && (
+        <div className="mt-4">
+          <a
+            href={`/cheese-batches/edit/${batch.id}`}
+            className="px-4 py-2 bg-(--olive_bright) text-white rounded font-bold hover:bg-(--orange)"
+          >
+            Bearbeiten
+          </a>
+        </div>
+      )}
 
       {/* AUTHOR */}
       <div className="flex items-center justify-end gap-3 pt-4 border-t border-(--olive) pb-5 mt-5">

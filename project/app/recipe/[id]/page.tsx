@@ -1,8 +1,8 @@
-import RecipeList from "@/app/recipe/RecipeList";
 import RecipeItem from "./RecipeItem";
 import RecipeSidebar from "../RecipeSidebar";
 import MobileRecipeBar from "../MobileRecipeBar";
 import PageWrapper from "@/app/PageWraper";
+import RecipeBatchesCarousel from "@/app/components/batsh/RecipeBatchesCarousel";
 
 interface PageProps {
   params: { id: string };
@@ -28,18 +28,16 @@ export default async function RecipePage({ params }: PageProps) {
 
   return (
     <PageWrapper>
-<MobileRecipeBar recipeId={recipeId} />
+      <MobileRecipeBar recipeId={recipeId} />
+      <div className="md:flex md:pl-5 ">
+        <div className=" md:block hidden">
+          <RecipeSidebar recipeId={recipeId} />
+        </div>
 
-    <div className="md:flex md:pl-5 ">
-      <div className=" md:block hidden">
-        <RecipeSidebar recipeId={recipeId} />
+        <div className=" mx-auto p-6">
+          <RecipeItem recipe={recipeData} />
+        </div>
       </div>
-
-      <div className=" mx-auto p-6">
-        <RecipeItem recipe={recipeData} />
-      </div>
-    </div>
     </PageWrapper>
-    
   );
 }

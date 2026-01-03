@@ -36,7 +36,7 @@ export default function UserCheese({ nickname }: { nickname: string }) {
       {/* Таймлайн */}
       {timelineBatches.length > 0 && (
         <div>
-          <h2 className="text-xl font-bold mb-3">Käsereifungsplan</h2>
+          <h2 className="font-bold mb-3">Käsereifungsplan</h2>
           <CheeseTimeline
             batches={timelineBatches}
             onHide={async (id) => {

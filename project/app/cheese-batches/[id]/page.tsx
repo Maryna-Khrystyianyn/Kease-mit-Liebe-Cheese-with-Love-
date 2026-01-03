@@ -59,15 +59,30 @@ export default async function BatchPage({ params }: PageProps) {
       avatar: batchData.users.avatar,
     },
   };
+
+ 
+
   return (
     <PageWrapper>
-      <MobileBatchesBar activeId={batch.id} nickName={batch.user.nickName} username={batch.user.username} avatar={batch.user.avatar} />
+      <MobileBatchesBar
+        activeId={batch.id}
+        nickName={batch.user.nickName}
+        username={batch.user.username}
+        avatar={batch.user.avatar}
+      />
       <div className="md:flex md:pl-5 ">
         <div className=" md:block hidden">
-          <BatchSideBar activeId={batch.id} nickName={batch.user.nickName} username={batch.user.username} avatar={batch.user.avatar} />
+          <BatchSideBar
+            activeId={batch.id}
+            nickName={batch.user.nickName}
+            username={batch.user.username}
+            avatar={batch.user.avatar}
+          />
         </div>
         <div>
-          <BatchItem batch={batch} />
+          <BatchItem
+            batch={batch}
+          />
         </div>
       </div>
     </PageWrapper>

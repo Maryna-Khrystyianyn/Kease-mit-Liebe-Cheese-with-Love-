@@ -39,7 +39,7 @@ export default function CheeseTimeline({ batches, onHide }: Props) {
       // Підгрупи — окремі партії
       ...batches.map((b) => ({
         id: `batch-${b.id}`,
-        content: `Charge #${b.createdAt.slice(0,10)}`,
+        content: `Charge #${b.createdAt.slice(0, 10)}`,
       })),
     ]);
 
@@ -64,15 +64,11 @@ export default function CheeseTimeline({ batches, onHide }: Props) {
       ])
     );
 
-    
-
-
     const timeline = new Timeline(containerRef.current, items, groups, {
       stack: false,
       zoomable: true,
       moveable: true,
       orientation: "top",
-     
     });
 
     // 👉 RIGHT CLICK MENU
@@ -80,12 +76,12 @@ export default function CheeseTimeline({ batches, onHide }: Props) {
     timeline.on("contextmenu", (props: any) => {
       props.event.preventDefault();
       if (!props.item || !containerRef.current) return;
-    
+
       const rawId = props.item;
       const batchId = Number(String(rawId).split("-")[0]);
-    
+
       const rect = containerRef.current.getBoundingClientRect();
-    
+
       setSelectedBatch(batchId);
       setMenuPos({
         x: props.event.clientX - rect.left,
@@ -104,9 +100,9 @@ export default function CheeseTimeline({ batches, onHide }: Props) {
   }, [batches]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full mb-20">
       {/* Timeline container */}
-      <div ref={containerRef} style={{ height: "500px" }} />
+      <div ref={containerRef} />
 
       {/* Context menu */}
       {selectedBatch && (
@@ -124,24 +120,24 @@ export default function CheeseTimeline({ batches, onHide }: Props) {
               setSelectedBatch(null);
             }}
           >
-            Не відображати
+            Nicht anzeigen
           </button>
 
           <button
-            className="block w-full text-left text-blue-600 hover:underline mt-2"
+            className="block w-full text-left text-(--olive_bright) hover:underline mt-2"
             onClick={() => {
               router.push(`/cheese-batches/${selectedBatch}`);
               setSelectedBatch(null);
             }}
           >
-            Перейти до партії
+            Geh zur Käsecharge
           </button>
 
           <button
             className="block w-full text-left text-gray-500 hover:underline mt-2"
             onClick={() => setSelectedBatch(null)}
           >
-            Закрити
+            Schließen
           </button>
         </div>
       )}

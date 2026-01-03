@@ -28,7 +28,7 @@ const HeaderMobile = () => {
       <Logo />
       <div className="flex gap-2 sm:gap-6 ">
         {user ? (
-          <UserMenu username={user.username} avatar={user.avatar} />
+          <UserMenu username={user.username} avatar={user.avatar} nick={user.nick_name}/>
         ) : (
           <>
             <Link href="/login" className=" border-b-2  border-[#4F694C]">

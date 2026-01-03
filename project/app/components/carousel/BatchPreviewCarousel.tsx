@@ -11,16 +11,26 @@ export function BatchPreviewCarousel({ batch }: BatchPreviewProps) {
     <div className="bg-(--gray) ">
       <div className="w-full flex lg:flex-row flex-col-reverse">
         {/* LEFT – IMAGE */}
-        <div className="xl:pt-7 lg:h-[500px] lg:pt-7 md:h-[300px]">
-            <div className="  2xl:w-[800px]  lg:h-[400px] xl:w-[700px] lg:w-[450px] w-full h-[300px] lg:px-0 px-10 rounded-2xl shrink-0 xl:m-4  lg:mx-4">
-          <img
-            src={batch.image || "/cheese.png"}
-            alt={batch.recipeName}
-            className=" 2xl:w-[800px] lg:h-[400px] xl:w-[700px] lg:w-[450px] w-full h-[300px] rounded-2xl  object-cover object-center "
-          />
-        </div>
-        </div>
-        
+        <Link
+          href={`/cheese-batches/${batch.id}`}
+          className="xl:pt-7 lg:h-[500px] lg:pt-7 md:h-[300px]"
+        >
+          <div className="  2xl:w-[800px]  lg:h-[400px] xl:w-[700px] lg:w-[450px] w-full h-[300px] lg:px-0 px-10 rounded-2xl shrink-0 xl:m-4  lg:mx-4">
+            <div className="relative group">
+              <img
+                src={batch.image || "/cheese.png"}
+                alt={batch.recipeName}
+                className="   2xl:w-[800px] lg:h-[400px] xl:w-[700px] lg:w-[450px] w-full h-[300px] rounded-2xl  object-cover object-center "
+              />
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                <span className="text-white text-sm font-semibold">
+                  Zur Charge →
+                </span>
+              </div>
+            </div>
+          </div>
+        </Link>
 
         {/* RIGHT – CONTENT */}
         <div className=" md:pt-2 md:pb-5 px-10  flex flex-col justify-between w-full">
@@ -102,7 +112,6 @@ export function BatchPreviewCarousel({ batch }: BatchPreviewProps) {
               href={`/user/${batch.user.nickName}`}
               className="flex items-center justify-end gap-3 pt-4 pb-5"
             >
-                
               <span className="font-bold ">{batch.user.username}</span>
               {batch.user.avatar && (
                 <img

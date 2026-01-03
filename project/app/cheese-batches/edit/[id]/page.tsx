@@ -41,6 +41,7 @@ export default function EditBatchPage() {
   const [readyDate, setReadyDate] = useState("");
   const [agingDays, setAgingDays] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [onTimeLine, setOnTimeLine] = useState(true);
 
   //=======================
   // ==Load batch==========
@@ -63,6 +64,7 @@ export default function EditBatchPage() {
       setPreviewUrl(batch.foto || "/cheese.png");
       setMilks(batch.milk_in_batch || []);
       setBatchDate(batch.created_at?.split("T")[0] || "");
+      setOnTimeLine(batch.onTimeLine);
 
       if (batch.recipe_id) {
         const recipeRes = await fetch(`/api/recipes/${batch.recipe_id}`);
@@ -134,7 +136,7 @@ export default function EditBatchPage() {
         return;
       }
     }
-
+console.log("ON TIME LINE", onTimeLine)
     const res = await fetch(`/api/cheese-batches/${batchId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -146,6 +148,7 @@ export default function EditBatchPage() {
         created_at: batchDate,
         ready_at: readyDate,
         ispublic: isPublic,
+        onTimeLine,
       }),
     });
 
@@ -257,7 +260,21 @@ export default function EditBatchPage() {
       >
         Bild hochladen
       </label>
+      {/* CHECKBOX ON TIMELINE */}
+      <div className="mt-4 flex items-center gap-2 my-check">
+        <input
+          type="checkbox"
+          id="onTimeLine"
+          checked={onTimeLine}
+          onChange={(e) => setOnTimeLine(e.target.checked)}
+          className="w-4 h-4 accent-(--orange)"
+        />
+        <label htmlFor="onTimeLine" className="text-(--text_gray)">
+          Auf Timeline anzeigen
+        </label>
+      </div>
 
+      {/* BUTTONS */}
       <div className="flex gap-4 mt-10">
         <button
           className="px-6 py-3 bg-gray-400 text-white rounded"
