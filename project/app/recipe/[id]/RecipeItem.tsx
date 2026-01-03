@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { User } from "@/types/global";
+import Link from "next/link";
 
 interface RecipeProps {
   recipe: {
@@ -54,8 +55,19 @@ export default function RecipeItem({ recipe }: RecipeProps) {
           ENTWURF
         </div>
       )}
-
-      <h1 className="text-2xl font-bold mb-4">{recipe.name}</h1>
+<div className="flex justify-between items-center">
+<h1 className="text-2xl font-bold mb-4">{recipe.name}</h1>
+<Link
+        href={{
+          pathname: "/cheese-batches/add",
+          query: { id: recipe.id, name: recipe.name, aging: recipe.aging },
+        }}
+        className="link-underline text-(--olive_bright) font-semibold block pb-2"
+      >
+        Käsecharge erstellen
+      </Link>
+</div>
+      
 
       <p className="text-sm text-(--text-gray) mb-2">
         Kategorie:
@@ -67,7 +79,7 @@ export default function RecipeItem({ recipe }: RecipeProps) {
           Reifezeit: <strong>{recipe.aging}</strong> Tage
         </p>
       )}
-
+     
       {recipe.image && (
         <img
           src={recipe.image}

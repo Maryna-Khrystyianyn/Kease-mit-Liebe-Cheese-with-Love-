@@ -1,16 +1,22 @@
 "use client";
 
-interface RecipeShort {
-  id: number;
-  name: string;
-  aging?: number | null;
-}
+
 
 import RecipeSelector from "@/app/components/batsh/RecipeSelector";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
 import MilkSelector from "@/app/components/batsh/MilkSelector";
+import { useSearchParams } from "next/navigation";
+
+interface RecipeShort {
+  id: number;
+  name: string;
+  aging?: number | null;
+}
+
+
+
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 function calculateReadyDate(start: string, days: number) {
@@ -21,6 +27,12 @@ function calculateReadyDate(start: string, days: number) {
 }
 
 export default function CreateBatchPage() {
+  const searchParams = useSearchParams();
+  const recipeId = searchParams.get("id");
+  const recipeName = searchParams.get("name");
+  const recipeAging = searchParams.get("aging");
+
+
   const [recipe, setRecipe] = useState<RecipeShort | null>(null);
   const [description, setDescription] = useState("");
   const [cheeseweight, setCheeseweight] = useState("");
@@ -32,6 +44,18 @@ export default function CreateBatchPage() {
   const [readyDate, setReadyDate] = useState<string>("");
   const [agingDays, setAgingDays] = useState<number>(0);
 
+  useEffect(() => {
+    if (!recipeId) return;
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRecipe({
+      id: Number(recipeId),
+      name: recipeName ?? "",
+      aging: recipeAging ? Number(recipeAging) : 0,
+    });
+  }, [recipeId, recipeName, recipeAging]);
+
+  console.log("recipe", recipe);
   useEffect(() => {
     const days = recipe?.aging ?? 0;
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -68,7 +92,6 @@ export default function CreateBatchPage() {
       alert("Fehler beim Hochladen des Bildes");
     }
   }
-
 
   //=======================
   //=== Save ==============
@@ -113,8 +136,9 @@ export default function CreateBatchPage() {
     }
 
     const data = await res.json();
-    if(isPublic){window.location.href = `/cheese-batch/${data.id}`;}
-    
+    if (isPublic) {
+      window.location.href = `/cheese-batch/${data.id}`;
+    }
   }
 
   return (
@@ -122,7 +146,7 @@ export default function CreateBatchPage() {
       <h1 className="text-2xl font-bold mb-4">Käsecharge erstellen</h1>
 
       {/* Recipe */}
-      <RecipeSelector value={recipe} onSelect={setRecipe} />
+      <RecipeSelector key={recipe?.id ?? "empty"} value={recipe} onSelect={setRecipe} />
 
       {/* Reifen*/}
       <div className="flex flex-col md:flex-row gap-5 md:gap-15 items-start mt-6">
