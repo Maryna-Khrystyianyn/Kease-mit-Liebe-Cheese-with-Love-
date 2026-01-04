@@ -10,7 +10,7 @@ interface Params {
 
 export default async function PublicUserPage({ params }: Params) {
   const { nickname } = params;
-
+console.log("NICK NAME",nickname)
   // Прямий запит до бази через Prisma
   const user = await prisma.users.findUnique({
     where: { nick_name: nickname },
@@ -30,8 +30,8 @@ export default async function PublicUserPage({ params }: Params) {
         <div className="max-w-3xl mx-auto p-6">
           <UserProfile user={user} />
         </div>
-        <UserBatchesCarousel nickname={user.nick_name} />
-        <UserCheese nickname={user.nick_name} />
+        <UserBatchesCarousel nick={user.nick_name} />
+        <UserCheese nick={user.nick_name} />
       </div>
     </PageWrapper>
   );

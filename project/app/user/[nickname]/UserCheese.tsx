@@ -8,17 +8,17 @@ import "swiper/css";
 import CheeseTimeline from "@/app/components/timeLine/CheeseTimeline";
 import { Batch } from "@/types/global";
 
-export default function UserCheese({ nickname }: { nickname: string }) {
+export default function UserCheese({ nick }: { nick: string }) {
   const [batches, setBatches] = useState<Batch[]>([]);
 
   useEffect(() => {
     async function load() {
-      const res = await fetch(`/api/cheese-batches/user/${nickname}`);
+      const res = await fetch(`/api/cheese-batches/user/${nick}`);
       const data = await res.json();
       setBatches(data);
     }
     load();
-  }, [nickname]);
+  }, [nick]);
 
   // Дані для таймлайну
   const timelineBatches = batches
