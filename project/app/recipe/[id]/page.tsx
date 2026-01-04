@@ -4,11 +4,12 @@ import MobileRecipeBar from "../MobileRecipeBar";
 import PageWrapper from "@/app/PageWraper";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function RecipePage({ params }: PageProps) {
-  const recipeId = Number(params.id);
+  const { id } = await params;
+  const recipeId = Number(id);
 
   const res = await fetch(`/api/recipes/${recipeId}`, {
     cache: "no-store",
