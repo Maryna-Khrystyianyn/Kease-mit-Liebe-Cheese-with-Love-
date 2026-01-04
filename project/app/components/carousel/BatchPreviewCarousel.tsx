@@ -7,6 +7,10 @@ interface BatchPreviewProps {
 }
 
 export function BatchPreviewCarousel({ batch }: BatchPreviewProps) {
+  function cleanHtml(html: string) {
+    return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
+  }
+
   return (
     <div className="bg-(--gray) ">
       <div className="w-full flex lg:flex-row flex-col-reverse">
@@ -95,7 +99,7 @@ export function BatchPreviewCarousel({ batch }: BatchPreviewProps) {
               {batch.description && (
                 <div
                   className="description-preview-carousel"
-                  dangerouslySetInnerHTML={{ __html: batch.description }}
+                  dangerouslySetInnerHTML={{ __html: cleanHtml(batch.description) }}
                 />
               )}
 

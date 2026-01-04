@@ -7,9 +7,14 @@ interface BatchPreviewProps {
 }
 
 export function BatchPreview({ batch }: BatchPreviewProps) {
+
+  function cleanHtml(html: string) {
+    return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
+  }
+
   return (
     <div className="bg-(--gray) ">
-      <div className="w-full flex lg:flex-row flex-col-reverse">
+      <div className="flex lg:flex-row flex-col-reverse">
         {/* LEFT – IMAGE */}
         <div className="xl:h-[350px] xl:w-[400px] lg:h-[250px] lg:w-[400px] w-full h-[300px] lg:px-0 px-10 rounded-2xl shrink-0 xl:m-4 lg:mt-12 lg:mx-4">
           <img
@@ -82,7 +87,7 @@ export function BatchPreview({ batch }: BatchPreviewProps) {
               {batch.description && (
                 <div
                   className="description-preview"
-                  dangerouslySetInnerHTML={{ __html: batch.description }}
+                  dangerouslySetInnerHTML={{ __html: cleanHtml(batch.description) }}
                 />
               )}
 
@@ -111,6 +116,8 @@ export function BatchPreview({ batch }: BatchPreviewProps) {
           </div>
         </div>
       </div>
+
+      
       {/* for lg screen */}
       <div className="xl:hidden lg:mx-5 mx-10">
         {/* DESCRIPTION */}
@@ -118,7 +125,7 @@ export function BatchPreview({ batch }: BatchPreviewProps) {
           {batch.description && (
             <div
               className="description-preview"
-              dangerouslySetInnerHTML={{ __html: batch.description }}
+              dangerouslySetInnerHTML={{ __html: cleanHtml(batch.description) }}
             />
           )}
 

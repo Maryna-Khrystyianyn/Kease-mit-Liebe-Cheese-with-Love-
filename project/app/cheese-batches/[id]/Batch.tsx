@@ -11,6 +11,11 @@ export function BatchItem({ batch }: BatchProps) {
 
   const [user, setUser] = useState<User | null>(null);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+  function cleanHtml(html: string) {
+    return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
+  }
+
   useEffect(() => {
     fetch(`${baseUrl}/api/me`)
       .then((res) => res.json())
@@ -86,7 +91,7 @@ export function BatchItem({ batch }: BatchProps) {
         {batch.description && (
           <div
             className="prose custom-list"
-            dangerouslySetInnerHTML={{ __html: batch.description }}
+            dangerouslySetInnerHTML={{ __html: cleanHtml(batch.description) }}
           />
         )}
       </div>
