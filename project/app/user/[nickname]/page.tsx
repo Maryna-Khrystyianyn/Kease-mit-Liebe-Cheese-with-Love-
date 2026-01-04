@@ -30,8 +30,8 @@ console.log("NICK NAME",nickname)
         <div className="max-w-3xl mx-auto p-6">
           <UserProfile user={user} />
         </div>
-        <UserBatchesCarousel nick={user.nick_name} />
-        <UserCheese nick={user.nick_name} />
+        <UserBatchesCarousel nickname={user.nick_name} />
+        <UserCheese nickname={user.nick_name} />
       </div>
     </PageWrapper>
   );

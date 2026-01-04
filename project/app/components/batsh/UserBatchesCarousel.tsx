@@ -19,7 +19,7 @@ type BatchImage = {
 };
 
 interface Props {
-  nick: string;
+  nickname: string;
 }
 /* //Logined user
   useEffect(() => {
@@ -28,22 +28,22 @@ interface Props {
       .then((data) => setUser(data.user));
   }, []); */
 
-export default function UserBatchesCarousel({ nick }: Props) {
+export default function UserBatchesCarousel({ nickname }: Props) {
   const [items, setItems] = useState<BatchImage[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!nick) return;
+    if (!nickname) return;
 
-    fetch(`/api/user/${nick}/batch-images`)
+    fetch(`/api/user/${nickname}/batch-images`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, [nick]);
+  }, [nickname]);
 
   //Logined user
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function UserBatchesCarousel({ nick }: Props) {
 
   const filteredItems = items.filter((batch:BatchImage) => {
     // Якщо це власник — показуємо всі фото
-    if (user && user.nick_name === nick) return true;
+    if (user && user.nick_name === nickname) return true;
   
     // Інакше показуємо тільки публічні
     return batch.ispublic === true;
