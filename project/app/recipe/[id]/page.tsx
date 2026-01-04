@@ -5,7 +5,7 @@ import PageWrapper from "@/app/PageWraper";
 import RecipeBatchesCarousel from "@/app/components/batsh/RecipeBatchesCarousel";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function RecipePage({ params }: PageProps) {

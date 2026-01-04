@@ -4,18 +4,20 @@ import UserProfile from "./UserProfile"; // приклад клієнтсько�
 import { type users } from "@prisma/client";
 import UserBatchesCarousel from "@/app/components/batsh/UserBatchesCarousel";
 
-
 interface Params {
-  params: { nickname: string };
+  params: Promise<{ nickname: string }>;
 }
 
 export default async function PublicUserPage({ params }: Params) {
   const { nickname } = await params;
 
   // Запит до нашого API роутера
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${nickname}`, {
-    cache: "no-store", // завжди свіжі дані
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${nickname}`,
+    {
+      cache: "no-store", // завжди свіжі дані
+    }
+  );
 
   const user: users | null = res.ok ? await res.json() : null;
 
@@ -27,16 +29,14 @@ export default async function PublicUserPage({ params }: Params) {
     );
   }
   return (
-     <PageWrapper>
-
+    <PageWrapper>
       <div className="mx-10">
-      <div className="max-w-3xl mx-auto p-6">
-        <UserProfile user={user} />
+        <div className="max-w-3xl mx-auto p-6">
+          <UserProfile user={user} />
+        </div>
+        <UserBatchesCarousel nickname={user.nick_name} />
+        <UserCheese nickname={user.nick_name} />
       </div>
-      <UserBatchesCarousel nickname={user.nick_name} />
-       <UserCheese nickname={user.nick_name}/>
-    </div>
-     </PageWrapper>
-    
+    </PageWrapper>
   );
 }

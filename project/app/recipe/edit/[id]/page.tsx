@@ -1,7 +1,7 @@
 import EditRecipeForm from "./EditRecipeForm";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function EditRecipePage({ params }: PageProps) {

@@ -5,7 +5,7 @@ import BatchSideBar from "../BatchSideBar";
 import MobileBatchesBar from "../MobileBatchesBar";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function BatchPage({ params }: PageProps) {

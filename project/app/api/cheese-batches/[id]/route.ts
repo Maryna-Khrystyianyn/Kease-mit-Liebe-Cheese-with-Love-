@@ -6,7 +6,7 @@ import { requireUser } from "../../../utils/auth";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
   const batchId = Number(id);
@@ -46,7 +46,7 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params:Promise<{ id: string }>}
 ) {
   const user = await requireUser();
   const { id } = await params;
@@ -110,7 +110,7 @@ export async function PUT(
 //DELETE
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params:Promise<{ id: string }>}
 ) {
   const { id } = await params;
   const batcheId = Number(id);
