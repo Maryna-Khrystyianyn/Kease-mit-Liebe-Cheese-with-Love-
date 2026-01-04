@@ -8,6 +8,7 @@ import Link from "next/link";
 import FilterSideBar from "./FilterSideBar";
 import MobileFilterBar from "./MobileFilterBar";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 interface Recipe {
   id: number;
@@ -124,91 +125,94 @@ export default function RecipesPage() {
   );
 
   return (
-    <PageWrapper>
-      {/* MOBILE FILTER */}
-      <div className="md:hidden  block">
-        <MobileFilterBar
-          categories={categories}
-          filters={filters}
-          setFilters={setFilters}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          onApply={() => setPage(1)}
-        />
-      </div>
+    <Suspense fallback={<p>Lädt...</p>}>
+      <PageWrapper>
+        {/* MOBILE FILTER */}
+        <div className="md:hidden  block">
+          <MobileFilterBar
+            categories={categories}
+            filters={filters}
+            setFilters={setFilters}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onApply={() => setPage(1)}
+          />
+        </div>
 
-      <div className="flex">
-        {/* FilterSideBar */}
-        <FilterSideBar
-          categories={categories}
-          filters={filters}
-          setFilters={setFilters}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          onApply={() => setPage(1)}
-        />
+        <div className="flex">
+          {/* FilterSideBar */}
+          <FilterSideBar
+            categories={categories}
+            filters={filters}
+            setFilters={setFilters}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            onApply={() => setPage(1)}
+          />
 
-        {/* ALL RECIPE*/}
-        <section className="max-w-6xl mx-auto p-6 space-y-8">
-          <h1 className="text-3xl font-bold">Alle Rezepte</h1>
+          {/* ALL RECIPE*/}
+          <section className="max-w-6xl mx-auto p-6 space-y-8">
+            <h1 className="text-3xl font-bold">Alle Rezepte</h1>
 
-          {filteredRecipes.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 text-center text-(--text_gray)">
-              <p className="text-xl font-semibold mb-2">
-                Leider konnten wir keine Rezepte finden.
-              </p>
-              <p className="text-sm">
-                Bitte ändern Sie Ihre Suchanfrage oder passen Sie die Filter an.
-              </p>
-              <button
-                onClick={() => {
-                  setFilters({ category: "", milk: "", aging: "" });
-                  setSearchQuery("");
-                  setPage(1);
-                }}
-                className="mt-4 main-button"
-              >
-                Filter zurücksetzen
-              </button>
-            </div>
-          ) : (
-            <>
-              <div className="grid gap-6 lg:grid-cols-2">
-                {paginatedRecipes.map((recipe) => (
-                  <Link
-                    key={recipe.id}
-                    href={`/recipe/${recipe.id}`}
-                    className="recipe-shadow"
-                  >
-                    <RecipeItem recipe={recipe} />
-                  </Link>
-                ))}
+            {filteredRecipes.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-20 text-center text-(--text_gray)">
+                <p className="text-xl font-semibold mb-2">
+                  Leider konnten wir keine Rezepte finden.
+                </p>
+                <p className="text-sm">
+                  Bitte ändern Sie Ihre Suchanfrage oder passen Sie die Filter
+                  an.
+                </p>
+                <button
+                  onClick={() => {
+                    setFilters({ category: "", milk: "", aging: "" });
+                    setSearchQuery("");
+                    setPage(1);
+                  }}
+                  className="mt-4 main-button"
+                >
+                  Filter zurücksetzen
+                </button>
               </div>
-
-              {/* PAGINATION */}
-              {totalPages > 1 && (
-                <div className="flex justify-center gap-2 mt-6">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (num) => (
-                      <button
-                        key={num}
-                        className={`px-3 py-1 rounded border ${
-                          num === page
-                            ? "bg-(--orange) text-white"
-                            : "bg-white text-(--text)"
-                        }`}
-                        onClick={() => setPage(num)}
-                      >
-                        {num}
-                      </button>
-                    )
-                  )}
+            ) : (
+              <>
+                <div className="grid gap-6 lg:grid-cols-2">
+                  {paginatedRecipes.map((recipe) => (
+                    <Link
+                      key={recipe.id}
+                      href={`/recipe/${recipe.id}`}
+                      className="recipe-shadow"
+                    >
+                      <RecipeItem recipe={recipe} />
+                    </Link>
+                  ))}
                 </div>
-              )}
-            </>
-          )}
-        </section>
-      </div>
-    </PageWrapper>
+
+                {/* PAGINATION */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center gap-2 mt-6">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (num) => (
+                        <button
+                          key={num}
+                          className={`px-3 py-1 rounded border ${
+                            num === page
+                              ? "bg-(--orange) text-white"
+                              : "bg-white text-(--text)"
+                          }`}
+                          onClick={() => setPage(num)}
+                        >
+                          {num}
+                        </button>
+                      )
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+          </section>
+        </div>
+      </PageWrapper>
+    </Suspense>
   );
 }
