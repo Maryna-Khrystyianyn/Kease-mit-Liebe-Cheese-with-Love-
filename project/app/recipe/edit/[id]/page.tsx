@@ -11,7 +11,7 @@ export default async function EditRecipePage({ params }: PageProps) {
 
   // Отримуємо дані з API
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/recipes/${recipeId}`,
+    `/api/recipes/${recipeId}`,
     {
       cache: "no-store", // завжди свіжі дані
     }

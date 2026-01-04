@@ -13,7 +13,7 @@ export default async function BatchPage({ params }: PageProps) {
   const batchId = Number(id);
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/cheese-batches/${batchId}`,
+    `/api/cheese-batches/${batchId}`,
     {
       cache: "no-store",
       credentials: "include",

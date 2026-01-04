@@ -13,7 +13,7 @@ export default async function PublicUserPage({ params }: Params) {
 
   // Запит до нашого API роутера
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/${nickname}`,
+    `/api/user/${nickname}`,
     {
       cache: "no-store", // завжди свіжі дані
     }
