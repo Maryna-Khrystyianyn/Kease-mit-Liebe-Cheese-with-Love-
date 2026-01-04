@@ -1,6 +1,7 @@
 import { users } from "@prisma/client";
 
 export async function fetchUser(nickname: string | undefined): Promise<users | null> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   if (!nickname) return null; 
   try {
     const res = await fetch(`${baseUrl}/api/user/${encodeURIComponent(nickname)}`);
