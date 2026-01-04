@@ -10,14 +10,14 @@ import Login from "./Login";
 const NavMobile = ({ user }: { user: User | null }) => {
   const { i18n } = useTranslation();
   const { t } = useTranslation();
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   useEffect(() => {
     i18n.changeLanguage("de"); // immer de
   }, []);
 
   async function handleLogout() {
     console.log("TRAY LogAut");
-    await fetch("/api/logout", { method: "POST", credentials: "include" });
+    await fetch(`${baseUrl}/api/logout`, { method: "POST", credentials: "include" });
     window.location.href = "/";
   }
 

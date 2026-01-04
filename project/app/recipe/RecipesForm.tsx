@@ -47,7 +47,8 @@ export default function RecipesForm() {
   const searchParams = useSearchParams();
   const searchFromUrl = searchParams.get("search") || "";
   const [searchQuery, setSearchQuery] = useState(searchFromUrl);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   const [filters, setFilters] = useState({
     category: "",
     milk: "",
@@ -57,11 +58,11 @@ export default function RecipesForm() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetch("/api/me")
+    fetch(`${baseUrl}/api/me`)
       .then((res) => res.json())
       .then((data) => setUser(data.user));
 
-    fetch("/api/recipes")
+    fetch(`${baseUrl}/api/recipes`)
       .then((res) => res.json())
       .then((data) => setRecipes(data));
   }, []);

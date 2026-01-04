@@ -39,7 +39,8 @@ export default function CreateBatchForm() {
   const [readyDate, setReadyDate] = useState<string>("");
   const [agingDays, setAgingDays] = useState<number>(0);
   const [onTimeLine, setOnTimeLine] = useState(true);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   useEffect(() => {
     if (!recipeId) return;
 
@@ -109,7 +110,7 @@ export default function CreateBatchForm() {
 
     setLoading(true);
 
-    const res = await fetch("/api/cheese-batches", {
+    const res = await fetch(`${baseUrl}/api/cheese-batches`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

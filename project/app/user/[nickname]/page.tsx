@@ -10,7 +10,7 @@ interface Params {
 
 export default async function PublicUserPage({ params }: Params) {
   const { nickname } = await params; 
-  console.log("NICKNAME", nickname);
+  
 
   if (!nickname) {
     return <p>Nickname not provided</p>;

@@ -13,7 +13,7 @@ export default function UserCheese({ nickname }: { nickname: string }) {
 
   useEffect(() => {
     async function load() {
-      const res = await fetch(`/api/cheese-batches/user/${nickname}`);
+      const res = await fetch(`${baseUrl}/api/cheese-batches/user/${nickname}`);
       const data = await res.json();
       setBatches(data);
     }
@@ -29,7 +29,8 @@ export default function UserCheese({ nickname }: { nickname: string }) {
       createdAt: b.createdAt,
       readyAt: b.readyAt ?? "",
     }));
-
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    
   return (
     <div>
 
@@ -40,7 +41,7 @@ export default function UserCheese({ nickname }: { nickname: string }) {
           <CheeseTimeline
             batches={timelineBatches}
             onHide={async (id) => {
-              await fetch(`/api/cheese-batches/${id}/timeline`, {
+              await fetch(`${baseUrl}/api/cheese-batches/${id}/timeline`, {
                 method: "PATCH",
                 body: JSON.stringify({ onTimeLine: false }),
               });

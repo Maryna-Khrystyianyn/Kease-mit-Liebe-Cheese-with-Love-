@@ -17,7 +17,8 @@ export default function UserMenu({
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   // Закриваємо меню при кліку поза ним
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -31,7 +32,7 @@ export default function UserMenu({
 
   async function handleLogout() {
     console.log("TRAY LogAut");
-    await fetch("/api/logout", { method: "POST", credentials: "include" });
+    await fetch(`${baseUrl}/api/logout`, { method: "POST", credentials: "include" });
     window.location.href = "/";
   }
   return (

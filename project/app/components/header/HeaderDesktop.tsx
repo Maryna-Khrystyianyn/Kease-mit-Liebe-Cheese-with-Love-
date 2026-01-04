@@ -17,10 +17,10 @@ import { User } from "@/types/global";
 
 const HeaderDesktop = () => {
   const [user, setUser] = useState<User | null>(null);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch("/api/me", { cache: "no-store" });
+      const res = await fetch(`${baseUrl}/api/me`, { cache: "no-store" });
       const data = await res.json();
       setUser(data.user as User);
       console.log("USER AVATAR", user?.avatar)

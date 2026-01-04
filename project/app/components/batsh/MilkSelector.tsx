@@ -19,9 +19,10 @@ interface Props {
 
 export default function MilkSelector({ value, onChange }: Props) {
   const [milks, setMilks] = useState<Milk[]>([]);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   useEffect(() => {
-    fetch("/api/milk")
+    fetch(`${baseUrl}/api/milk`)
       .then((r) => r.json())
       .then(setMilks);
   }, []);

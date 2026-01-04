@@ -34,8 +34,10 @@ interface RecipeProps {
 
 export default function RecipeItem({ recipe }: RecipeProps) {
   const [user, setUser] = useState<User | null>(null);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   useEffect(() => {
-    fetch("/api/me")
+    fetch(`${baseUrl}/api/me`)
       .then((res) => res.json())
       .then((data) => setUser(data.user));
   }, []);

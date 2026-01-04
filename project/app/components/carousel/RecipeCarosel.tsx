@@ -13,9 +13,10 @@ import RecipeCarouselItem from "./RecipeCarouselItem";
 export default function RecipeCarousel() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [results, setResults] = useState<any[]>([]);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   useEffect(() => {
-    fetch(`/api/recipes?public=true"`)
+    fetch(`${baseUrl}/api/recipes?public=true"`)
       .then((res) => res.json())
       .then((data) => {
         setResults(data.slice(0, 10));

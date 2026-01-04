@@ -16,16 +16,17 @@ interface MobileRecipeListProps {
 export default function MobileRecipeList({ id: activeId }: MobileRecipeListProps) {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [user, setUser] = useState<User | null>(null);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   useEffect(() => {
     //Get User
-    fetch("/api/me")
+    fetch(`${baseUrl}/api/me`)
       .then(res => res.json())
       .then(data => setUser(data.user))
       .catch(err => console.error("Error loading user:", err));
 
     // Get all Recipe
-    fetch("/api/recipes")
+    fetch(`${baseUrl}/api/recipes`)
       .then(res => res.json())
       .then(data => setRecipes(data))
       .catch(err => console.error("Error loading recipes:", err));

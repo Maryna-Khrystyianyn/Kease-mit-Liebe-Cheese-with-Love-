@@ -23,11 +23,12 @@ interface Props {
 export default function RecipeBatchesCarousel({ recipeId }: Props) {
   const [items, setItems] = useState<BatchImage[]>([]);
   const [loading, setLoading] = useState(true);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   useEffect(() => {
     if (!recipeId) return;
 
-    fetch(`/api/recipes/${recipeId}/public-batch-images`)
+    fetch(`${baseUrl}/api/recipes/${recipeId}/public-batch-images`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data);

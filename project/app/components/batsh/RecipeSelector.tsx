@@ -20,7 +20,8 @@ export default function RecipeSelector({ value, onSelect }: Props) {
   const [results, setResults] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(value);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   useEffect(() => {
     //when we are not rendering
     if (inputValue.length < 2 || selectedRecipe?.name === inputValue) {
@@ -30,7 +31,7 @@ export default function RecipeSelector({ value, onSelect }: Props) {
     }
 
     const timeout = setTimeout(async () => {
-      const res = await fetch(`/api/recipes?q=${inputValue}`);
+      const res = await fetch(`${baseUrl}/api/recipes?q=${inputValue}`);
       const data = await res.json();
       setResults(data);
       setOpen(true);

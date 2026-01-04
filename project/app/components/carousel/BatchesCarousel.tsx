@@ -14,9 +14,10 @@ import { BatchPreviewCarousel } from "./BatchPreviewCarousel";
 
 export default function BatchesCarousel() {
   const [batches, setBatches] = useState<Batch[]>([]);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   useEffect(() => {
-    fetch(`/api/cheese-batches/publick`)
+    fetch(`${baseUrl}/api/cheese-batches/publick`)
       .then((res) => res.json())
       .then((data: Batch[]) => {
         setBatches(data.slice(0, 10));

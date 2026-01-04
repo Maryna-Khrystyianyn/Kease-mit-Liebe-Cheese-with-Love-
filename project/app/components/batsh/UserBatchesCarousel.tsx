@@ -32,11 +32,12 @@ export default function UserBatchesCarousel({ nickname }: Props) {
   const [items, setItems] = useState<BatchImage[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   useEffect(() => {
     if (!nickname) return;
 
-    fetch(`/api/user/${nickname}/batch-images`)
+    fetch(`${baseUrl}/api/user/${nickname}/batch-images`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
@@ -47,7 +48,7 @@ export default function UserBatchesCarousel({ nickname }: Props) {
 
   //Logined user
   useEffect(() => {
-    fetch("/api/me")
+    fetch(`${baseUrl}/api/me`)
       .then((res) => res.json())
       .then((data) => setUser(data.user));
   }, []);

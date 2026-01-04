@@ -45,15 +45,16 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
   );
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState(recipe.image || "/cheese.png");
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   // Завантаження інгредієнтів і категорій
   useEffect(() => {
-    fetch("/api/ingredients")
+    fetch(`${baseUrl}/api/ingredients`)
       .then((res) => res.json())
       .then((data: IngredientType[]) => setAllIngredients(data))
       .catch((err) => console.error("Error loading ingredients:", err));
 
-    fetch("/api/categories")
+    fetch(`${baseUrl}/api/categories`)
       .then((res) => res.json())
       .then((data: CategoryType[]) => setAllCategories(data))
       .catch((err) => console.error("Error loading categories:", err));
@@ -118,7 +119,7 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
     };
 
     try {
-      const res = await fetch(`/api/recipes/${recipe.id}`, {
+      const res = await fetch(`${baseUrl}/api/recipes/${recipe.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(recipeData),
@@ -138,7 +139,7 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
     if (!confirm("Willst du dieses Rezept wirklich löschen?")) return;
 
     try {
-      const res = await fetch(`/api/recipes/${recipe.id}`, { method: "DELETE" });
+      const res = await fetch(`${baseUrl}/api/recipes/${recipe.id}`, { method: "DELETE" });
       if (res.ok) {
         alert("Rezept gelöscht!");
       } else {

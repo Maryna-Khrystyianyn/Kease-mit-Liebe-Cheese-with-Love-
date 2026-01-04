@@ -46,7 +46,8 @@ const Register = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -73,7 +74,7 @@ const Register = () => {
     const formDataUpload = new FormData();
     formDataUpload.append("file", file);
 
-    const res = await fetch("/api/upload-avatar", {
+    const res = await fetch(`${baseUrl}/api/upload-avatar`, {
       method: "POST",
       body: formDataUpload,
     });
@@ -91,7 +92,7 @@ const Register = () => {
     setError(null);
     setSuccess(null);
 
-    const res = await fetch("/api/register", {
+    const res = await fetch(`${baseUrl}/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

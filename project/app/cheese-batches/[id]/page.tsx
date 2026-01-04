@@ -11,14 +11,12 @@ interface PageProps {
 export default async function BatchPage({ params }: PageProps) {
   const { id } = await params;
   const batchId = Number(id);
-
-  const res = await fetch(
-    `/api/cheese-batches/${batchId}`,
-    {
-      cache: "no-store",
-      credentials: "include",
-    }
-  );
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
+  const res = await fetch(`${baseUrl}/api/cheese-batches/${batchId}`, {
+    cache: "no-store",
+    credentials: "include",
+  });
 
   if (!res.ok) {
     return <p>Batch nicht gefunden</p>;
@@ -60,8 +58,6 @@ export default async function BatchPage({ params }: PageProps) {
     },
   };
 
- 
-
   return (
     <PageWrapper>
       <MobileBatchesBar
@@ -80,9 +76,7 @@ export default async function BatchPage({ params }: PageProps) {
           />
         </div>
         <div>
-          <BatchItem
-            batch={batch}
-          />
+          <BatchItem batch={batch} />
         </div>
       </div>
     </PageWrapper>

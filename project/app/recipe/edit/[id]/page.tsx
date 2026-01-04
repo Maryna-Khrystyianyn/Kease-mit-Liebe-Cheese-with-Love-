@@ -7,15 +7,13 @@ interface PageProps {
 export default async function EditRecipePage({ params }: PageProps) {
   const { id } = await params;
   const recipeId = Number(id);
-  console.log("RECIPE ID", recipeId);
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   // Отримуємо дані з API
-  const res = await fetch(
-    `/api/recipes/${recipeId}`,
-    {
-      cache: "no-store", // завжди свіжі дані
-    }
-  );
+  const res = await fetch(`${baseUrl}/api/recipes/${recipeId}`, {
+    cache: "no-store", // завжди свіжі дані
+  });
 
   if (!res.ok) {
     return <p>Rezept nicht gefunden</p>;

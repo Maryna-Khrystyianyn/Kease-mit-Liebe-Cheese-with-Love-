@@ -18,7 +18,8 @@ const Login = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -32,7 +33,7 @@ const Login = () => {
     setError(null);
     setSuccess(null);
 
-    const res = await fetch("/api/login", {
+    const res = await fetch(`${baseUrl}/api/login`, {
       method: "POST",
       credentials:"include",
       headers: { "Content-Type": "application/json" },

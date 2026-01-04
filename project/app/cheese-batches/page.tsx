@@ -17,6 +17,7 @@ const Tagebuch = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [sort, setSort] = useState<"new" | "old">("new");
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   // перший раз коли я завантажую сторінку з партіями сиру
   // я зчитую всі партії сиру і зразу знаходжу всі категорії
@@ -24,7 +25,7 @@ const Tagebuch = () => {
   // а роблю тільки уже залежно від того які фільтри вибрані запити до бази даних
 
   useEffect(() => {
-    fetch(`/api/cheese-batches/publick`)
+    fetch(`${baseUrl}/api/cheese-batches/publick`)
       .then((res) => res.json())
       .then((data: Batch[]) => {
         setBatches(data);
@@ -41,7 +42,7 @@ const Tagebuch = () => {
       params.set("categories", selectedCategories.join(","));
     if (sort) params.set("sort", sort);
 
-    fetch(`/api/cheese-batches/publick?${params.toString()}`)
+    fetch(`${baseUrl}/api/cheese-batches/publick?${params.toString()}`)
       .then((res) => res.json())
       .then((data) => {
         setBatches(data);
@@ -68,6 +69,7 @@ const Tagebuch = () => {
         onApply={() => setPage(1)}
       />
       <div className="flex">
+      <div className="hidden md:block w-64 ">
         <FilterBatchesSide
           categories={categories}
           setSelectedCategories={setSelectedCategories}
@@ -77,16 +79,16 @@ const Tagebuch = () => {
           sort={sort}
           setSort={setSort}
           onApply={() => setPage(1)}
-        />
+        /></div>
 
         {/* CONTENT */}
-        <div className="w-full">
-          <div className="max-w-6xl mx-auto flex flex-col gap-5 w-full">
+        <div className="flex-1">
+          <div className="max-w-6xl mx-auto flex flex-col gap-5 ">
             <h1 className="font-bold my-5 md:mx-0 mx-5">Das Käsetagebuch der Community</h1>
             <p className="text-(--text_gray) mb-10 italic lg:text-xl md:mx-0 mx-5">
               Hier teilen Hobby‑ und Haussennereien ihre Erfahrungen, kleine
               Erfolge und besondere Momente aus der Käseherstellung. Ein Ort, an
-              dem jede*r festhalten kann, wie ein Käse entstanden ist, welche
+              dem jeder festhalten kann, wie ein Käse entstanden ist, welche
               Rezepte begeistert haben und was man beim nächsten Mal vielleicht
               anders machen würde. Ein gemeinsames Tagebuch voller Inspiration,
               Austausch und echter Leidenschaft fürs Käsen.

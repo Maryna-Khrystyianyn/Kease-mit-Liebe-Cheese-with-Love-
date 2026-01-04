@@ -42,17 +42,17 @@ export default function EditBatchPage() {
   const [agingDays, setAgingDays] = useState(0);
   const [loading, setLoading] = useState(false);
   const [onTimeLine, setOnTimeLine] = useState(true);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   //=======================
   // ==Load batch==========
 
   useEffect(() => {
     async function fetchBatch() {
-      const res = await fetch(`/api/cheese-batches/${batchId}`);
+      const res = await fetch(`${baseUrl}/api/cheese-batches/${batchId}`);
       if (!res.ok) return;
 
       const batch = await res.json();
-      const resUser = await fetch("/api/me", { cache: "no-store" });
+      const resUser = await fetch(`${baseUrl}/api/me`, { cache: "no-store" });
       const data = await resUser.json();
       const user = data.user;
 
@@ -67,7 +67,7 @@ export default function EditBatchPage() {
       setOnTimeLine(batch.onTimeLine);
 
       if (batch.recipe_id) {
-        const recipeRes = await fetch(`/api/recipes/${batch.recipe_id}`);
+        const recipeRes = await fetch(`${baseUrl}/api/recipes/${batch.recipe_id}`);
         if (!recipeRes.ok) return;
         const recipeData = await recipeRes.json();
 
@@ -137,7 +137,7 @@ export default function EditBatchPage() {
       }
     }
 console.log("ON TIME LINE", onTimeLine)
-    const res = await fetch(`/api/cheese-batches/${batchId}`, {
+    const res = await fetch(`${baseUrl}/api/cheese-batches/${batchId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -166,7 +166,7 @@ console.log("ON TIME LINE", onTimeLine)
   async function handleDelete() {
     if (!confirm("Möchten Sie diese Käsecharge wirklich löschen?")) return;
 
-    const res = await fetch(`/api/cheese-batches/${batchId}`, {
+    const res = await fetch(`${baseUrl}/api/cheese-batches/${batchId}`, {
       method: "DELETE",
     });
 

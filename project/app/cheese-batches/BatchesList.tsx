@@ -12,14 +12,15 @@ interface BatchesListProps {
 export default function BatchesList({ nickName, activeId }: BatchesListProps) {
   const [batches, setBatches] = useState<Batch[]>([]);
   const [user, setUser] = useState<User | null>(null);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   useEffect(() => {
-    fetch("/api/me")
+    fetch(`${baseUrl}/api/me`)
       .then((res) => res.json())
       .then((data) => setUser(data.user))
       .catch((err) => console.error("Error loading user:", err));
 
-    fetch(`/api/cheese-batches/user/${nickName}`)
+    fetch(`${baseUrl}/api/cheese-batches/user/${nickName}`)
       .then((res) => res.json())
       .then((data) => setBatches(data))
       .catch((err) => console.error("Error loading recipes:", err));

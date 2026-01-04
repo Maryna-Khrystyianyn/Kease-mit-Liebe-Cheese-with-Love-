@@ -27,15 +27,16 @@ export default function AddRecipePage() {
     SelectedIngredient[]
   >([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
   // Завантаження інгредієнтів і категорій
   useEffect(() => {
-    fetch("/api/ingredients")
+    fetch(`${baseUrl}/api/ingredients`)
       .then((res) => res.json())
       .then((data: IngredientType[]) => setAllIngredients(data))
       .catch((err) => console.error("Error loading ingredients:", err));
 
-    fetch("/api/categories")
+    fetch(`${baseUrl}/api/categories`)
       .then((res) => res.json())
       .then((data: CategoryType[]) => setAllCategories(data))
       .catch((err) => console.error("Error loading categories:", err));
@@ -100,7 +101,7 @@ export default function AddRecipePage() {
     };
 
     try {
-      const res = await fetch("/api/recipes", {
+      const res = await fetch(`${baseUrl}/api/recipes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(recipeData),
