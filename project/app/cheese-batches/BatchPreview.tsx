@@ -87,7 +87,7 @@ export function BatchPreview({ batch }: BatchPreviewProps) {
               )}
 
               <Link
-                href={`/cheesebatches/${batch.id}`}
+                href={`/cheese-batches/${batch.id}`}
                 className="mt-2 text-yellow-400 hover:underline text-sm"
               >
                 {`> > > >`}
@@ -123,7 +123,7 @@ export function BatchPreview({ batch }: BatchPreviewProps) {
           )}
 
           <Link
-            href={`/cheesebatches/${batch.id}`}
+            href={`/cheese-batches/${batch.id}`}
             className="mt-2 text-yellow-400 hover:underline text-sm"
           >
             {`> > > >`}

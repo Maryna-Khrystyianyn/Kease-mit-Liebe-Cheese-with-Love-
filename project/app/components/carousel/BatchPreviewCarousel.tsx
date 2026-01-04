@@ -100,7 +100,7 @@ export function BatchPreviewCarousel({ batch }: BatchPreviewProps) {
               )}
 
               <Link
-                href={`/cheesebatches/${batch.id}`}
+                href={`/cheese-batches/${batch.id}`}
                 className="mt-2 text-yellow-400 hover:underline  font-bold"
               >
                 {`> > > >`}
@@ -136,7 +136,7 @@ export function BatchPreviewCarousel({ batch }: BatchPreviewProps) {
           )}
 
           <Link
-            href={`/cheesebatches/${batch.id}`}
+            href={`/cheese-batches/${batch.id}`}
             className="mt-2 text-yellow-400 hover:underline font-bold"
           >
             {`> > > >`}
