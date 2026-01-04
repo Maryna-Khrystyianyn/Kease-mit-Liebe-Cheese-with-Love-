@@ -3,22 +3,17 @@ import RecipeSidebar from "../RecipeSidebar";
 import MobileRecipeBar from "../MobileRecipeBar";
 import PageWrapper from "@/app/PageWraper";
 
-
 interface PageProps {
   params: { id: string };
 }
 
 export default async function RecipePage({ params }: PageProps) {
-  // const { id } = await params;
   const recipeId = Number(params.id);
 
-  const res = await fetch(
-    `/api/recipes/${recipeId}`,
-    {
-      cache: "no-store",
-      credentials: "include",
-    }
-  );
+  const res = await fetch(`/api/recipes/${recipeId}`, {
+    cache: "no-store",
+    credentials: "include",
+  });
 
   if (!res.ok) {
     return <p>Rezept nicht gefunden</p>;

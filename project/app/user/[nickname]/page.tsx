@@ -1,25 +1,20 @@
 import PageWrapper from "@/app/PageWraper";
 import UserCheese from "./UserCheese";
-import UserProfile from "./UserProfile"; // приклад клієнтського компоненту для відображення
-import { type users } from "@prisma/client";
+import UserProfile from "./UserProfile"; // клієнтський компонент
+import { prisma } from "@/lib/prisma"; // твій Prisma client
 import UserBatchesCarousel from "@/app/components/batsh/UserBatchesCarousel";
 
 interface Params {
-  params: Promise<{ nickname: string }>;
+  params: { nickname: string };
 }
 
 export default async function PublicUserPage({ params }: Params) {
-  const { nickname } = await params;
+  const { nickname } = params;
 
-  // Запит до нашого API роутера
-  const res = await fetch(
-    `/api/user/${nickname}`,
-    {
-      cache: "no-store", // завжди свіжі дані
-    }
-  );
-
-  const user: users | null = res.ok ? await res.json() : null;
+  // Прямий запит до бази через Prisma
+  const user = await prisma.users.findUnique({
+    where: { nick_name: nickname },
+  });
 
   if (!user) {
     return (
@@ -28,6 +23,7 @@ export default async function PublicUserPage({ params }: Params) {
       </div>
     );
   }
+
   return (
     <PageWrapper>
       <div className="mx-10">
