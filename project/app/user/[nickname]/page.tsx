@@ -1,17 +1,21 @@
 import PageWrapper from "@/app/PageWraper";
 import UserCheese from "./UserCheese";
-import UserProfile from "./UserProfile"; // клієнтський компонент
-import { prisma } from "@/lib/prisma"; // твій Prisma client
+import UserProfile from "./UserProfile"; 
+import { prisma } from "@/lib/prisma"; 
 import UserBatchesCarousel from "@/app/components/batsh/UserBatchesCarousel";
 
 interface Params {
-  params: { nickname: string };
+  params: Promise<{ nickname: string }>;
 }
 
 export default async function PublicUserPage({ params }: Params) {
-  const { nickname } = params;
-console.log("NICK NAME",nickname)
-  // Прямий запит до бази через Prisma
+  const { nickname } = await params; 
+  console.log("NICKNAME", nickname);
+
+  if (!nickname) {
+    return <p>Nickname not provided</p>;
+  }
+
   const user = await prisma.users.findUnique({
     where: { nick_name: nickname },
   });
