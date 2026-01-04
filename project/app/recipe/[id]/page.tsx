@@ -10,8 +10,9 @@ interface PageProps {
 export default async function RecipePage({ params }: PageProps) {
   const { id } = await params;
   const recipeId = Number(id);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  const res = await fetch(`/api/recipes/${recipeId}`, {
+  const res = await fetch(`${baseUrl}/api/recipes/${recipeId}`, {
     cache: "no-store",
     credentials: "include",
   });
