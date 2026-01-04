@@ -2,15 +2,15 @@ import RecipeItem from "./RecipeItem";
 import RecipeSidebar from "../RecipeSidebar";
 import MobileRecipeBar from "../MobileRecipeBar";
 import PageWrapper from "@/app/PageWraper";
-import RecipeBatchesCarousel from "@/app/components/batsh/RecipeBatchesCarousel";
+
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 export default async function RecipePage({ params }: PageProps) {
-  const { id } = await params;
-  const recipeId = Number(id);
+  // const { id } = await params;
+  const recipeId = Number(params.id);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/recipes/${recipeId}`,
