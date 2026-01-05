@@ -1,7 +1,7 @@
 # 🧀 Käse mit Liebe ❤️
 
-**Eine zweisprachige Plattform (Deutsch 🇩🇪 & Ukrainisch 🇺🇦) für Käsemacher und Käseliebhaber.**  
-Hier können Nutzer Zutaten für die Käseherstellung kaufen, ihre Käseproduktion dokumentieren und die Reifung ihrer Käse verfolgen.
+**Eine Plattform für Käser und Käseliebhaber.**  
+Hier können Nutzer  bewährte Rezepte entdecken, alle nötigen Materialien kaufen, eigenen Käse herstellen und sich mit anderen austauschen kann – ein Ort, um Erfahrungen zu teilen, Freundschaften zu knüpfen und Unterstützung zu finden.
 
 ---
 
@@ -12,6 +12,8 @@ Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetag
 ---
 
 ## ✅ Actueller Fortschritt
+
+[Trello](https://trello.com/invite/b/695b86ae7e00340881f103c7/ATTI09c7e3a0032cda64cb62f78e935769bcF12F0330/🧀-kase-mit-liebe-❤️)
 
 - Prisma wurde installiert und erfolgreich mit der Neon-Datenbank verbunden.
 
@@ -33,7 +35,7 @@ Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetag
 | Rolle | Beschreibung |
 |-------|---------------|
 | **Administrator** | Rezepte erstellen, Produkte hinzufügen, Benutzer verwalten, Zugriffsrechte vergeben |
-| **Käser** | Käsepartien anlegen & bearbeiten, Reifungsdiagramm anzeigen, persönliche Seite mit Käsegalerie |
+| **Käser** | Käsepartien(Käsechargen) anlegen & bearbeiten, Reifungsdiagramm anzeigen, persönliche Seite mit Käsegalerie |
 | **Registrierter Nutzer** | Produkte kaufen, Kommentare schreiben |
 | **Nicht registrierter Nutzer** | Rezepte & allgemeine Informationen ansehen |
 
@@ -46,7 +48,6 @@ Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetag
 - **📸 Persönliche Seiten:** Galerie hergestellter Käse für jeden Käsemacher  
 - **📍 Karte aller Käsemacher:** visuelle Übersicht über die Community  
 - **📚 Rezeptdatenbank:** Rezepte hinzufügen, durchsuchen & speichern  
-- **🌍 Zweisprachigkeit:** Deutsch & Ukrainisch
 
 
 ## 🛠️ Technologie-Stack
@@ -56,8 +57,13 @@ Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetag
 | [Next.js](https://nextjs.org/) | Frontend & Backend (Fullstack Framework) |
 | [TypeScript](https://www.typescriptlang.org/) | Typsicherheit im gesamten Projekt |
 | [PostgreSQL](https://www.postgresql.org/) | Relationale Datenbank |
+| [Prisma](https://www.prisma.io)|ORM für Datenbankzugriff|
 | [Tailwind CSS](https://tailwindcss.com/) | Styling & responsive Design |
-| [i18next](https://www.i18next.com/) | Mehrsprachigkeit (DE / UK) |
 | [Swiper.js](https://swiperjs.com/) | Bildergalerien & Slider |
-| [NextAuth.js](https://next-auth.js.org/) *(geplant)* | Authentifizierung & Rollenverwaltung |
+| [Framer Motion](https://www.framer.com/motion)|Animationen im UI|
+| [Quill / React‑Quill](https://quilljs.com)|Rich‑Text‑Editor|
+| [Cloudinary](https://github.com/colbyfayock/next-cloudinary)|Cloudinary‑Cloud‑Speicher für Bilder|
+| [Google-cloud](https://cloud.google.com/storage)|Cloud‑Speicher für Dateien & Bilder |
+| [Vis-timeline](https://visjs.github.io/vis-timeline)|Interaktive Zeitachsen & Datenvisualisierung
+
 
