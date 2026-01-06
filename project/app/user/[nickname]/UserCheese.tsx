@@ -20,7 +20,7 @@ export default function UserCheese({ nickname }: { nickname: string }) {
     load();
   }, [nickname]);
 
-  // Дані для таймлайну
+  // DATA FÜR TIMELINE
   const timelineBatches = batches
     .filter((b) => b.onTimeLine)
     .map((b) => ({
@@ -30,11 +30,11 @@ export default function UserCheese({ nickname }: { nickname: string }) {
       readyAt: b.readyAt ?? "",
     }));
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    
+
   return (
     <div>
 
-      {/* Таймлайн */}
+      {/* TIMELINE*/}
       {timelineBatches.length > 0 && (
         <div>
           <h2 className="font-bold mb-3">Käsereifungsplan</h2>
@@ -46,7 +46,7 @@ export default function UserCheese({ nickname }: { nickname: string }) {
                 body: JSON.stringify({ onTimeLine: false }),
               });
 
-              // Оновлюємо локальний стан
+              
               setBatches((prev) =>
                 prev.map((b) =>
                   b.id === id ? { ...b, onTimeLine: false } : b

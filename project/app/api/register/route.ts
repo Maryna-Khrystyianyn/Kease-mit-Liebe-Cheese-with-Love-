@@ -30,7 +30,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Перевіряємо, чи такий email вже існує
     const existingUser = await prisma.users.findUnique({ where: { email } });
     if (existingUser) {
       return NextResponse.json(
@@ -39,10 +38,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // Хешуємо пароль
+ 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Створюємо користувача
     const newUser:users = await prisma.users.create({
       data: {
         nick_name,
@@ -60,10 +58,10 @@ export async function POST(req: Request) {
       },
     });
 
-    // Створюємо JWT токен для автоматичного логіну
+  
     const token = generateToken(newUser);
 
-    // Встановлюємо HttpOnly cookie
+  
     const response = NextResponse.json(
       { message: "Benutzer erfolgreich erstellt!", user: { email: newUser.email, username: newUser.username , avatar:newUser.avatar } },
       { status: 200 }
@@ -73,7 +71,7 @@ export async function POST(req: Request) {
       value: token,
       httpOnly: true,
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 днів
+      maxAge: 60 * 60 * 24 * 7, 
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
     });

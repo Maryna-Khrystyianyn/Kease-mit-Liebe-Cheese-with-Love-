@@ -11,7 +11,7 @@ const LanguageSwitcher = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   
 
-  // закривати меню при кліку поза ним
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -39,7 +39,7 @@ const LanguageSwitcher = () => {
         <span>{ArrowDown} </span>
       </button>
 
-      {/* select language menu*/}
+     
       {isOpen && (
         <div className="absolute mt-2 w-30 opacity-90 -right-10 border overflow-hidden border-(--gray) rounded-lg shadow-md z-10">
           <button

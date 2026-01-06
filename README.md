@@ -1,7 +1,9 @@
 # 🧀 Käse mit Liebe ❤️
 
 **Eine Plattform für Käser und Käseliebhaber.**  
-Hier können Nutzer  bewährte Rezepte entdecken, alle nötigen Materialien kaufen, eigenen Käse herstellen und sich mit anderen austauschen kann – ein Ort, um Erfahrungen zu teilen, Freundschaften zu knüpfen und Unterstützung zu finden.
+„Käse mit Liebe“ ist ein digitaler Treffpunkt für Menschen, die Käse lieben, ihn zu Hause herstellen oder es einfach ausprobieren möchten.
+Hier finden Nutzer geprüfte Rezepte, alle notwendigen Zutaten außer Milch, Unterstützung während des Herstellungsprozesses und eine Community aus Gleichgesinnten.
+Eigene Erfahrungen können dokumentiert, geteilt und über eine Zeitleiste verfolgt werden, sodass man jederzeit sieht, welcher Käse wann reif ist.
 
 ---
 

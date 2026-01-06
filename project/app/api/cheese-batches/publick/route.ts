@@ -54,7 +54,7 @@ export async function GET(req: Request) {
     agingDays: b.recipes.aging ?? 0,
     recipeCategory: b.recipes.recipes_categories.name,
 
-    // Масив типів молока + кількість
+    
     milkArray: b.milk_in_batch.map((m) => ({
       type: m.ingredients.name,
       amount: m.amount,

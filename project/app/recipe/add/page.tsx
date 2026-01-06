@@ -28,8 +28,8 @@ export default function AddRecipePage() {
   >([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  
-  // Завантаження інгредієнтів і категорій
+
+ 
   useEffect(() => {
     fetch(`${baseUrl}/api/ingredients`)
       .then((res) => res.json())
@@ -109,7 +109,6 @@ export default function AddRecipePage() {
 
       if (res.ok) {
         alert(isPublic ? "Rezept veröffentlicht!" : "Rezept gespeichert!");
-        // Очищення форми
         setTitle("");
         setSteps("");
         setAging("");

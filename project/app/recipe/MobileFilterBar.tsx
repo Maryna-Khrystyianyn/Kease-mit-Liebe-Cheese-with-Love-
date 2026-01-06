@@ -31,7 +31,7 @@ export default function MobileFilterBar({
 
   return (
     <div className="md:hidden border-b border-(--olive) bg-(--bg) pt-4">
-      {/* Заголовок + кнопка */}
+      
       <div className="flex items-center justify-between px-6 py-2">
         <span className="font-bold text-[18px]">Filter</span>
         <button

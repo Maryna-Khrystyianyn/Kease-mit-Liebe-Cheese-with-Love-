@@ -6,7 +6,7 @@
     user-select: none;
   }
   
-  /* ховаємо стандартний чекбокс */
+ 
   .hiddenInput {
     display: none;
   }
@@ -21,13 +21,13 @@
     transition: all 0.2s ease;
   }
   
-  /* Активний стан */
+  
   .hiddenInput:checked + .checkmark {
     background-color: #28a745;
     border-color: #28a745;
   }
   
-  /* Біла галочка */
+  
   .hiddenInput:checked + .checkmark::after {
     content: "";
     position: absolute;

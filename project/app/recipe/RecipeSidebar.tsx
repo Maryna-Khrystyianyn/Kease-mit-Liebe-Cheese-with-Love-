@@ -20,7 +20,7 @@ export default function RecipeSidebar({ recipeId }: SidebarProps) {
           ${isOpen ? "w-72 p-4 " : "w-12 p-1 flex justify-center items-start border-r "}
         `}
       >
-        {/* Toggle кнопка */}
+        
         <button
           className={`
             absolute top-6  left-full
@@ -33,7 +33,7 @@ export default function RecipeSidebar({ recipeId }: SidebarProps) {
          {isOpen ? <ArrowBigLeft size={20} /> : <LayoutIcon size={30} />}
         </button>
 
-        {/* Вміст списку */}
+    
         <div
           className={`
             transition-opacity duration-500 ease-in-out

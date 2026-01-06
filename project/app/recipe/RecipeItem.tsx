@@ -36,10 +36,10 @@ export default function RecipeItem({ recipe }: RecipeItemProps) {
         />
       )}
 
-      {/* Назва рецепту */}
+      
       <h2 className="text-xl font-bold">{recipe.name}</h2>
 
-      {/* Категорія та тривалість визрівання */}
+      
       <div className="text-sm text-(--text_gray) flex justify-between gap-1 flex-col md:flex-row">
         <span > <span className="font-semibold">Kategorie:</span> {recipe.recipes_categories?.name}</span>
         {recipe.aging && <span> <span className="font-semibold">Reifezeit:</span> {recipe.aging} Tage</span>}
@@ -55,7 +55,7 @@ export default function RecipeItem({ recipe }: RecipeItemProps) {
         </div>
       
 
-      {/* Позначка для чернетки */}
+      
       {!recipe.ispublic && (
         <div className="mt-2 inline-block px-2 py-1 text-xs font-bold bg-(--text) text-(--gray) rounded">
           ENTWURF

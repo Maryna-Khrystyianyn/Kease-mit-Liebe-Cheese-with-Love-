@@ -47,7 +47,7 @@ export default function EditRecipeForm({ recipe}: EditRecipeFormProps) {
   const [previewUrl, setPreviewUrl] = useState(recipe.image || "/cheese.png");
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  // Завантаження інгредієнтів і категорій
+
   useEffect(() => {
     fetch(`${baseUrl}/api/ingredients`)
       .then((res) => res.json())

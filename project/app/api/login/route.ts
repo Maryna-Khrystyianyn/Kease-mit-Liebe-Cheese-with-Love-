@@ -35,10 +35,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // Генеруємо JWT токен
+ 
     const token = generateToken(user);
 
-    // Встановлюємо токен в HttpOnly cookie
+   
     const response = NextResponse.json(
       { message: "Login erfolgreich!", user: { email: user.email, username: user.username } },
       { status: 200 }

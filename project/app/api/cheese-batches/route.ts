@@ -19,12 +19,7 @@ export async function POST(req: Request) {
 
     
 
-    if (!["basic", "admin"].includes(user.user_status)) {
-      return NextResponse.json(
-        { message: "Keine Berechtigung" },
-        { status: 403 }
-      );
-    }
+  
 
     const body = await req.json();
     const {

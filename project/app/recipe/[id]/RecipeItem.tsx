@@ -35,7 +35,11 @@ interface RecipeProps {
 export default function RecipeItem({ recipe }: RecipeProps) {
   const [user, setUser] = useState<User | null>(null);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  
+
+  function cleanHtml(html: string) {
+    return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
+  }
+
   useEffect(() => {
     fetch(`${baseUrl}/api/me`)
       .then((res) => res.json())
@@ -111,7 +115,7 @@ export default function RecipeItem({ recipe }: RecipeProps) {
       {recipe.body && (
         <div
           className="prose custom-list"
-          dangerouslySetInnerHTML={{ __html: recipe.body }}
+          dangerouslySetInnerHTML={{ __html: cleanHtml(recipe.body) }}
         />
       )}
 

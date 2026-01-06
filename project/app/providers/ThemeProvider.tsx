@@ -16,11 +16,10 @@ export function ThemeProvider({ children }: Props) {
   }, []);
 
   if (!mounted) {
-    // Сервер рендерить нейтральне дерево без theme-dependent атрибутів
+    
     return <>{children}</>;
   }
 
-  // Клієнт вже може безпечно додавати data-theme
   return (
     <NextThemesProvider attribute="data-theme" defaultTheme="system" enableSystem>
       {children}

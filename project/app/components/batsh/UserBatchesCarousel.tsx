@@ -33,7 +33,7 @@ export default function UserBatchesCarousel({ nickname }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  
+
   useEffect(() => {
     if (!nickname) return;
 
@@ -54,10 +54,9 @@ export default function UserBatchesCarousel({ nickname }: Props) {
   }, []);
 
   const filteredItems = items.filter((batch:BatchImage) => {
-    // Якщо це власник — показуємо всі фото
+    
     if (user && user.nick_name === nickname) return true;
   
-    // Інакше показуємо тільки публічні
     return batch.ispublic === true;
   });
 
