@@ -3,6 +3,7 @@ import UserCheese from "./UserCheese";
 import UserProfile from "./UserProfile";
 import { prisma } from "@/lib/prisma";
 import UserBatchesCarousel from "@/app/components/batsh/UserBatchesCarousel";
+import { getUserFromToken, UserFromToken } from "@/app/utils/auth";
 
 interface Params {
   params: Promise<{ nickname: string }>;
@@ -27,11 +28,14 @@ export default async function PublicUserPage({ params }: Params) {
     );
   }
 
+  const curentUser= await getUserFromToken()
+
+
   return (
     <PageWrapper>
-      <div className="mx-10 grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-5 ">
-        <div className="max-w-3xl mx-auto p-6 lg:col-span-1">
-          <UserProfile user={user} />
+      <div className="sm:mx-10 mx-3 grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-5 ">
+        <div className="max-w-3xl mx-auto sm:p-6 py-6 lg:col-span-1">
+          <UserProfile user={user} curentUserNick={curentUser?.nick_name} />
         </div>
         <div className="lg:col-span-2 2xl:col-span-3">
           <UserBatchesCarousel nickname={user.nick_name} />
