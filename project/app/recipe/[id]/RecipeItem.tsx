@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { User } from "@/types/global";
 import Link from "next/link";
 import RecipeBatchesCarousel from "@/app/components/batsh/RecipeBatchesCarousel";
+import { Heart } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface RecipeProps {
   recipe: {
@@ -35,6 +37,8 @@ interface RecipeProps {
 export default function RecipeItem({ recipe }: RecipeProps) {
   const [user, setUser] = useState<User | null>(null);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const [isFavorite, setIsFavorite] = useState(false);
+  const router = useRouter();
 
   function cleanHtml(html: string) {
     return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
@@ -45,6 +49,15 @@ export default function RecipeItem({ recipe }: RecipeProps) {
       .then((res) => res.json())
       .then((data) => setUser(data.user));
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+
+    fetch(`${baseUrl}/api/favorite-recipes/check?recipeId=${recipe.id}`)
+      .then((res) => res.json())
+      .then((data) => setIsFavorite(data.favorite));
+  }, [user, recipe.id]);
+
   const isAdmin = user?.user_status === "admin";
 
   if (!recipe.ispublic && !isAdmin) {
@@ -54,6 +67,25 @@ export default function RecipeItem({ recipe }: RecipeProps) {
       </p>
     );
   }
+
+  const toggleFavorite = async () => {
+    if (!user) {
+      router.push("/register");
+      return;
+    }
+
+    const res = await fetch(`${baseUrl}/api/favorite-recipes`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ recipeId: recipe.id }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      setIsFavorite(data.favorite);
+    }
+  };
+
   return (
     <article className="bg-(--bg) rounded main-shadow p-10">
       {/*  DRAFT LABEL */}
@@ -63,7 +95,21 @@ export default function RecipeItem({ recipe }: RecipeProps) {
         </div>
       )}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold mb-4">{recipe.name}</h1>
+        <div className="flex  gap-4">
+         
+
+          <button onClick={toggleFavorite} aria-label="favorite" className="pb-4">
+            <Heart
+              size={28}
+              className={`transition ${
+                isFavorite
+                  ? "fill-(--orange) text-(--orange)"
+                  : "text-gray-400 hover:text-(--orange)"
+              }`}
+            />
+          </button>
+          <h1 className="text-2xl font-bold mb-4">{recipe.name}</h1>
+        </div>
         <Link
           href={{
             pathname: "/cheese-batches/add",
