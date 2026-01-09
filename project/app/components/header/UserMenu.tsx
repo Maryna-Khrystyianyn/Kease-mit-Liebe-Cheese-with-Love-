@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { BookLock, ChevronDown, CookingPot, Heart, User, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function UserMenu({
@@ -18,8 +18,7 @@ export default function UserMenu({
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  
-  // Закриваємо меню при кліку поза ним
+
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -32,7 +31,10 @@ export default function UserMenu({
 
   async function handleLogout() {
     console.log("TRAY LogAut");
-    await fetch(`${baseUrl}/api/logout`, { method: "POST", credentials: "include" });
+    await fetch(`${baseUrl}/api/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
     window.location.href = "/";
   }
   return (
@@ -53,12 +55,56 @@ export default function UserMenu({
       </button>
 
       {open && (
-        <button
-          onClick={handleLogout}
-          className="absolute right-0 top-8 bg-gray-100  w-32 text-black"
-        >
-          <div className="block px-4 py-2 link-underline ">Logout</div>
-        </button>
+        <div className="absolute right-0 top-8 bg-gray-100  w-70 p-5 opacity-95 text-black flex flex-col gap-2">
+          <button
+            onClick={() => setOpen(false)}
+            className="absolute top-2 right-2 text-black opacity-60 hover:opacity-100"
+          >
+            <X size={20} />
+          </button>
+
+          {nick === "admin" && (
+            <Link
+              href={`/admin`}
+              className="flex gap-3 link-underline w-[155px] items-end"
+            >
+              <BookLock size={25} className="text-(--orange) pb-1" />
+              Admin Panel
+            </Link>
+          )}
+
+          <Link
+            href={`/user/${nick}`}
+            className="flex gap-3 link-underline w-[155px] items-end"
+          >
+            <User size={25} className="text-(--orange) pb-1" />
+            Profile
+          </Link>
+          <Link
+            href={`/user/${nick}/favorite`}
+            className="flex gap-3 link-underline w-[155px] items-end"
+          >
+            <Heart size={25} className="text-(--orange) pb-1" />
+            Lieblingsrezepte
+          </Link>
+          <Link
+            href={`/user/${nick}/batches`}
+            className="flex gap-3 link-underline w-[185px] items-end"
+          >
+            <CookingPot size={25} className="text-(--orange) pb-1" />
+            Meine Käsechargen
+          </Link>
+
+          <Link
+            href={"/cheese-batches/add"}
+            className="link-underline w-[220px] items-end text-(--olive_bright)"
+          >
+            Neue Käsecharge herstellen
+          </Link>
+          <button onClick={handleLogout} className="">
+            <div className="block ml-40 pt-2 link-underline ">Logout</div>
+          </button>
+        </div>
       )}
     </div>
   );

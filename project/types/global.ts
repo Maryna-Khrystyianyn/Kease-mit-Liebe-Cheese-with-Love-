@@ -33,3 +33,20 @@ export type Batch = {
     avatar: string | null;
   };
 };
+
+export type ProductForClient = {
+  id: number;
+  name: string;
+  category_id: number;
+  description: string | null;
+  price: number; // уже number
+  avaible: boolean | null;
+  image_url: string | null;
+  image_id: string | null;
+  isPublic: boolean;
+  products_categories: {
+    id: number;
+    name: string;
+    body: string | null;
+  };
+};

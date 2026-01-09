@@ -136,7 +136,6 @@ export default function EditBatchPage() {
         return;
       }
     }
-console.log("ON TIME LINE", onTimeLine)
     const res = await fetch(`${baseUrl}/api/cheese-batches/${batchId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },

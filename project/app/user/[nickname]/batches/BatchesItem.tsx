@@ -18,6 +18,11 @@ export default function BatchesItem({ batch }: { batch: Batch }) {
   const agingProgress = getAgingProgress(batch.createdAt, batch.agingDays);
   const isReady = agingProgress >= 100;
 
+  const daysLeft = Math.max(
+    0,
+    Math.ceil(batch.agingDays - (agingProgress / 100) * batch.agingDays)
+  );
+
   return (
     <motion.article
       layout
@@ -44,8 +49,6 @@ export default function BatchesItem({ batch }: { batch: Batch }) {
           <h2 className="text-xl font-bold">{batch.recipeName}</h2>
           <span className="tect-[18px]">{batch.createdAt.slice(0, 10)}</span>
         </div>
-
-        
       </div>
 
       {/* AGING PROGRESS */}
@@ -54,7 +57,6 @@ export default function BatchesItem({ batch }: { batch: Batch }) {
           <span className="text-(--text_gray)">Reifung</span>
           <span className="font-semibold">{Math.round(agingProgress)}%</span>
         </div>
-
         <div className="w-full h-3 bg-gray-200 rounded overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
@@ -65,16 +67,18 @@ export default function BatchesItem({ batch }: { batch: Batch }) {
             }`}
           />
         </div>
-
         {isReady && (
           <p className="mt-1 text-sm font-semibold text-green-600">
             ✔ Käse ist gereift
           </p>
+        )}{" "}
+        {!isReady && (
+          <p className="text-xs text-(--text_gray) mt-2">Noch ca. {daysLeft} Tage</p>
         )}
       </div>
 
       {/* ICONS LIST */}
-     {/*  <div className=" grid grid-cols-2  gap-x-1 gap-y-3 text-sm md:mb-0 mb-5">
+      {/*  <div className=" grid grid-cols-2  gap-x-1 gap-y-3 text-sm md:mb-0 mb-5">
         <div className="flex">
           <Milk size={20} />{" "}
           <div>

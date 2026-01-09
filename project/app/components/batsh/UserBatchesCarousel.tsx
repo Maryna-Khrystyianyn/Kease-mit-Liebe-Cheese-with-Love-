@@ -53,10 +53,9 @@ export default function UserBatchesCarousel({ nickname }: Props) {
       .then((data) => setUser(data.user));
   }, []);
 
-  const filteredItems = items.filter((batch:BatchImage) => {
-    
+  const filteredItems = items.filter((batch: BatchImage) => {
     if (user && user.nick_name === nickname) return true;
-  
+
     return batch.ispublic === true;
   });
 
@@ -98,7 +97,10 @@ export default function UserBatchesCarousel({ nickname }: Props) {
       >
         {filteredItems.map((batch) => (
           <SwiperSlide key={batch.id}>
-            <Link href={`/cheese-batches/${batch.id}`} className="block group pb-10">
+            <Link
+              href={batch.ispublic?`/cheese-batches/${batch.id}`:`/cheese-batches/edit/${batch.id}`}
+              className="block group pb-10"
+            >
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-gray-100">
                 <img
                   src={batch.foto}

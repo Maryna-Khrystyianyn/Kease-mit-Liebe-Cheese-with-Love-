@@ -115,7 +115,7 @@ export function BatchItem({ batch }: BatchProps) {
           <img
             src={batch.user.avatar}
             alt={batch.user.username}
-            className="w-10 h-10 rounded-full object-cover border-2 border-(--orange)"
+            className="w-10 h-10 rounded-full object-cover orange-shadow"
           />
         )}
       </div>

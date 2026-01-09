@@ -29,19 +29,22 @@ model batch_notes {
 }
 
 model cart {
-  user_nick     String     @id @db.VarChar
-  cart_items_id Int
-  total_price   Decimal?   @db.Decimal(10, 2)
-  cart_items    cart_items @relation(fields: [cart_items_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users         users      @relation(fields: [user_nick], references: [nick_name], onDelete: NoAction, onUpdate: NoAction)
+  user_nick   String      @id @db.VarChar
+  total_price Decimal?   @db.Decimal(10,2)
+  cart_items  cart_items[]
+  users       users       @relation(fields: [user_nick], references: [nick_name])
 }
 
 model cart_items {
   id         Int      @id @default(autoincrement())
+  cart_nick  String
   product_id Int
   quantity   Int
-  cart       cart[]
-  products   products @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  cart       cart     @relation(fields: [cart_nick], references: [user_nick])
+  products   products @relation(fields: [product_id], references: [id])
+
+  @@unique([cart_nick, product_id]) 
 }
 
 model cheese_batches {
@@ -92,28 +95,33 @@ model milk_in_batch {
   @@id([batch_id, milk_id])
 }
 
-model order_items {
-  id          Int      @id @default(autoincrement())
-  product_id  Int
-  quantity    Int
-  total_price Decimal  @db.Decimal(10, 2)
-  products    products @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  orders      orders[]
+model orders {
+  id          Int          @id @default(autoincrement())
+  user_nick   String
+  date        DateTime     @default(now())
+  total_price Decimal      @db.Decimal(10,2)
+  discount    Decimal?     @db.Decimal(10,2)
+  comment     String?      @db.VarChar(500)
+  shipp_address String
+  status      order_status @default(pending)
+
+  order_items order_items[]
+  users       users        @relation(fields: [user_nick], references: [nick_name])
 }
 
-model orders {
-  id             Int          @id @default(autoincrement())
-  user_nick      String       @db.VarChar
-  order_items_id Int
-  date           DateTime     @default(now()) @db.Timestamp(6)
-  total_price    Decimal      @db.Decimal(10, 2)
-  discount       Decimal?     @db.Decimal(10, 2)
-  comment        String?      @db.VarChar(500)
-  shipp_address  String
-  status         order_status @default(pending)
-  order_items    order_items  @relation(fields: [order_items_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users          users        @relation(fields: [user_nick], references: [nick_name], onDelete: NoAction, onUpdate: NoAction)
+model order_items {
+  id         Int      @id @default(autoincrement())
+  order_id   Int
+  product_id Int
+  quantity   Int
+  total_price Decimal  @db.Decimal(10,2)
+
+  orders    orders   @relation(fields: [order_id], references: [id])
+  products  products @relation(fields: [product_id], references: [id])
+
+  @@unique([order_id, product_id]) 
 }
+
 
 model products {
   id                  Int                 @id @default(autoincrement())
@@ -122,6 +130,9 @@ model products {
   description         String?
   price               Decimal             @db.Decimal(10, 2)
   avaible             Boolean?
+  image_url           String? 
+  image_id            String?  
+  isPublic            Boolean  @default(false)
   cart_items          cart_items[]
   order_items         order_items[]
   products_categories products_categories @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)

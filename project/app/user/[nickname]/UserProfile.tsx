@@ -45,6 +45,8 @@ export default function UserProfile({ user, curentUserNick }: Props) {
         </div>
       </div>
       <div>
+
+        {/* only for OUNER */}
         {curentUserNick === user.nick_name && (
           <div className="space-y-3 mt-10">
             <Link
@@ -59,6 +61,8 @@ export default function UserProfile({ user, curentUserNick }: Props) {
             >
                <CookingPot size={25} className="text-(--orange) pb-1" />Meine Käsechargen
             </Link>
+
+            <Link href={"/cheese-batches/add"} className="link-underline w-[185px] items-end text-(--olive_bright)">Neue Käsecharge herstellen</Link>
           </div>
         )}
       </div>
