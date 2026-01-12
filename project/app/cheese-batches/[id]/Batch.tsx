@@ -1,4 +1,5 @@
 "use client";
+import { cleanHtml } from "@/app/utils/cleanHTML";
 import type { Batch, User } from "@/types/global";
 import { Milk, Scale, CalendarDays, CalendarCheck } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -12,9 +13,7 @@ export function BatchItem({ batch }: BatchProps) {
   const [user, setUser] = useState<User | null>(null);
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-  function cleanHtml(html: string) {
-    return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
-  }
+ 
 
   useEffect(() => {
     fetch(`${baseUrl}/api/me`)

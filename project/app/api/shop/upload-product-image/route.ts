@@ -14,8 +14,19 @@ const bucket = storage.bucket(process.env.GCS_BUCKET_PRODUCTS!);
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
+    const oldImageId = formData.get("oldImageId") as string | null;
 
-    // Перевірка на файл
+    // if oldImageId ->delete from bucket
+    if (oldImageId) {
+      const oldFile = bucket.file(oldImageId);
+      try {
+        await oldFile.delete();
+        console.log(`Deleted old image: ${oldImageId}`);
+      } catch (err) {
+        console.warn("Old image not found or cannot delete:", err);
+      }
+    }
+
     const fileData = formData.get("file");
     if (!fileData || !(fileData instanceof Blob)) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
@@ -29,11 +40,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Конвертація файлу в буфер
+    // in Buffer
     const arrayBuffer = await fileData.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Генерація імені файлу
+    // Generation Name
     const timestamp = Date.now();
     const fileName = `${timestamp}_${
       fileData instanceof File
@@ -43,16 +54,16 @@ export async function POST(req: NextRequest) {
 
     const blob = bucket.file(fileName);
 
-    // Завантаження файлу в bucket
+    // upload in bucket
     await blob.save(buffer, {
       resumable: false,
       contentType: fileData.type || "application/octet-stream",
     });
 
-    // Генеруємо публічний URL (якщо bucket публічний, працюватиме)
+    // publick URL
     const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
 
-    // Повертаємо URL і ID (ID = fileName, можна використати для видалення)
+   
     return NextResponse.json({ url: publicUrl, id: fileName });
   } catch (err: unknown) {
     let message = "Unknown error";

@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,7 +26,7 @@ export default function RecipeCarousel() {
   return (
     <>
       <Swiper
-        slidesPerView={1}
+        slidesPerView={1.2}
         spaceBetween={10}
         pagination={{
           clickable: true,

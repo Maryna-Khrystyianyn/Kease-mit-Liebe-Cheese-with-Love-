@@ -1,55 +1,53 @@
 "use client";
 
 import { ProductForClient } from "@/types/global";
-
-
+import Link from "next/link";
 
 type ProductCardProps = {
-    product:ProductForClient;
-    isAdmin: boolean;
-  };
-  
-  export default function ProductCard({ product, isAdmin }: ProductCardProps) {
-    return (
-      <div className="border rounded-lg shadow-sm bg-white relative">
+  product: ProductForClient;
+  isAdmin: boolean;
+};
+
+export default function ProductCard({ product, isAdmin }: ProductCardProps) {
+  return (
+    <div className="bg-(--bg) rounded main-shadow p-10 flex  flex-col justify-between recipe-shadow ">
+      {/* INFO AND IMG */}
+      <Link href={`/shop/products/${product.id}`}>
         {!product.isPublic && isAdmin && (
-          <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded">
-            Чернетка
+          <span className=" mb-4 inline-block px-3 py-1 text-sm font-bold bg-black text-white rounded">
+            Entwurf
           </span>
         )}
-  
+        <h3 className="font-semibold text-lg mb-5">{product.name}</h3>
         <img
           src={product.image_url || "/product.png"}
           alt={product.name}
-          className="w-full h-48 object-cover rounded-t-lg"
+          className="w-full max-h-96 xl:max-h-130 object-cover rounded mb-4"
         />
-  
+
         <div className="p-4">
-          <h3 className="font-semibold text-lg">{product.name}</h3>
-  
           <p className="text-sm text-gray-500 mb-2">
             {product.products_categories?.name}
           </p>
-  
-          <p className="font-bold text-lg mb-3">
-            {product.price.toFixed(2)} €
-          </p>
-  
-          {isAdmin ? (
-            <div className="flex gap-2">
-              <button className="px-3 py-1 text-sm bg-blue-600 text-white rounded">
-                Bearbeiten
-              </button>
-              <button className="px-3 py-1 text-sm bg-red-600 text-white rounded">
-                Löschen
-              </button>
-            </div>
-          ) : (
-            <button className="w-full px-4 py-2 bg-olive text-white rounded">
-              In den Warenkorb
-            </button>
-          )}
+
+          <p className="font-bold text-lg mb-3">{product.price.toFixed(2)} €</p>
         </div>
+      </Link>
+      {/* BUTTONS */}
+      <div>
+        {isAdmin ? (
+          <Link
+            href={`/shop/products/${product.id}/edit`}
+            className="px-4 py-2 bg-(--olive_bright) text-white rounded font-bold hover:bg-(--orange)"
+          >
+            Bearbeiten
+          </Link>
+        ) : (
+          <button className="px-4 py-2 bg-(--olive_bright) text-white rounded font-bold hover:bg-(--orange)">
+            In den Warenkorb
+          </button>
+        )}
       </div>
-    );
-  }
+    </div>
+  );
+}

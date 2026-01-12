@@ -5,6 +5,7 @@ import Link from "next/link";
 import RecipeBatchesCarousel from "@/app/components/batsh/RecipeBatchesCarousel";
 import { Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { cleanHtml } from "@/app/utils/cleanHTML";
 
 interface RecipeProps {
   recipe: {
@@ -40,9 +41,7 @@ export default function RecipeItem({ recipe }: RecipeProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const router = useRouter();
 
-  function cleanHtml(html: string) {
-    return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
-  }
+
 
   useEffect(() => {
     fetch(`${baseUrl}/api/me`)

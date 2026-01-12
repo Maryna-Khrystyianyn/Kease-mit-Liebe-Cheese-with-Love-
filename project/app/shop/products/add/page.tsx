@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { products_categories as CategoryType } from "@prisma/client";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 
 export default function AddProductPage() {
   const [name, setName] = useState("");
@@ -109,12 +111,13 @@ export default function AddProductPage() {
         ))}
       </select>
 
-      <textarea
-        rows={4}
-        placeholder="Beschreibung"
+
+      <h4 className="font-semibold mb-2">Beschreibung</h4>
+       <ReactQuill
+        theme="snow"
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        className="w-full p-2 border border-(--olive) mb-4 rounded"
+        onChange={setDescription}
+        className="mb-4 my-editor"
       />
 
       <input

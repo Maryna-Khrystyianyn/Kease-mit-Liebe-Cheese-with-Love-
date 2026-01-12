@@ -1,16 +1,13 @@
 import type { Batch } from "@/types/global";
 import { Milk, Scale, CalendarDays, CalendarCheck } from "lucide-react";
 import Link from "next/link";
+import { cleanHtml } from "../utils/cleanHTML";
 
 interface BatchPreviewProps {
   batch: Batch;
 }
 
 export function BatchPreview({ batch }: BatchPreviewProps) {
-
-  function cleanHtml(html: string) {
-    return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
-  }
 
   return (
     <div className="bg-(--gray) ">

@@ -99,7 +99,6 @@ export async function DELETE(
     await requireUserStatus("admin");
     const { id } = await params;
     const recipeId = Number(id);
-    console.log("id for DELETE", recipeId);
 
     await prisma.recipe_ingredients.deleteMany({
       where: { recipe_id: recipeId },

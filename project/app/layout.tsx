@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./providers/ThemeProvider";
 import Header from "./components/header/Header";
 import "../lib/i18n";
+import ScrollToTop from "./components/ScrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en" >
       <body>
+      <ScrollToTop />
+
         <ThemeProvider>
           <Header />
           <main className="mt-12 md:mt-25 sm:mt-20"> 

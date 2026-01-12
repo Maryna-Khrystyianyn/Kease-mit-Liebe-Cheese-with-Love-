@@ -1,3 +1,4 @@
+import { cleanHtml } from "@/app/utils/cleanHTML";
 import type { Batch } from "@/types/global";
 import { Milk, Scale, CalendarDays, CalendarCheck } from "lucide-react";
 import Link from "next/link";
@@ -7,9 +8,7 @@ interface BatchPreviewProps {
 }
 
 export function BatchPreviewCarousel({ batch }: BatchPreviewProps) {
-  function cleanHtml(html: string) {
-    return html.replace(/&nbsp;/g, " ").replace(/<p><br><\/p>/g, "");
-  }
+ 
 
   return (
     <div className="bg-(--gray) ">

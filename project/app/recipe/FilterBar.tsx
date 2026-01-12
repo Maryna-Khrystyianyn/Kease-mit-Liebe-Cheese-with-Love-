@@ -19,8 +19,7 @@ export default function FilterBar({
   setFilters,
   onApply,
 }: FilterBarProps) {
-  const resetFilters = () =>
-    setFilters({ category: "", milk: "", aging: "" });
+  const resetFilters = () => setFilters({ category: "", milk: "", aging: "" });
 
   return (
     <aside className="w-full md:w-64 space-y-6 p-4  rounded-lg bg-bg my-check ">
@@ -34,9 +33,7 @@ export default function FilterBar({
           <input
             type="checkbox"
             checked={filters.category === ""}
-            onChange={() =>
-              setFilters({ ...filters, category: "" })
-            }
+            onChange={() => setFilters({ ...filters, category: "" })}
           />
           Alle
         </label>
@@ -46,9 +43,7 @@ export default function FilterBar({
             <input
               type="checkbox"
               checked={filters.category === c}
-              onChange={() =>
-                setFilters({ ...filters, category: c })
-              }
+              onChange={() => setFilters({ ...filters, category: c })}
             />
             {c}
           </label>
@@ -63,9 +58,7 @@ export default function FilterBar({
           <input
             type="checkbox"
             checked={filters.milk === ""}
-            onChange={() =>
-              setFilters({ ...filters, milk: "" })
-            }
+            onChange={() => setFilters({ ...filters, milk: "" })}
           />
           Alle
         </label>
@@ -74,9 +67,7 @@ export default function FilterBar({
           <input
             type="checkbox"
             checked={filters.milk === "cow"}
-            onChange={() =>
-              setFilters({ ...filters, milk: "cow" })
-            }
+            onChange={() => setFilters({ ...filters, milk: "cow" })}
           />
           Kuhmilch
         </label>
@@ -85,9 +76,7 @@ export default function FilterBar({
           <input
             type="checkbox"
             checked={filters.milk === "goat"}
-            onChange={() =>
-              setFilters({ ...filters, milk: "goat" })
-            }
+            onChange={() => setFilters({ ...filters, milk: "goat" })}
           />
           Ziegenmilch
         </label>
@@ -101,9 +90,7 @@ export default function FilterBar({
           <input
             type="checkbox"
             checked={filters.aging === ""}
-            onChange={() =>
-              setFilters({ ...filters, aging: "" })
-            }
+            onChange={() => setFilters({ ...filters, aging: "" })}
           />
           Alle
         </label>
@@ -118,19 +105,12 @@ export default function FilterBar({
             <input
               type="checkbox"
               checked={filters.aging === v}
-              onChange={() =>
-                setFilters({ ...filters, aging: v })
-              }
+              onChange={() => setFilters({ ...filters, aging: v })}
             />
             {l}
           </label>
         ))}
       </div>
-      
-      
-
-      
-      
     </aside>
   );
 }

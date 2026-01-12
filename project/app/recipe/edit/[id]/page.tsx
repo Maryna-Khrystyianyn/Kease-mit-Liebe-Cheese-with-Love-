@@ -12,7 +12,7 @@ export default async function EditRecipePage({ params }: PageProps) {
 
 
   const res = await fetch(`${baseUrl}/api/recipes/${recipeId}`, {
-    cache: "no-store", // завжди свіжі дані
+    cache: "no-store", 
   });
 
   if (!res.ok) {
