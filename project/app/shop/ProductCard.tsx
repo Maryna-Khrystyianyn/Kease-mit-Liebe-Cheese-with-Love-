@@ -2,6 +2,8 @@
 
 import { ProductForClient } from "@/types/global";
 import Link from "next/link";
+import { useCart } from "@/app/context/CartContext";
+import { toast } from "react-toastify";
 
 type ProductCardProps = {
   product: ProductForClient;
@@ -9,6 +11,7 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product, isAdmin }: ProductCardProps) {
+  const { addItem } = useCart();
   return (
     <div className="bg-(--bg) rounded main-shadow p-10 flex  flex-col justify-between recipe-shadow ">
       {/* INFO AND IMG */}
@@ -43,9 +46,20 @@ export default function ProductCard({ product, isAdmin }: ProductCardProps) {
             Bearbeiten
           </Link>
         ) : (
-          <button className="px-4 py-2 bg-(--olive_bright) text-white rounded font-bold hover:bg-(--orange)">
-            In den Warenkorb
-          </button>
+            <button
+                        onClick={() => {
+                          addItem({
+                            productId: product.id,
+                            name: product.name,
+                            price: product.price,
+                            image_url: product.image_url,
+                          });
+                          toast.success("Der Artikel ist jetzt in deinem Warenkorb.");
+                        }}
+                        className="px-4 py-2 bg-(--olive_bright) text-white rounded font-bold hover:bg-(--orange)"
+                      >
+                        In den Warenkorb
+                      </button>
         )}
       </div>
     </div>

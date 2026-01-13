@@ -50,3 +50,15 @@ export type ProductForClient = {
     body: string | null;
   };
 };
+
+export type CartItem = {
+  productId: number;
+  name: string;
+  price: number;
+  image_url: string | null;
+  quantity: number;
+};
+
+export type Cart = {
+  items: CartItem[];
+};

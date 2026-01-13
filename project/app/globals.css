@@ -208,7 +208,6 @@ h3 {
   transition: width 0.3s ease;
 }
 
-
 .link-underline:hover {
   color: var(--orange);
 }
@@ -329,7 +328,7 @@ h3 {
 .vis-item.ready {
   background: var(--olive_bright) !important;
   border-color: var(--olive_bright) !important;
-  color: white ;
+  color: white;
 }
 
 .vis-ltr .vis-label.vis-nested-group .vis-inner {
@@ -349,6 +348,15 @@ h3 {
 }
 
 .vis-time-axis .vis-text {
-  color: var(--text)!important;
+  color: var(--text) !important;
   font-weight: 600; /* жирний шрифт */
+}
+
+
+.Toastify__toast--success {
+  background: var(--gray_dunkel) !important;
+  color: var(--olive_bright) !important;
+}
+.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: var(--olive_bright) !important;
 }

@@ -5,6 +5,8 @@ import { ThemeProvider } from "./providers/ThemeProvider";
 import Header from "./components/header/Header";
 import "../lib/i18n";
 import ScrollToTop from "./components/ScrollToTop";
+import { CartProvider } from "./context/CartContext";
+import { ToastContainer } from "react-toastify"; import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,15 +29,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <body>
-      <ScrollToTop />
-
-        <ThemeProvider>
-          <Header />
-          <main className="mt-12 md:mt-25 sm:mt-20"> 
-            {children}</main>
-        </ThemeProvider>
+        <ScrollToTop />
+        <CartProvider>
+          <ThemeProvider>
+            <Header />
+            <main className="mt-12 md:mt-25 sm:mt-20">{children}</main>
+            <ToastContainer 
+            />
+          </ThemeProvider>
+        </CartProvider>
+        
       </body>
     </html>
   );

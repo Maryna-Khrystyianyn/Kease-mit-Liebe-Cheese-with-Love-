@@ -1,8 +1,10 @@
 "use client";
 
+import { useCart } from "@/app/context/CartContext";
 import { cleanHtml } from "@/app/utils/cleanHTML";
 import { ProductForClient } from "@/types/global";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface Props {
   product: ProductForClient;
@@ -10,6 +12,7 @@ interface Props {
 
 export default function ProductView({ product }: Props) {
   const [qty, setQty] = useState(1);
+  const { addItem } = useCart();
 
   return (
     <div className="max-w-7xl mx-auto p-4">
@@ -40,7 +43,18 @@ export default function ProductView({ product }: Props) {
               className="w-20 border border-(--olive_bright) rounded p-2"
             />
 
-            <button className="px-4 py-2 bg-(--olive_bright) text-white rounded font-bold hover:bg-(--orange)">
+            <button
+              onClick={() => {
+                addItem({
+                  productId: product.id,
+                  name: product.name,
+                  price: product.price,
+                  image_url: product.image_url,
+                });
+                toast.success("Der Artikel ist jetzt in deinem Warenkorb.");
+              }}
+              className="px-4 py-2 bg-(--olive_bright) text-white rounded font-bold hover:bg-(--orange)"
+            >
               In den Warenkorb
             </button>
           </div>
