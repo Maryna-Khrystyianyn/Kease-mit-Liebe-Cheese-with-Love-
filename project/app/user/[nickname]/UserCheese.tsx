@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import CheeseTimeline from "@/app/components/timeLine/CheeseTimeline";
 import { Batch } from "@/types/global";

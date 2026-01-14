@@ -50,7 +50,7 @@ export default function HorisontalRandomProducts({ products }: Props) {
                   addItem({
                     productId: product.id,
                     name: product.name,
-                    price: product.price,
+                    price: Number(product.price),
                     image_url: product.image_url,
                   });
                   toast.success("Der Artikel ist jetzt in deinem Warenkorb.");

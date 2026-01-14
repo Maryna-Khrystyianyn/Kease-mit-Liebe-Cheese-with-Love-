@@ -59,14 +59,14 @@ export default function RandomProductsSidebar({ products }: Props) {
 
                 <div className="">
                   <p className="text-sm font-semibold">{product.name}</p>
-                  <p className="text-sm text-gray-600">{product.price} €</p>
+                  <p className="text-sm text-(--text_gray)">{product.price} €</p>
                 </div>
                 <button
                   onClick={() => {
                     addItem({
                       productId: product.id,
                       name: product.name,
-                      price: product.price,
+                      price: Number(product.price),
                       image_url: product.image_url,
                     });
                     toast.success("Der Artikel ist jetzt in deinem Warenkorb.");

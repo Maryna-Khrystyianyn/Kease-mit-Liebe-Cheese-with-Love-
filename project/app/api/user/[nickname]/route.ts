@@ -14,18 +14,7 @@ export async function GET(
   try {
     const user = await prisma.users.findUnique({
       where: { nick_name: nickname },
-      select: {
-        nick_name: true,
-        username: true,
-        email: true,
-        telefon: true,
-        user_status: true,
-        mood:true,
-        info:true,
-        avatar: true,
-        ispublic: true,
-        issubscribed: true,
-      },
+     
     });
 
     if (!user) {
