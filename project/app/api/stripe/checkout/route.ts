@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -42,9 +43,17 @@ export async function POST(req: NextRequest) {
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/cancel?order=${orderId}`,
     });
 
+    await prisma.orders.update({
+      where: { id: orderId },
+      data: { stripe_session_id: session.id, payment_method: "Stripe" },
+    });
+
     return NextResponse.json({ url: session.url });
   } catch (err) {
     console.error("Stripe Checkout error:", err);
-    return NextResponse.json({ error: "Stripe Checkout failed" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Stripe Checkout failed" },
+      { status: 500 }
+    );
   }
 }

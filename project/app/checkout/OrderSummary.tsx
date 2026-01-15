@@ -36,7 +36,7 @@ export default function OrderSummary() {
       </ul>
 <div className="flex justify-between font-bold">
     <span >Summa</span>
-    <span >{subtotal} €</span>
+    <span >{subtotal.toFixed(2)} €</span>
 </div>
       {/* Доставка */}
       <div className="flex justify-between text-sm">

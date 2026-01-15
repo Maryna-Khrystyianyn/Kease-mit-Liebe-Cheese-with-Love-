@@ -21,6 +21,12 @@ export default function CheckoutForm() {
 
   const [user, setUser] = useState<User | null>(null);
 
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [createdOrder, setCreatedOrder] = useState<any>(null);
+  const [selectedPayment, setSelectedPayment] = useState<
+    "stripe" | "paypal" | "invoice" | null
+  >(null);
+
   useEffect(() => {
     async function loadUser() {
       const resNick = await fetch("/api/me", { cache: "no-store" });
@@ -97,6 +103,7 @@ export default function CheckoutForm() {
       email: form.email,
       user_nick: user?.nick_name || null,
       name: form.name,
+      phone:form.phone,
       street: form.street,
       zip: form.zip,
       city: form.city,
@@ -112,148 +119,222 @@ export default function CheckoutForm() {
       });
 
       const data = await res.json();
+
       if (res.ok) {
-        clearCart();
-        const checkoutRes = await fetch("/api/stripe/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            orderId: data.order.id,
-            items: cart.items,
-            deliveryPrice:data.order.delivery_price
-          }),
-        });
-
-        const checkoutData = await checkoutRes.json();
-
-        if (checkoutRes.ok && checkoutData.url) {
-          // --->>> Stripe Checkout
-          window.location.href = checkoutData.url;
-        } else {
-          console.error("Stripe Checkout failed", checkoutData.error);
-          alert("Fehler beim Weiterleiten zu Stripe.");
-        }
+        setCreatedOrder(data.order); 
+        setShowPaymentModal(true); 
       } else {
-        console.error("Order creation failed:", data.error);
         alert("Fehler beim Erstellen der Bestellung.");
       }
     } catch (error) {
       console.error(error);
-      alert("Fehler beim Erstellen der Bestellung.");
+    }
+  }
+
+  async function handlePayment(method: "stripe" | "paypal" | "invoice") {
+    if (!createdOrder) return;
+  
+    if (method === "stripe") {
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: createdOrder.id,
+          items: cart.items,
+          deliveryPrice: createdOrder.delivery_price,
+        }),
+      });
+  
+      const data = await res.json();
+      if (data.url) {
+        clearCart();
+        window.location.href = data.url;
+      }
+    }
+  
+    if (method === "paypal") {
+      const res = await fetch("/api/paypal/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: createdOrder.id,
+          total: createdOrder.total_price,
+        }),
+      });
+    
+      const data = await res.json();
+    
+      if (data.approvalUrl) {
+        clearCart();
+        window.location.href = data.approvalUrl;
+      }
+    }
+  
+    if (method === "invoice") {
+      await fetch("/api/orders/send-invoice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: createdOrder.id,
+        }),
+      });
+  
+      clearCart();
+      alert("Rechnung wurde per E-Mail gesendet.");
+      window.location.href = "/checkout/success";
     }
   }
 
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY!}
-      libraries={["places"]}
-    >
-      <form
-        onSubmit={handleSubmit}
-        className="bg-(--bg) p-6 rounded-lg main-shadow space-y-4 w-full mx-auto"
+    <>
+      <LoadScript
+        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY!}
+        libraries={["places"]}
       >
-        <h2 className="text-lg font-bold mb-4">Ihre Daten</h2>
+        <form
+          onSubmit={handleSubmit}
+          className="bg-(--bg) p-6 rounded-lg main-shadow space-y-4 w-full mx-auto"
+        >
+          <h2 className="text-lg font-bold mb-4">Ihre Daten</h2>
 
-        {/* e-mail name */}
+          {/* e-mail name */}
 
-        <div className="flex flex-col lg:flex-row gap-5 ">
-          <div>
-            <label> E-mail</label>
+          <div className="flex flex-col lg:flex-row gap-5 ">
+            <div>
+              <label> E-mail</label>
+              <input
+                name="email"
+                type="email"
+                required
+                placeholder="E-Mail"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full p-3 border rounded border-(--olive_bright)"
+              />
+            </div>
+
+            <div>
+              <label> Name Vorname</label>
+              <input
+                name="name"
+                required
+                placeholder="Name"
+                value={form.name}
+                onChange={handleChange}
+                className="w-full p-3 border rounded border-(--olive_bright)"
+              />
+            </div>
+          </div>
+          <div className="flex gap-2 items-center">
+            <span>Telefonnummer</span>
             <input
-              name="email"
-              type="email"
-              required
-              placeholder="E-Mail"
-              value={form.email}
+              name="phone"
+              type="tel"
+              placeholder="+49"
+              value={form.phone}
               onChange={handleChange}
-              className="w-full p-3 border rounded border-(--olive_bright)"
+              className="w-full max-w-[200px] p-3 border-b border-(--olive_bright) "
+            />
+          </div>
+          {/* Autocomplete для адреси */}
+          <label>
+            Ihre Adresse{" "}
+            <span className="text-sm text-(--text_gray)">(Lieferadresse)</span>
+          </label>
+          <StandaloneSearchBox
+            onLoad={(ref) => setSearchBox(ref)}
+            onPlacesChanged={handlePlaceChanged}
+          >
+            <input
+              type="text"
+              placeholder="Adresse suchen..."
+              className=" w-full p-3 border rounded border-(--olive_bright)"
+            />
+          </StandaloneSearchBox>
+          <div className="pl-15 flex flex-col gap-4">
+            <input
+              name="street"
+              value={form.street}
+              onChange={handleChange}
+              placeholder="Straße und Hausnumer"
+              className="w-full p-3 border rounded border-(--olive)"
+            />
+            <input
+              name="city"
+              value={form.city}
+              onChange={handleChange}
+              placeholder="Stadt"
+              className="w-full p-3 border rounded border-(--olive)"
+            />
+            <input
+              name="zip"
+              value={form.zip}
+              onChange={handleChange}
+              placeholder="Postleitzahl"
+              className="w-full p-3 border rounded border-(--olive)"
+            />
+            <input
+              name="country"
+              value={form.country}
+              onChange={handleChange}
+              placeholder="Land"
+              className="w-full p-3 border rounded border-(--olive)"
             />
           </div>
 
-          <div>
-            <label> Name Vorname</label>
-            <input
-              name="name"
-              required
-              placeholder="Name"
-              value={form.name}
-              onChange={handleChange}
-              className="w-full p-3 border rounded border-(--olive_bright)"
-            />
+          <textarea
+            name="comment"
+            placeholder="Kommentar (optional)"
+            value={form.comment}
+            onChange={handleChange}
+            className="w-full mt-10 p-3 border rounded border-(--olive_bright)"
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-(--olive_bright) text-white py-3 rounded font-bold hover:bg-(--orange)"
+          >
+            Bestellung bestätigen
+          </button>
+        </form>
+      </LoadScript>
+
+      {/* MODAL PAYMENT METOD */}
+      {showPaymentModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md space-y-4">
+            <h3 className="text-lg font-bold">Zahlungsmethode wählen</h3>
+
+            <button
+              onClick={() => handlePayment("stripe")}
+              className="w-full bg-(--olive_bright) text-white p-3 rounded"
+            >
+              💳 Karte (Stripe)
+            </button>
+
+            <button
+              onClick={() => handlePayment("paypal")}
+              className="w-full bg-blue-600 text-white p-3 rounded"
+            >
+              🅿️ PayPal
+            </button>
+
+            <button
+              onClick={() => handlePayment("invoice")}
+              className="w-full bg-gray-500 text-white p-3 rounded"
+            >
+              📄 Rechnung per E-Mail
+            </button>
+
+            <button
+              onClick={() => setShowPaymentModal(false)}
+              className="w-full text-sm text-gray-500"
+            >
+              Abbrechen
+            </button>
           </div>
         </div>
-        <div className="flex gap-2 items-center">
-          <span>Telefonnummer</span>
-          <input
-            name="phone"
-            type="tel"
-            placeholder="+49"
-            value={form.phone}
-            onChange={handleChange}
-            className="w-full max-w-[200px] p-3 border-b border-(--olive_bright) "
-          />
-        </div>
-        {/* Autocomplete для адреси */}
-        <label>
-          Ihre Adresse{" "}
-          <span className="text-sm text-(--text_gray)">(Lieferadresse)</span>
-        </label>
-        <StandaloneSearchBox
-          onLoad={(ref) => setSearchBox(ref)}
-          onPlacesChanged={handlePlaceChanged}
-        >
-          <input
-            type="text"
-            placeholder="Adresse suchen..."
-            className=" w-full p-3 border rounded border-(--olive_bright)"
-          />
-        </StandaloneSearchBox>
-        <div className="pl-15 flex flex-col gap-4">
-          <input
-            name="street"
-            value={form.street}
-            onChange={handleChange}
-            placeholder="Straße und Hausnumer"
-            className="w-full p-3 border rounded border-(--olive)"
-          />
-          <input
-            name="city"
-            value={form.city}
-            onChange={handleChange}
-            placeholder="Stadt"
-            className="w-full p-3 border rounded border-(--olive)"
-          />
-          <input
-            name="zip"
-            value={form.zip}
-            onChange={handleChange}
-            placeholder="Postleitzahl"
-            className="w-full p-3 border rounded border-(--olive)"
-          />
-          <input
-            name="country"
-            value={form.country}
-            onChange={handleChange}
-            placeholder="Land"
-            className="w-full p-3 border rounded border-(--olive)"
-          />
-        </div>
-
-        <textarea
-          name="comment"
-          placeholder="Kommentar (optional)"
-          value={form.comment}
-          onChange={handleChange}
-          className="w-full mt-10 p-3 border rounded border-(--olive_bright)"
-        />
-
-        <button
-          type="submit"
-          className="w-full bg-(--olive_bright) text-white py-3 rounded font-bold hover:bg-(--orange)"
-        >
-          Bestellung bestätigen
-        </button>
-      </form>
-    </LoadScript>
+      )}
+    </>
   );
 }
