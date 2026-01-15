@@ -1,8 +1,12 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Lottie from "lottie-react";
 import successAnimation from "../../../public/Success.json";
+
+
 
 export default function Success() {
   const params = useSearchParams();
