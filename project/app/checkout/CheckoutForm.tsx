@@ -26,13 +26,12 @@ export default function CheckoutForm() {
       const resNick = await fetch("/api/me", { cache: "no-store" });
       const dataNick = await resNick.json();
       if (!dataNick) return;
-      
-      console.log("DATA API/ME", dataNick);
+
       const res = await fetch(`/api/user/${dataNick.user.nick_name}`, {
         cache: "no-store",
       });
       const data = await res.json();
-      console.log("DATA CHECKOUT", data);
+
       if (data) {
         setUser(data);
         setForm((prev) => ({
@@ -93,7 +92,7 @@ export default function CheckoutForm() {
       alert("Warenkorb ist leer!");
       return;
     }
-    
+
     const payload = {
       email: form.email,
       user_nick: user?.nick_name || null,
@@ -104,7 +103,6 @@ export default function CheckoutForm() {
       country: form.country,
       comment: form.comment,
       cartItems: cart.items,
-     
     };
 
     try {
@@ -115,9 +113,26 @@ export default function CheckoutForm() {
 
       const data = await res.json();
       if (res.ok) {
-        console.log("Order created:", data.order);
-        clearCart(); 
-        alert("Danke! Ihre Bestellung wurde erstellt.");
+        clearCart();
+        const checkoutRes = await fetch("/api/stripe/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderId: data.order.id,
+            items: cart.items,
+            deliveryPrice:data.order.delivery_price
+          }),
+        });
+
+        const checkoutData = await checkoutRes.json();
+
+        if (checkoutRes.ok && checkoutData.url) {
+          // --->>> Stripe Checkout
+          window.location.href = checkoutData.url;
+        } else {
+          console.error("Stripe Checkout failed", checkoutData.error);
+          alert("Fehler beim Weiterleiten zu Stripe.");
+        }
       } else {
         console.error("Order creation failed:", data.error);
         alert("Fehler beim Erstellen der Bestellung.");
