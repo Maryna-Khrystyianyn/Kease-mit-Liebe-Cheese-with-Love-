@@ -99,6 +99,7 @@ model orders {
   id                Int           @id @default(autoincrement())
   user_nick         String?
   email             String
+  name              String
   date              DateTime      @default(now())
   total_price       Decimal       @db.Decimal(10, 2)
   delivery_price    Decimal       @default(0) @db.Decimal(10, 2)
@@ -123,7 +124,7 @@ model order_items {
   order_id    Int
   product_id  Int
   quantity    Int
-  total_price Decimal @db.Decimal(10, 2)
+  unit_price Decimal @db.Decimal(10, 2)
 
   orders   orders   @relation(fields: [order_id], references: [id])
   products products @relation(fields: [product_id], references: [id])

@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
     // 
     const itemsTotal = order.order_items.reduce((sum, item) => {
-      return sum + Number(item.total_price);
+      return sum + Number(item.unit_price)*item.quantity;
     }, 0);
 
   

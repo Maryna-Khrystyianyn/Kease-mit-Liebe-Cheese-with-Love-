@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
       data: {
         email,
         user_nick: user_nick || null,
+        name,
         comment: comment || null,
         phone:phone||null,
         street,
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
           create: cartItems.map((item: any) => ({
             product_id: item.productId,
             quantity: item.quantity,
-            total_price: item.price * item.quantity,
+            unit_price: item.price,
           })),
         },
       },

@@ -22,6 +22,7 @@ export default function CheckoutForm() {
   const [user, setUser] = useState<User | null>(null);
 
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [createdOrder, setCreatedOrder] = useState<any>(null);
   const [selectedPayment, setSelectedPayment] = useState<
     "stripe" | "paypal" | "invoice" | null
@@ -171,17 +172,15 @@ export default function CheckoutForm() {
     }
   
     if (method === "invoice") {
-      await fetch("/api/orders/send-invoice", {
+      await fetch("/api/invoice/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderId: createdOrder.id,
-        }),
+        body: JSON.stringify({ orderId: createdOrder.id }),
       });
   
       clearCart();
       alert("Rechnung wurde per E-Mail gesendet.");
-      window.location.href = "/checkout/success";
+      window.location.href = "/checkout/invoice-sent";
     }
   }
 
