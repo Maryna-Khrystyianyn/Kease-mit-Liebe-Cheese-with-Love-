@@ -18,6 +18,9 @@ export default function AdminPage() {
           <Link href="/admin/orders/active" className="link-underline">
             Active Bestellungen
           </Link>
+          <Link href="/admin/orders/archive" className="link-underline">
+            Archive Bestellungen
+          </Link>
 
           <Link href="/shop/products/add" className="link-underline">
             ➕ Produkt hinzufügen

@@ -70,7 +70,7 @@ export default function MobileShopfolter({
             onChange={(e) =>
               setCategoryId(e.target.value ? Number(e.target.value) : null)
             }
-            className="w-full p-2 mb-4 border border-(--olive_bright) rounded focus:ring-1 focus:ring-(--green-orange)"
+            className="w-full p-2 mb-4 border border-(--olive_bright) bg-(--bg) rounded focus:ring-1 focus:ring-(--green-orange)"
           >
             <option value="">Alle Kategorien</option>
             {categories.map((c) => (

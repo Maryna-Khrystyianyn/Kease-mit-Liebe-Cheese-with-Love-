@@ -1,5 +1,6 @@
 "use client";
 
+import { ORDER_STATUS_COLORS, PAYMENT_STATUS_COLORS } from "@/lib/Color";
 import { useRouter } from "next/navigation";
 
 type Order = {
@@ -32,7 +33,7 @@ export default function OrderRow({ order, updateOrderField }: Props) {
 
     //save in DB
     try {
-      const res = await fetch(`/api/admin/orders/update`, {
+      const res = await fetch(`/api/orders/update/${order.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ orderId: order.id, field, value }),
@@ -45,7 +46,7 @@ export default function OrderRow({ order, updateOrderField }: Props) {
   };
 
   return (
-    <tr className="border-t border-gray-200 hover:bg-gray-50">
+    <tr className="border-t border-(--gray) hover:bg-(--gray_dunkel)">
       <td className="px-4 py-2">{order.id}</td>
       <td className="px-4 py-2">{order.email}</td>
       <td className="px-4 py-2">{(order.total_price + order.delivery_price - (order.discount || 0)).toFixed(2)}</td>
@@ -56,7 +57,7 @@ export default function OrderRow({ order, updateOrderField }: Props) {
         <select
           value={order.status}
           onChange={(e) => handleChange("status", e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
+          className={`border border-(--olive_bright) bg-(--bg) rounded px-2 py-1 focus:ring-1 focus:ring-(--green-orange) ${ORDER_STATUS_COLORS[order.status]}`}
         >
           {STATUS_OPTIONS.map((s) => (
             <option key={s} value={s}>
@@ -71,7 +72,7 @@ export default function OrderRow({ order, updateOrderField }: Props) {
         <select
           value={order.payment_status}
           onChange={(e) => handleChange("payment_status", e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
+          className={`border border-(--olive_bright) rounded px-2 py-1 bg-(--bg) focus:ring-1 focus:ring-(--green-orange) ${PAYMENT_STATUS_COLORS[order.payment_status]}`}
         >
           {PAYMENT_STATUS_OPTIONS.map((s) => (
             <option key={s} value={s}>
@@ -86,7 +87,7 @@ export default function OrderRow({ order, updateOrderField }: Props) {
       <td className="px-4 py-2">
         <button
           onClick={() => router.push(`/admin/orders/${order.id}`)}
-          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+          className="text-(--olive_bright)  px-3 py-1 link-underline"
         >
           {`>>>>`}
         </button>

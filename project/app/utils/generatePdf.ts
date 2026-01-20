@@ -90,7 +90,7 @@ Maryna Khrywtyianyn`,
       .stroke();
 
     // =========================
-    // Table Rows з wrap назви
+    // Table Rows 
     // =========================
     const nameColWidth = 220; 
     const quantityX = 290;
@@ -152,7 +152,7 @@ Maryna Khrywtyianyn`,
       .text(grandTotal.toFixed(2) + " €", 450, y);
 
 // =========================
-// Fake IBAN для оплати
+// Fake IBAN 
 // =========================
 
       y += 30;

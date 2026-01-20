@@ -58,6 +58,10 @@ h3 {
   font-size: 1.5em;
 }
 
+tr {
+  transition: all 0.2s ease;
+}
+
 @media (max-width: 900px) {
   h1 {
     font-size: 2em;

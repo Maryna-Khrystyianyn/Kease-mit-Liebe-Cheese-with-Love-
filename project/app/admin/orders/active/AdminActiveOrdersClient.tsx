@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import OrderRow from "./OrderRow";
+import Link from "next/link";
 
 
 type Order = {
@@ -31,10 +32,11 @@ export default function AdminActiveOrdersClient({ initialOrders }: Props) {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Aktive Bestellungen</h1>
+        <Link href={"/admin"} className="text-(--text_gray) text-[14px] link-underline ">{`Admin Panel > `}</Link>
+      <h1 className="text-2xl font-bold mb-4 ">Aktive Bestellungen</h1>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-(--bg) border border-gray-200">
-          <thead className="bg-gray-100">
+        <table className="min-w-full bg-(--bg) border border-(--olive)">
+          <thead className="bg-(--gray)">
             <tr>
               <th className="px-4 py-2 text-left">№</th>
               <th className="px-4 py-2 text-left">Email</th>

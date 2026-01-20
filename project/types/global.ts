@@ -62,3 +62,13 @@ export type CartItem = {
 export type Cart = {
   items: CartItem[];
 };
+
+interface Order {
+  id: number;
+  email: string;
+  total_price: number;
+  payment_method: string | null;
+  status: string;
+  payment_status: string;
+  date: string;
+}
