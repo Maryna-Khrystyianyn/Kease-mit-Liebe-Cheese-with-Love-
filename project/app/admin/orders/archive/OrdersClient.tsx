@@ -22,8 +22,12 @@ export default function OrdersClient({
   const [total, setTotal] = useState(initialTotal);
   const [page, setPage] = useState(initialPage);
 
-  const [filters, setFilters] = useState({
-    status: "all",
+  const [filters, setFilters] = useState<{
+    status: string;
+    email: string;
+    sort: "new" | "old";
+  }>({
+    status: "",
     email: "",
     sort: "new",
   });
