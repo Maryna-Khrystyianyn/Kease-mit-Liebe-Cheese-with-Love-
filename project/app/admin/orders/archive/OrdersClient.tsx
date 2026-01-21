@@ -81,7 +81,7 @@ export default function OrdersClient({
         href={"/admin"}
         className="text-(--text_gray) text-[14px] link-underline "
       >{`Admin Panel > `}</Link>
-      <h1 className="text-2xl font-bold mb-4 ">Aktive Bestellungen</h1>
+      <h1 className="text-2xl font-bold mb-5 ">Aktive Bestellungen</h1>
       <Filters
         filters={filters}
         setFilters={setFilters}
