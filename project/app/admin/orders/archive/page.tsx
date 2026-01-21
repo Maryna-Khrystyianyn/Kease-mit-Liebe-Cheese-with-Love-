@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import OrdersClient from "./OrdersClient";
 import PageWrapper from "@/app/PageWraper";
+export const dynamic = "force-dynamic";
 
 export interface Order {
   id: number;
@@ -25,7 +26,7 @@ export default async function ArchiveOrdersPage() {
   const total = await prisma.orders.count({
     where: { status: { in: ["delivered", "cancelled", "refunded"] } },
   });
-  
+
   const orders: Order[] = rawOrders.map((o) => ({
     id: o.id,
     email: o.email,

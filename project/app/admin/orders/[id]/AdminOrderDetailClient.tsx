@@ -15,6 +15,7 @@ export default function AdminOrderDetailClient({ order }: any) {
   const updateField = async (field: string, value: string) => {
     try {
       const res = await fetch(`/api/orders/update/${order.id}`, {
+        cache: "no-store", 
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ orderId: order.id, field, value }),

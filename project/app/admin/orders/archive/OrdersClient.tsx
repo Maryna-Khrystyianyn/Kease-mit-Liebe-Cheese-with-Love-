@@ -47,7 +47,7 @@ export default function OrdersClient({
       if (filters.email) params.set("email", filters.email);
       if (applyFilterAll) params.set("filterAll", "true");
 
-      const res = await fetch(`/api/orders/archive?${params.toString()}`);
+      const res = await fetch(`/api/orders/archive?${params.toString()}`, { cache: "no-store" });
       const data = await res.json();
 
      

@@ -1,6 +1,7 @@
 
 import { prisma } from "@/lib/prisma";
 import AdminActiveOrdersClient from "./AdminActiveOrdersClient";
+export const dynamic = "force-dynamic";
 
 
 
