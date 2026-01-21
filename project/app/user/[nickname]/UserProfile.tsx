@@ -1,7 +1,7 @@
 "use client";
 import { useTranslation } from "next-i18next";
 import { type users } from "@prisma/client";
-import { CookingPot, Heart, SquarePen } from "lucide-react";
+import { CookingPot, Heart, Package, SquarePen } from "lucide-react";
 import Link from "next/link";
 
 interface Props {
@@ -60,6 +60,12 @@ export default function UserProfile({ user, curentUserNick }: Props) {
               className="flex gap-3 link-underline w-[185px] items-end"
             >
                <CookingPot size={25} className="text-(--orange) pb-1" />Meine Käsechargen
+            </Link>
+            <Link
+              href={`/user/${user.nick_name}/orders`}
+              className="flex gap-3 link-underline w-[185px] items-end"
+            >
+               <Package size={25} className="text-(--orange) pb-1" />Meine Bestellungen
             </Link>
 
             <Link href={"/cheese-batches/add"} className="link-underline w-[185px] items-end text-(--olive_bright)">Neue Käsecharge herstellen</Link>

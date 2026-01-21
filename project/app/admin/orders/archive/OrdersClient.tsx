@@ -89,12 +89,12 @@ export default function OrdersClient({
       />
 
       {loading ? (
-        <div className="p-4 text-center text-gray-500">Завантаження...</div>
+        <div className="p-4 text-center text-gray-500">Loading...</div>
       ) : (
         <OrdersTable orders={orders} />
       )}
 
-      {/* Пагінація */}
+      {/* Pagination*/}
       <div className="flex gap-2 mt-4 items-center">
         <button
           disabled={page <= 1 || loading}
