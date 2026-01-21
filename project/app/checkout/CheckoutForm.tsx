@@ -104,7 +104,7 @@ export default function CheckoutForm() {
       email: form.email,
       user_nick: user?.nick_name || null,
       name: form.name,
-      phone:form.phone,
+      phone: form.phone,
       street: form.street,
       zip: form.zip,
       city: form.city,
@@ -122,8 +122,8 @@ export default function CheckoutForm() {
       const data = await res.json();
 
       if (res.ok) {
-        setCreatedOrder(data.order); 
-        setShowPaymentModal(true); 
+        setCreatedOrder(data.order);
+        setShowPaymentModal(true);
       } else {
         alert("Fehler beim Erstellen der Bestellung.");
       }
@@ -134,6 +134,20 @@ export default function CheckoutForm() {
 
   async function handlePayment(method: "stripe" | "paypal" | "invoice") {
     if (!createdOrder) return;
+  
+    async function notifyAdmin(order: typeof createdOrder) {
+      console.log("ORDER",order)
+      await fetch("/api/orders/notify-new-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: order.id,
+          email: order.email,
+          total: order.total_price,
+          payment_method: order.payment_method,
+        }),
+      });
+    }
   
     if (method === "stripe") {
       const res = await fetch("/api/stripe/checkout", {
@@ -150,6 +164,7 @@ export default function CheckoutForm() {
       if (data.url) {
         clearCart();
         window.location.href = data.url;
+        await notifyAdmin(createdOrder);
       }
     }
   
@@ -162,12 +177,13 @@ export default function CheckoutForm() {
           total: createdOrder.total_price,
         }),
       });
-    
+  
       const data = await res.json();
-    
+  
       if (data.approvalUrl) {
         clearCart();
         window.location.href = data.approvalUrl;
+        await notifyAdmin(createdOrder);
       }
     }
   
@@ -180,9 +196,14 @@ export default function CheckoutForm() {
   
       clearCart();
       alert("Rechnung wurde per E-Mail gesendet.");
+      await notifyAdmin(createdOrder);
       window.location.href = "/checkout/invoice-sent";
+  
+     
+      
     }
   }
+  
 
   return (
     <>
