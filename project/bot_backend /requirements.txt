@@ -1,0 +1,13 @@
+fastapi==0.110.0
+uvicorn==0.40.0
+
+pydantic==2.12.5
+python-dotenv==1.2.1
+
+openai==1.74.0
+llama-index==0.9.39
+chromadb==1.4.1
+
+requests
+tqdm
+typing_extensions==4.15.0

@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.sqlite3
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Logs
+*.log
+
+# Chroma DB (локальні дані)
+chroma_data/
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+
+# OS / Editor
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/

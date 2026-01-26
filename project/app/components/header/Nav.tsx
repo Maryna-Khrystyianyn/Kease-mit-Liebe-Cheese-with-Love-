@@ -24,6 +24,9 @@ const Nav = () => {
       <li className="link-underline">
         <Link href={"/cheese-batches"}>{t("tagebuch")}</Link>
       </li>
+      <li className="link-underline">
+        <Link href={"/FAQ"}>FAQ</Link>
+      </li>
     </ul>
   );
 };

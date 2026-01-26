@@ -225,6 +225,24 @@ enum ingredients_type {
   Other
 }
 
+model FAQ {
+  id         Int       @id @default(autoincrement())
+  category   FAQCategory
+  tags       String?      
+  question   String
+  answer     String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+enum FAQCategory {
+  ZahlungLieferung                  
+  LagerungTransportKulturen         
+  KaseHerstellungNuancen            
+  KaseReifungLagerungNuancen        
+  Andere                             
+}
+
 enum order_status {
   pending
   processing

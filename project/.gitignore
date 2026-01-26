@@ -41,3 +41,23 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Віртуальні середовища
+.venv/
+.venv_clean/
+
+# Файли даних
+data/
+recipes.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+

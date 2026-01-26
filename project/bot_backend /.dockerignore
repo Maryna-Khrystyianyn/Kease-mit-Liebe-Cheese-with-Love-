@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.sqlite3
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Logs
+*.log
+
+# Chroma DB (якщо не хочеш включати локальні дані)
+chroma_data/
+
+# Git
+.git/
+.gitignore
+
+# Docker files (не обов'язково, але можна)
+Dockerfile
+docker-compose.yml
+
+# Node / Next.js (якщо є фронтенд поруч)
+node_modules/
+.next/
+out/

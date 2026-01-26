@@ -48,6 +48,11 @@ const NavMobile = ({ user }: { user: User | null }) => {
             {t("tagebuch")}
           </Link>
         </li>
+        <li>
+          <Link className="link-underline" href="/FAQ">
+            FAQ
+          </Link>
+        </li>
       </ul>
 
       <div className="my-5 p-5 flex flex-col gap-5">

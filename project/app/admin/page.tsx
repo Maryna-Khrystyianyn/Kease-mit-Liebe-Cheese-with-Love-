@@ -33,11 +33,20 @@ export default function AdminPage() {
             ➕ Kategorie erstellen
           </button>
         </div>
+
         <div className="main-shadow p-5">
           <h2 className="mb-3">Rezepte</h2>
           <Link href="/recipe/add" className=" link-underline">
             ➕ Rezept hinzufügen
           </Link>
+          
+        </div>
+        <div className="main-shadow p-5">
+<h2 className="mb-3">FAQ</h2>
+          <Link href="/admin/FAQ" className=" link-underline">
+          Die Seite FAQ administriren
+          </Link>
+
         </div>
       </div>
 

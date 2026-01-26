@@ -7,6 +7,7 @@
   --bg: #fff;
   --text: #0f0f0f;
   --text_gray: #393939;
+  --bg-transparent: rgba(57, 57, 57, 0.5);
   --gray: #f4f4f4;
   --gray_dunkel: #e5e5e5;
   --orange: #e29b03;
@@ -29,7 +30,7 @@
   --gray_dunkel: #2b2b2b;
   --text: #fff;
   --text_gray: #c0bebe;
-  --gray: #1b1b19;
+  --gray: #20201e;
   --orange: #f4b619;
   --olive: #4f694c;
   --shadow_color: #838181;
@@ -84,6 +85,14 @@ tr {
   h3 {
     font-size: 1em;
   }
+}
+
+/*=========================  
+    SCOLLBAR 
+===========================*/
+
+* {
+  scrollbar-color: var(--orange) var(--gray); 
 }
 
 /* =======================
@@ -355,7 +364,6 @@ tr {
   color: var(--text) !important;
   font-weight: 600; /* жирний шрифт */
 }
-
 
 .Toastify__toast--success {
   background: var(--gray_dunkel) !important;
