@@ -88,7 +88,7 @@ export default function FAQList({ faqs, refresh }: Props) {
               {/* Заголовок */}
               <button
                 onClick={() => toggleOpen(faq.id)}
-                className="w-full text-left p-4 flex justify-between items-center hover:bg-gray-50"
+                className="w-full text-left p-4 flex justify-between items-center hover:bg-(--gray)"
               >
                 <div>
                   <div className="text-sm text-(--olive_bright)">

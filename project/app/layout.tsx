@@ -8,6 +8,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./context/CartContext";
 import { ToastContainer } from "react-toastify"; import "react-toastify/dist/ReactToastify.css";
 import ChatWidget from "./components/chat/ChatWidget";
+import Footer from "./components/Futer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default function RootLayout({
             />
           </ThemeProvider>
         </CartProvider>
+        <Footer/>
         <ChatWidget />
       </body>
     </html>
