@@ -86,15 +86,15 @@ export default function RecipeItem({ recipe }: RecipeProps) {
   };
 
   return (
-    <article className="bg-(--bg) rounded main-shadow p-10">
+    <article className="bg-(--bg) rounded main-shadow md:p-10 sm:p-6 p-2">
       {/*  DRAFT LABEL */}
       {!recipe.ispublic && isAdmin && (
         <div className="mb-4 inline-block px-3 py-1 text-sm font-bold bg-black text-white rounded">
           ENTWURF
         </div>
       )}
-      <div className="flex justify-between items-center">
-        <div className="flex  gap-4">
+      <div className="flex justify-between sm:items-center flex-col sm:flex-row">
+        <div className="flex  gap-4 ">
          
 
           <button onClick={toggleFavorite} aria-label="favorite" className="pb-4">
@@ -109,6 +109,7 @@ export default function RecipeItem({ recipe }: RecipeProps) {
           </button>
           <h1 className="text-2xl font-bold mb-4">{recipe.name}</h1>
         </div>
+
         <Link
           href={{
             pathname: "/cheese-batches/add",
