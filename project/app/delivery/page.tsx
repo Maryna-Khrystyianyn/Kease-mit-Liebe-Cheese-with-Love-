@@ -4,7 +4,7 @@ export default function VersandPage() {
   return (
     <div className="flex flex-col mt-[-40px]">
       {/* Hero Image */}
-      <div className="relative w-full h-[250px] sm:h-[300px] md:h-[340px] lg:h-[460px] xl:h-[500px] 2xl:h-[560px]">
+      <div className="relative w-full h-[190px] sm:h-[300px] md:h-[340px] lg:h-[460px] xl:h-[500px] 2xl:h-[560px]">
         <Image
           src="/delivery.png"
           alt="Lieferung Käse mit Liebe"
