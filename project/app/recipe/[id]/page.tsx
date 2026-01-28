@@ -31,7 +31,7 @@ export default async function RecipePage({ params }: PageProps) {
           <RecipeSidebar recipeId={recipeId} />
         </div>
 
-        <div className=" mx-auto p-6">
+        <div className=" mx-auto lg:p-6 p-2">
           <RecipeItem recipe={recipeData} />
         </div>
       </div>

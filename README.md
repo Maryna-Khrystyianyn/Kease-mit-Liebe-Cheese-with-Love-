@@ -10,6 +10,7 @@ Eigene Erfahrungen können dokumentiert, geteilt und über eine Zeitleiste verfo
 ---
 
 ## 🚀 Projektstatus
+
 Dieses Projekt befindet sich aktuell in der **Entwicklungsphase (MVP)**.  
 Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetagebuch und Onlineshop.
 
@@ -21,53 +22,50 @@ Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetag
 
 - Prisma wurde installiert und erfolgreich mit der Neon-Datenbank verbunden.
 
-- [ERD - logical Data model ](docs/ERD_logical_data_model.png)
-
+- [ERD - logical Data model ](docs/ERD_logical_data_model_final.png)
 
 - [ERD - physical Data Model](https://dbdiagram.io/d/68f0c40a2e68d21b41c5476b)
 
-
 - [Figma design - in process](https://www.figma.com/design/3lPi9DrVtBNnbKULPAvOpB/K%C3%A4se-mit-liebe?node-id=0-1&p=f)
-
-
-
-
 
 ## 🧩 Hauptfunktionen
 
 ### 🔐 Rollen & Zugriffsrechte
-| Rolle | Beschreibung |
-|-------|---------------|
-| **Administrator** | Rezepte erstellen, Produkte hinzufügen, Benutzer verwalten, Zugriffsrechte vergeben |
-| **Käser** | Käsepartien(Käsechargen) anlegen & bearbeiten, Reifungsdiagramm anzeigen, persönliche Seite mit Käsegalerie |
-| **Registrierter Nutzer** | Produkte kaufen, Kommentare schreiben |
-| **Nicht registrierter Nutzer** | Rezepte & allgemeine Informationen ansehen |
+
+| Rolle                          | Beschreibung                                                                                                |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| **Administrator**              | Rezepte erstellen, Produkte hinzufügen, Benutzer verwalten, Zugriffsrechte vergeben                         |
+| **Käser**                      | Käsepartien(Käsechargen) anlegen & bearbeiten, Reifungsdiagramm anzeigen, persönliche Seite mit Käsegalerie |
+| **Registrierter Nutzer**       | Produkte kaufen, Kommentare schreiben                                                                       |
+| **Nicht registrierter Nutzer** | Rezepte & allgemeine Informationen ansehen                                                                  |
 
 ---
 
 ### 🧀 Kernfunktionen
-- **🧾 Käsetagebuch:** persönliche Einträge für jede Käsepartie  
-- **🕓 Reifungszeitachse:** zeigt an, wann welcher Käse reif ist  
-- **🛒 Onlineshop:** Zutaten, Starterkulturen, Ausrüstung & Zusatzstoffe  
-- **📸 Persönliche Seiten:** Galerie hergestellter Käse für jeden Käsemacher  
-- **📍 Karte aller Käsemacher:** visuelle Übersicht über die Community  
-- **📚 Rezeptdatenbank:** Rezepte hinzufügen, durchsuchen & speichern  
 
+- **🧾 Käsetagebuch:** persönliche Einträge für jede Käsepartie
+- **🕓 Reifungszeitachse:** zeigt an, wann welcher Käse reif ist
+- **🛒 Onlineshop:** Zutaten, Starterkulturen, Ausrüstung & Zusatzstoffe
+- **📸 Persönliche Seiten:** Galerie hergestellter Käse für jeden Käsemacher
+- **📍 Karte aller Käsemacher:** visuelle Übersicht über die Community
+- **📚 Rezeptdatenbank:** Rezepte hinzufügen, durchsuchen & speichern
 
 ## 🛠️ Technologie-Stack
 
-| Technologie | Zweck |
-|--------------|--------|
-| [Next.js](https://nextjs.org/) | Frontend & Backend (Fullstack Framework) |
-| [TypeScript](https://www.typescriptlang.org/) | Typsicherheit im gesamten Projekt |
-| [PostgreSQL](https://www.postgresql.org/) | Relationale Datenbank |
-| [Prisma](https://www.prisma.io)|ORM für Datenbankzugriff|
-| [Tailwind CSS](https://tailwindcss.com/) | Styling & responsive Design |
-| [Swiper.js](https://swiperjs.com/) | Bildergalerien & Slider |
-| [Framer Motion](https://www.framer.com/motion)|Animationen im UI|
-| [Quill / React‑Quill](https://quilljs.com)|Rich‑Text‑Editor|
-| [Cloudinary](https://github.com/colbyfayock/next-cloudinary)|Cloudinary‑Cloud‑Speicher für Bilder|
-| [Google-cloud](https://cloud.google.com/storage)|Cloud‑Speicher für Dateien & Bilder |
-| [Vis-timeline](https://visjs.github.io/vis-timeline)|Interaktive Zeitachsen & Datenvisualisierung
-
-
+| Technologie                                                  | Zweck                                        |
+| ------------------------------------------------------------ | -------------------------------------------- |
+| [Next.js](https://nextjs.org/)                               | Frontend & Backend (Fullstack Framework)     |
+| [TypeScript](https://www.typescriptlang.org/)                | Typsicherheit im gesamten Projekt            |
+| [PostgreSQL](https://www.postgresql.org/)                    | Relationale Datenbank                        |
+| [Prisma](https://www.prisma.io)                              | ORM für Datenbankzugriff                     |
+| [Tailwind CSS](https://tailwindcss.com/)                     | Styling & responsive Design                  |
+| [Swiper.js](https://swiperjs.com/)                           | Bildergalerien & Slider                      |
+| [Framer Motion](https://www.framer.com/motion)               | Animationen im UI                            |
+| [Quill / React‑Quill](https://quilljs.com)                   | Rich‑Text‑Editor                             |
+| [Cloudinary](https://github.com/colbyfayock/next-cloudinary) | Cloudinary‑Cloud‑Speicher für Bilder         |
+| [Google-cloud](https://cloud.google.com/storage)             | Cloud‑Speicher für Dateien & Bilder          |
+| [Vis-timeline](https://visjs.github.io/vis-timeline)         | Interaktive Zeitachsen & Datenvisualisierung |
+| Python	                                                   |Backend-Logik für AI-Chatbot                  |
+| FastAPI	                                                   |API-Framework für Chatbot-Server              |
+| LlamaIndex	                                               |Retrieval-Augmented Generation (RAG) für den Chatbot |
+|OpenAI	                                                       |KI-Modell für die Generierung von Antworten im Chatbot
