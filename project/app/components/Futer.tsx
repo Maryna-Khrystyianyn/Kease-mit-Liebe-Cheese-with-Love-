@@ -55,7 +55,7 @@ export default function Footer() {
           <ul className="space-y-3">
             <li className="flex items-center gap-3">
               <Truck className="w-5 h-5" />
-              <span>Schnelle Lieferung in ganz Deutschland</span>
+              <Link href={"/delivery"} className="link-underline">Schnelle Lieferung in ganz Deutschland</Link>
             </li>
             <li className="flex items-center gap-3">
               <CreditCard className="w-5 h-5" />
