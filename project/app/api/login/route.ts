@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Шукаємо користувача в базі
+   
     const user:users|null = await prisma.users.findUnique({ where: { email } });
 
     if (!user) {
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Перевіряємо пароль
+    
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return NextResponse.json(

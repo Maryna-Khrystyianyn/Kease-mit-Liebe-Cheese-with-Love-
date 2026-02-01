@@ -23,7 +23,7 @@ export default function VersandPage() {
         {/* Content - section*/}
         <div className=" flex flex-col xl:flex-row xl:gap-10">
           <div className="main-shadow p-4 my-2">
-            <h2>Versand</h2>
+            <h2 className="text-(--green-orange) font-bold">Versand</h2>
             <ul>
               <li>
                 Alle Bestellungen werden nach erfolgreicher Zahlung innerhalb
@@ -43,7 +43,7 @@ export default function VersandPage() {
           </div>
 
           <div className="main-shadow p-4 my-2">
-            <h2>Rückgabe und Widerruf</h2>
+            <h2 className="text-(--green-orange) font-bold">Rückgabe und Widerruf</h2>
             <ul>
               <li>
                 <strong>Versiegelte Produkte:</strong> Ungeöffnete Produkte
@@ -81,7 +81,7 @@ export default function VersandPage() {
           </div>
 
           <div className="main-shadow p-4 my-2">
-          <h2>Hinweise</h2>
+          <h2 className="text-(--green-orange) font-bold">Hinweise</h2>
         <ul>
           <li>
             Bitte überprüfen Sie bei der Lieferung die Unversehrtheit der

@@ -135,7 +135,7 @@ export default function CreateBatchForm() {
 
     const data = await res.json();
     if (isPublic) {
-      window.location.href = `/cheese-batch/${data.id}`;
+      window.location.href = `/cheese-batch`;
     }
   }
 

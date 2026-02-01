@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["cypress"],
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -23,6 +24,7 @@
     }
   },
   "include": [
+    "cypress",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

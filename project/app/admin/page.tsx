@@ -8,13 +8,13 @@ export default function AdminPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="mx-5 md:mx-10">
+    <div className="mx-5 md:mx-10 mb-15">
       <h1 className="font-bold mb-4">Admin Panel</h1>
 
-      <div className="flex gap-20 ">
+      <div className="flex md:gap-20 flex-col md:flex-row gap-10">
         
-        <div className="main-shadow  flex flex-col max-w-70 gap-3 p-5">
-          <h2>Shop</h2>
+        <div className="main-shadow  flex flex-col  max-w-70 gap-3 p-5">
+          <h2 className=" text-(--green-orange) font-bold">Shop</h2>
           <Link href="/admin/orders/active" className="link-underline">
             Active Bestellungen
           </Link>
@@ -35,14 +35,14 @@ export default function AdminPage() {
         </div>
 
         <div className="main-shadow p-5">
-          <h2 className="mb-3">Rezepte</h2>
+          <h2 className="mb-3 text-(--green-orange) font-bold">Rezepte</h2>
           <Link href="/recipe/add" className=" link-underline">
             ➕ Rezept hinzufügen
           </Link>
           
         </div>
         <div className="main-shadow p-5">
-<h2 className="mb-3">FAQ</h2>
+<h2 className="mb-3 text-(--green-orange) font-bold">FAQ</h2>
           <Link href="/admin/FAQ" className=" link-underline">
           Die Seite FAQ administriren
           </Link>

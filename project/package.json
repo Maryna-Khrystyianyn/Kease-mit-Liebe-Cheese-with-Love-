@@ -55,6 +55,7 @@
     "@types/react-dom": "^19",
     "@types/stripe": "^8.0.416",
     "autoprefixer": "^10.4.22",
+    "cypress": "^15.9.0",
     "eslint": "^9",
     "eslint-config-next": "^16.0.0",
     "postcss": "^8.5.6",
