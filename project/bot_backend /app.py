@@ -24,11 +24,11 @@ def chat(req: ChatRequest):
     user_id = req.user_id
     message = req.message
 
-    # 1. Памʼять
+    # 1. Memory
     history = get_history(user_id)
     context_text = build_context(history)
 
-    # 2. Формуємо фінальний prompt
+    # 2. Forming the final prompt
     full_prompt = (
     "Du bist ein hilfreicher Assistent für einen Käseladen.\n"
     "Deine Aufgabe ist es, einfache, klare und freundliche Antworten zu geben, in der Sprache, in der der Nutzer dich anspricht (meistens Deutsch).\n"
@@ -40,10 +40,10 @@ def chat(req: ChatRequest):
 )
 
 
-    # 3. Отримуємо відповідь
+    # 3. Answer
     answer = retrieve_and_answer(full_prompt)
 
-    # 4. Оновлюємо памʼять
+    # 4. Refresh memory
     append_turn(user_id, "user", message)
     append_turn(user_id, "assistant", answer)
 

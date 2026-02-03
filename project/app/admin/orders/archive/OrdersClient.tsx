@@ -1,26 +1,19 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Filters from "./Filters";
 import OrdersTable from "./OrdersTable";
-import { Order } from "./page";
+
 import Link from "next/link";
+import { Order } from "@/types/global";
 
 interface OrdersClientProps {
-  initialOrders: Order[];
-  initialTotal: number;
-  initialPage: number;
   perPage: number;
 }
 
-export default function OrdersClient({
-  initialOrders,
-  initialTotal,
-  initialPage,
-  perPage,
-}: OrdersClientProps) {
-  const [orders, setOrders] = useState(initialOrders);
-  const [total, setTotal] = useState(initialTotal);
-  const [page, setPage] = useState(initialPage);
+export default function OrdersClient({ perPage }: OrdersClientProps) {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
 
   const [filters, setFilters] = useState<{
     status: string;
@@ -34,6 +27,8 @@ export default function OrdersClient({
 
   const [filterAll, setFilterAll] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const totalPages = Math.ceil(total / perPage);
 
   const loadOrders = useCallback(
     async (pageToLoad = 1, applyFilterAll = false) => {
@@ -50,7 +45,7 @@ export default function OrdersClient({
       const res = await fetch(`/api/orders/archive?${params.toString()}`, { cache: "no-store" });
       const data = await res.json();
 
-     
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const formattedOrders: Order[] = data.orders.map((o: any) => ({
         id: o.id,
         email: o.email,
@@ -73,7 +68,14 @@ export default function OrdersClient({
     [filters, perPage]
   );
 
-  const totalPages = Math.ceil(total / perPage);
+  
+  useEffect(() => {
+    const fetchFirstPage = async () => {
+      await loadOrders(1, false);
+    };
+  
+    fetchFirstPage();
+  }, [loadOrders]);
 
   return (
     <div className="p-4 md:px-10 xl:px-15 space-y-4">
@@ -81,11 +83,12 @@ export default function OrdersClient({
         href={"/admin"}
         className="text-(--text_gray) text-[14px] link-underline "
       >{`Admin Panel > `}</Link>
-      <h1 className="text-2xl font-bold mb-5 ">Aktive Bestellungen</h1>
+      <h1 className="text-2xl font-bold mb-5 ">Archivierte Bestellungen</h1>
+
       <Filters
         filters={filters}
         setFilters={setFilters}
-        onChange={() => loadOrders(1, true)}
+        onChange={() => loadOrders(1, false)} // застосовуємо фільтри без filterAll
       />
 
       {loading ? (
@@ -95,25 +98,27 @@ export default function OrdersClient({
       )}
 
       {/* Pagination*/}
-      <div className="flex gap-2 mt-4 items-center">
-        <button
-          disabled={page <= 1 || loading}
-          onClick={() => loadOrders(page - 1, filterAll)}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Vorherige Seite
-        </button>
-        <span>
-          {page} / {totalPages}
-        </span>
-        <button
-          disabled={page >= totalPages || loading}
-          onClick={() => loadOrders(page + 1, filterAll)}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Nächste Seite
-        </button>
-      </div>
+      {totalPages > 1 && (
+        <div className="flex gap-2 mt-4 items-center">
+          <button
+            disabled={page <= 1 || loading}
+            onClick={() => loadOrders(page - 1, false)}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Vorherige Seite
+          </button>
+          <span>
+            {page} / {totalPages}
+          </span>
+          <button
+            disabled={page >= totalPages || loading}
+            onClick={() => loadOrders(page + 1, false)}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Nächste Seite
+          </button>
+        </div>
+      )}
     </div>
   );
 }

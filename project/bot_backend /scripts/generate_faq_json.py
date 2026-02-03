@@ -41,7 +41,7 @@ faqs = session.execute(
 ).fetchall()
 
 for faq in faqs:
-    # Перетворюємо рядок тегів у список, якщо є
+    # Convert the tag string to a list, if any
     tags_list = [t.strip() for t in faq.tags.split(",")] if faq.tags else []
 
     faq_data.append({

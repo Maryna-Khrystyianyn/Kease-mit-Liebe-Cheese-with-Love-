@@ -1,0 +1,24 @@
+[
+  {
+    "id": 1,
+    "name": "Geheimer Käse",
+    "description": "Draft Rezept",
+    "aging": 30,
+    "ispublic": false,
+    "created_at": "2024-01-01T10:00:00.000Z",
+    "image": null,
+    "recipes_categories": { "name": "Siri" },
+    "recipe_ingredients": []
+  },
+  {
+    "id": 2,
+    "name": "Öffentlicher Käse",
+    "description": "Public Rezept",
+    "aging": 10,
+    "ispublic": true,
+    "created_at": "2024-01-01T10:00:00.000Z",
+    "image": null,
+    "recipes_categories": { "name": "Siri" },
+    "recipe_ingredients": []
+  }
+]

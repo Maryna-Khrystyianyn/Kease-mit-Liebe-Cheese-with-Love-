@@ -1,3 +1,5 @@
+#this file is just for checking and reading information from the vector database
+
 import chromadb
 from core.config import CHROMA_PATH, COLLECTION_NAME
 
