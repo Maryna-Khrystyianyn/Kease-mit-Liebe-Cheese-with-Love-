@@ -1,7 +1,7 @@
 "use client";
 
 import { ORDER_STATUS_COLORS, PAYMENT_STATUS_COLORS } from "@/lib/Color";
-import { Order } from "./page";
+import { Order } from "@/types/global";
 
 import Link from "next/link";
 
@@ -32,7 +32,7 @@ export default function OrdersTable({ orders }: OrdersTableProps) {
           >
             <td className="px-4 py-2">{order.id}</td>
             <td className="px-4 py-2">{order.email}</td>
-            <td className="px-4 py-2">{order.price.toFixed(2)}</td>
+            <td className="px-4 py-2">{(order.total_price + order.delivery_price - (order.discount || 0)).toFixed(2)}</td>
             <td className="px-4 py-2">{order.payment_method}</td>
 
             {/* STATUS */}
