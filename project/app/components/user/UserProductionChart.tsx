@@ -98,7 +98,7 @@ export default function UserProductionChart({ nickname }: { nickname: string }) 
   }
 
   return (
-    <div className="bg-(--bg) p-6 rounded-2xl shadow-lg border border-gray-100 mt-8 transition-all hover:shadow-xl mb-20">
+    <div className="bg-(--bg) p-6 rounded-2xl shadow-lg border border-(--gray) mt-8 transition-all hover:shadow-xl mb-20">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <h3 className="text-2xl font-bold text-(--olive_dark) tracking-tight">{CHART_TITLE}</h3>
         
