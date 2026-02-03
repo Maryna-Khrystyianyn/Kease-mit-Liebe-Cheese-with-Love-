@@ -150,7 +150,7 @@ export default function UserProductionChart({ nickname }: { nickname: string }) 
               }}
               labelStyle={{ fontWeight: 700, color: 'var(--olive_dark)', marginBottom: '4px' }}
               itemStyle={{ fontWeight: 600, color: 'var(--olive_bright)' }}
-              formatter={(value: number) => [`${value} kg`, Y_AXIS_LABEL]}
+              formatter={(value?: number) => [`${value ?? 0} kg`, Y_AXIS_LABEL]}
             />
             <Bar dataKey="weight" radius={[6, 6, 0, 0]} barSize={32}>
               {chartData.map((entry, index) => (
