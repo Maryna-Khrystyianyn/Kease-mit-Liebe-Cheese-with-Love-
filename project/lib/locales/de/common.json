@@ -26,7 +26,26 @@
     "user_address": "Adresse (Stadt)"
   },
   "user":{
-    "info": "Informationen über mich"
+    "info": "Informationen über mich",
+    "mood": "Mein aktueller Status"
+  },
+  "chart": {
+    "title": "Monatliche Käseproduktion",
+    "kg": "Gewicht (kg)",
+    "month": "Monat",
+    "months": {
+      "Jan": "Jan",
+      "Feb": "Feb",
+      "Mar": "Mär",
+      "Apr": "Apr",
+      "May": "Mai",
+      "Jun": "Jun",
+      "Jul": "Jul",
+      "Aug": "Aug",
+      "Sep": "Sep",
+      "Oct": "Okt",
+      "Nov": "Nov",
+      "Dec": "Dez"
+    }
   }
-  
 }

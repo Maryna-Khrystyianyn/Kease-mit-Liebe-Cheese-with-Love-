@@ -4,6 +4,8 @@ import UserProfile from "./UserProfile";
 import { prisma } from "@/lib/prisma";
 import UserBatchesCarousel from "@/app/components/batsh/UserBatchesCarousel";
 import { getUserFromToken, UserFromToken } from "@/app/utils/auth";
+import { User } from "lucide-react";
+import UserProductionChart from "@/app/components/user/UserProductionChart";
 
 interface Params {
   params: Promise<{ nickname: string }>;
@@ -40,6 +42,7 @@ export default async function PublicUserPage({ params }: Params) {
         <div className="lg:col-span-2 2xl:col-span-3">
           <UserBatchesCarousel nickname={user.nick_name} />
           <UserCheese nickname={user.nick_name} />
+          <UserProductionChart nickname={user.nick_name} />
         </div>
       </div>
     </PageWrapper>
