@@ -1,0 +1,9 @@
+@import "tailwindcss/preflight";
+
+@tailwind utilities;
+
+@tailwind utilities;
+
+.border-olive_bright {
+  border: solid 1px #52814d;
+} 
