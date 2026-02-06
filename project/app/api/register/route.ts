@@ -63,7 +63,7 @@ export async function POST(req: Request) {
 
   
     const response = NextResponse.json(
-      { message: "Benutzer erfolgreich erstellt!", user: { email: newUser.email, username: newUser.username , avatar:newUser.avatar } },
+      { message: "Benutzer erfolgreich erstellt!",token, user: { email: newUser.email, username: newUser.username , avatar:newUser.avatar } },
       { status: 200 }
     );
     response.cookies.set({

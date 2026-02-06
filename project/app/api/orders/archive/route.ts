@@ -9,6 +9,7 @@ export async function GET(req: Request) {
   const perPage = Number(searchParams.get("perPage") || 50);
   const sortOrder = searchParams.get("sort") === "old" ? "asc" : "desc";
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const where: any = {
     status: { in: ["delivered", "cancelled", "refunded"] },
   };
