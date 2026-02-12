@@ -72,10 +72,12 @@ export default function MilkSelector({ value, onChange }: Props) {
                 step={0.1}
                 placeholder="Liter"
                 className="w-20 border-b border-(--olive) text-center "
-                value={selected.amount || ""}
-                onChange={(e) =>
-                  updateAmount(milk.id, Number(e.target.value))
-                }
+                value={selected.amount === 0 ? "" : selected.amount}
+                onChange={(e) => {
+                  const val = e.target.value.replace(",", ".");
+                  const num = val === "" ? 0 : Math.round(parseFloat(val));
+                  updateAmount(milk.id, num);
+                }}
               />
             )}
           </div>

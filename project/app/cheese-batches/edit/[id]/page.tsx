@@ -62,8 +62,13 @@ export default function EditBatchPage() {
       setDescription(batch.description || "");
       setCheeseweight(batch.cheeseweight?.toString() || "");
       setPreviewUrl(batch.foto || "/cheese.png");
-      setMilks(batch.milk_in_batch || []);
-      setBatchDate(batch.created_at?.split("T")[0] || "");
+      setMilks(
+        (batch.milk_in_batch || []).map((m: any) => ({
+          milk_id: m.milk_id,
+          amount: Number(m.amount) || 0,
+        }))
+      );
+      setBatchDate(batch.created_at ? new Date(batch.created_at).toISOString().split("T")[0] : "");
       setOnTimeLine(batch.onTimeLine);
 
       if (batch.recipe_id) {
@@ -110,8 +115,11 @@ export default function EditBatchPage() {
   //=== Save ==============
   async function handleSave(isPublic: boolean) {
     if (!batchDate) return alert("Bitte Herstellungsdatum auswählen");
-    if (!milks.length || milks.some((m) => !m.amount))
-      return alert("Bitte wählen Sie mindestens eine Milchart mit Menge aus");
+
+    const validMilks = milks.filter((m) => m.amount && m.amount > 0);
+    if (validMilks.length === 0) {
+      return alert("Bitte wählen Sie mindestens eine Milchart mit einer Menge größer als 0 aus");
+    }
 
     setLoading(true);
 
@@ -143,7 +151,10 @@ export default function EditBatchPage() {
         description,
         cheeseweight: cheeseweight ? Number(cheeseweight) : null,
         foto: imageFile ? imageUrl : previewUrl,
-        milk_in_batch: milks,
+        milk_in_batch: validMilks.map(m => ({
+          milk_id: m.milk_id,
+          amount: m.amount
+        })),
         created_at: batchDate,
         ready_at: readyDate,
         ispublic: isPublic,

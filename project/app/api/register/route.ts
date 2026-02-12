@@ -1,26 +1,41 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
-import { generateToken } from "../../utils/generateToken"
+import { generateToken } from "../../utils/generateToken";
 import { users } from "@prisma/client";
 
 export async function POST(req: Request) {
-  try {
-    const body = await req.json();
+  const contentType = req.headers.get("content-type") || "";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let body: any;
 
+  try {
+    // --- Обробка даних ---
+    if (contentType.includes("multipart/form-data")) {
+      // Мобільний: FormData -> Object
+      const formData = await req.formData();
+      body = Object.fromEntries(formData.entries());
+    } else {
+      // Веб: JSON
+      body = await req.json();
+    }
+
+    // --- Перетворюємо булеві значення ---
+    const ispublic = body.ispublic === "true" || body.ispublic === true;
+    const issubscribed = body.issubscribed === "true" || body.issubscribed === true;
+
+    // --- Деструктуризація ---
     const {
-      nick_name,
-      username,
+      nick_name = "",
+      username = "",
       email,
       password,
-      telefon,
-      avatar,
+      telefon = "",
+      avatar = "",
       user_status = "user",
-      ispublic = true,
-      issubscribed = true,
-      mood,
-      info,
-      user_address,
+      mood = "",
+      info = "",
+      user_address = "",
     } = body;
 
     if (!email || !password) {
@@ -38,10 +53,11 @@ export async function POST(req: Request) {
       );
     }
 
- 
+    // --- Хешуємо пароль ---
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser:users = await prisma.users.create({
+    // --- Створюємо користувача ---
+    const newUser: users = await prisma.users.create({
       data: {
         nick_name,
         username,
@@ -58,38 +74,36 @@ export async function POST(req: Request) {
       },
     });
 
-  
+    // --- Генеруємо токен ---
     const token = generateToken(newUser);
 
-  
+    // --- Відповідь ---
     const response = NextResponse.json(
-      { message: "Benutzer erfolgreich erstellt!",token, user: { email: newUser.email, username: newUser.username , avatar:newUser.avatar } },
+      {
+        message: "Benutzer erfolgreich erstellt!",
+        token,
+        user: { email: newUser.email, username: newUser.username, avatar: newUser.avatar },
+      },
       { status: 200 }
     );
+
     response.cookies.set({
       name: "token",
       value: token,
       httpOnly: true,
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, 
+      maxAge: 60 * 60 * 24 * 7, // 7 днів
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
     });
 
     return response;
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("REGISTER ERROR:", error.message);
-      return NextResponse.json(
-        { message: "Fehler bei der Registrierung", error: error.message },
-        { status: 500 }
-      );
-    } else {
-      console.error("REGISTER ERROR:", error);
-      return NextResponse.json(
-        { message: "Fehler bei der Registrierung", error: String(error) },
-        { status: 500 }
-      );
-    }
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("REGISTER ERROR:", message);
+    return NextResponse.json(
+      { message: "Fehler bei der Registrierung", error: message },
+      { status: 500 }
+    );
   }
 }

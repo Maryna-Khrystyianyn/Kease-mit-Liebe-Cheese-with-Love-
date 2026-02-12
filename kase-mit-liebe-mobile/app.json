@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "kase-mit-liebe-mobile",
-    "slug": "kase-mit-liebe-mobile",
+    "name": "KäseTagebuch",
+    "slug": "kase-mit-liebe-tagebuch",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/logo.png",
     "scheme": "kasemitliebemobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -18,8 +18,14 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "edgeToEdgeEnabled": false,
+      "statusBar": {
+        "barStyle": "dark-content",
+        "backgroundColor": "#ffffff",
+        "translucent": false
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.kasemitliebemobile"
     },
     "web": {
       "output": "static",
@@ -44,6 +50,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f0f5a131-aebb-4455-8704-285e576edf85"
+      }
     }
   }
 }

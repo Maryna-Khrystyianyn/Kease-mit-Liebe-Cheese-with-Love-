@@ -4,17 +4,24 @@ import { API_URL } from "@/constants/config";
 
 type AuthData = { email: string; password: string; username?: string };
 
-export async function register(data: AuthData) {
-  const res = await fetch(`${API_URL}/auth/register`, {
+export async function register(formData: FormData) {
+  const res = await fetch(`${API_URL}/register`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
+    body: formData, // multipart/form-data автоматично
   });
 
-  if (!res.ok) throw new Error("Register failed");
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || "Registration failed");
+  }
 
   const result = await res.json();
-  await SecureStore.setItemAsync("token", result.token);
+
+  // Якщо сервер повертає токен
+  if (result.token) {
+    await SecureStore.setItemAsync("token", result.token);
+  }
+
   return result.user;
 }
 
@@ -40,4 +47,51 @@ export async function logout() {
 
 export async function getToken() {
   return await SecureStore.getItemAsync("token");
+}
+export async function getMe() {
+  const token = await getToken();
+  if (!token) return null;
+
+  const res = await fetch(`${API_URL}/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) return null;
+  const result = await res.json();
+  return result.user;
+}
+
+export async function getUserProfile(nickname: string) {
+  const res = await fetch(`${API_URL}/user/${nickname}`);
+  if (!res.ok) throw new Error("Failed to fetch user profile");
+  return await res.json();
+}
+
+export async function getUserStats(nickname: string) {
+  const res = await fetch(`${API_URL}/user/${nickname}/stats`);
+  if (!res.ok) throw new Error("Failed to fetch user stats");
+  return await res.json();
+}
+
+export async function updateProfile(data: any) {
+  const token = await getToken();
+  if (!token) throw new Error("No token found");
+
+  const res = await fetch(`${API_URL}/profile/update`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || "Failed to update profile");
+  }
+
+  return await res.json();
 }

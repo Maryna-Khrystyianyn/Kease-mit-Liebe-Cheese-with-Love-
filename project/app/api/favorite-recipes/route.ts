@@ -50,3 +50,28 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    const user = await requireUser();
+    const favorites = await prisma.favorite_recipes.findMany({
+      where: {
+        user_nick: user.nick_name,
+      },
+      include: {
+        recipes: {
+          include: {
+            recipes_categories: true,
+          },
+        },
+      },
+    });
+
+    return NextResponse.json(favorites);
+  } catch {
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+}
