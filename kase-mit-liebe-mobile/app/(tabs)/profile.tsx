@@ -8,12 +8,13 @@ import {
   TextInput, 
   TouchableOpacity, 
   Switch,
-  Alert
+  Alert,
+  Pressable
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Colors } from "@/constants/theme";
-import { getMe, getUserStats, updateProfile } from "@/services/auth";
+import { getMe, getUserStats, updateProfile, logout, deleteAccount } from "@/services/auth";
 import { ThemedText } from "@/components/themed-text";
 import { Counter } from "@/components/Counter";
 import { IconSymbol } from "@/components/ui/icon-symbol";
@@ -69,6 +70,33 @@ export default function ProfileScreen() {
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    router.replace("/login");
+  };
+
+  const handleDeleteAccount = async () => {
+    Alert.alert(
+      "Account löschen",
+      "Bist du sicher, dass du dein Konto permanent löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+      [
+        { text: "Abbrechen", style: "cancel" },
+        {
+          text: "Löschen",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await deleteAccount();
+              router.replace("/");
+            } catch (error: any) {
+              Alert.alert("Fehler", error.message);
+            }
+          }
+        },
+      ]
+    );
   };
 
   if (loading) {
@@ -200,6 +228,27 @@ export default function ProfileScreen() {
         <StatCard label="Produktion diesen Monat" value={stats?.month || 0} suffix=" kg" icon="clock.fill" />
       </View>
 
+      {/* BUTTONS */}
+      <View className="px-5 mt-10 space-y-3 mb-5">
+        <Pressable
+          onPress={handleLogout}
+          className="py-4 bg-olive_bright rounded-2xl"
+        >
+          <Text className="text-white text-center font-bold text-lg">
+            Abmelden
+          </Text>
+        </Pressable>
+
+        <Pressable
+          onPress={handleDeleteAccount}
+          className="py-4"
+        >
+          <Text className="text-red-500 text-center font-medium">
+            Account löschen
+          </Text>
+        </Pressable>
+      </View>
+
       {/* PRIVACY LINK */}
       <TouchableOpacity
         className="mt-8 items-center"
@@ -211,7 +260,7 @@ export default function ProfileScreen() {
       </TouchableOpacity>
 
       {/* AGREEMENT */}
-      <View className="mt-5 mb-10 px-5 items-center">
+      <View className="mt-5 mb-12 px-5 items-center">
         <Text className="text-xs text-center opacity-70">
           Durch die Nutzung dieser App stimmen Sie unserer{" "}
           <Text

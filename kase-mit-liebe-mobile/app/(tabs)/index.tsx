@@ -73,10 +73,10 @@ export default function HomeScreen() {
         {nickname && hasBatches === false && <PublicBatchesCarousel />}
 
         {/* Main call-to-action */}
-        <HomeCTA />
+        {nickname && hasBatches === false && <HomeCTA />}
 
         {/* Cheese recommendations */}
-        <CheeseRecommendations />
+        {nickname && hasBatches === false && <CheeseRecommendations />}
 
         {/* User cheese timeline */}
         {nickname && hasBatches === true && (
