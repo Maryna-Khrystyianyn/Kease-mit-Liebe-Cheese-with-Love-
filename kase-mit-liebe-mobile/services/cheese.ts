@@ -156,3 +156,18 @@ export async function getPublicBatchesByRecipe(recipeId: number) {
   // Filter on client side since publick endpoint doesn't support recipeId filter yet
   return data.filter((b: any) => b.recipeId === recipeId);
 }
+
+export async function reportContent(targetId: string, type: string, reason: string) {
+  const token = await getToken();
+  const res = await fetch(`${API_URL}/reports`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify({ targetId, type, reason }),
+  });
+
+  if (!res.ok) throw new Error("Failed to send report");
+  return await res.json();
+}

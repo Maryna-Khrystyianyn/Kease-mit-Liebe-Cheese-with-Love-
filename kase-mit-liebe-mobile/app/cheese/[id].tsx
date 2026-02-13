@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { 
   View, 
   Text, 
   ScrollView, 
-  StyleSheet, 
   ActivityIndicator, 
   Image,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Modal,
+  Pressable,
+  Alert
 } from "react-native";
 import RenderHTML from "react-native-render-html";
 import { useLocalSearchParams, useRouter, useFocusEffect } from "expo-router";
 import { useCallback } from "react";
-import { getBatchDetails } from "@/services/cheese";
+import { getBatchDetails, reportContent } from "@/services/cheese";
 import { getMe } from "@/services/auth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Colors } from "@/constants/theme";
-import { stripHtml } from "@/services/stripHtml";
 
 export default function BatchDetailScreen() {
   const { id } = useLocalSearchParams();
@@ -29,6 +30,21 @@ export default function BatchDetailScreen() {
   const [batch, setBatch] = useState<any>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [reportModalVisible, setReportModalVisible] = useState(false);
+
+  const handleReport = () => {
+    setReportModalVisible(true);
+  };
+
+  const submitReport = async (reason: string) => {
+    setReportModalVisible(false);
+    try {
+      await reportContent(id as string, "batch", reason);
+      Alert.alert("Gemeldet", "Vielen Dank. Wir werden diesen Inhalt innerhalb von 24 Stunden prüfen.");
+    } catch (error: any) {
+      Alert.alert("Fehler", "Fehler beim Senden der Meldung.");
+    }
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -69,7 +85,8 @@ export default function BatchDetailScreen() {
   const isOwner = currentUser && (currentUser.nick_name === batch.user_nick);
 
   return (
-    <ScrollView className="flex-1" style={{ backgroundColor: colors.background }}>
+    <View className="flex-1" style={{ backgroundColor: colors.background }}>
+    <ScrollView className="flex-1">
       <View className="relative h-72">
         {batch.foto ? (
           <Image source={{ uri: batch.foto }} className="w-full h-full" resizeMode="cover" />
@@ -94,6 +111,15 @@ export default function BatchDetailScreen() {
           >
             <MaterialCommunityIcons name="pencil" size={20} color="#fff" />
             <Text className="text-white font-bold ml-1">Bearbeiten</Text>
+          </TouchableOpacity>
+        )}
+        {!isOwner && (
+          <TouchableOpacity 
+            onPress={handleReport} 
+            className="absolute top-12 right-5 w-10 h-10 rounded-full items-center justify-center"
+            style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+          >
+            <MaterialCommunityIcons name="flag" size={20} color="#fff" />
           </TouchableOpacity>
         )}
       </View>
@@ -165,6 +191,48 @@ export default function BatchDetailScreen() {
       </View>
       <View className="h-10" />
     </ScrollView>
+
+    {/* REPORT MODAL */}
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={reportModalVisible}
+      onRequestClose={() => setReportModalVisible(false)}
+    >
+      <Pressable 
+        className="flex-1 bg-black/50 justify-center items-center px-6"
+        onPress={() => setReportModalVisible(false)}
+      >
+        <Pressable 
+          className="w-full bg-white rounded-3xl p-6"
+          onPress={(e) => e.stopPropagation()}
+        >
+          <View className="flex-row justify-between items-center mb-6">
+            <Text className="text-xl font-bold text-textmain">Inhalt melden</Text>
+            <TouchableOpacity onPress={() => setReportModalVisible(false)}>
+              <MaterialCommunityIcons name="close" size={24} color="#333" />
+            </TouchableOpacity>
+          </View>
+
+          <Text className="text-gray-500 mb-6">Warum möchten Sie diesen Inhalt melden?</Text>
+          
+          <View className="space-y-1">
+            <ReportReasonButton label="Spam" onPress={() => submitReport("Spam")} icon="mail-off" />
+            <ReportReasonButton label="Unangemessen" onPress={() => submitReport("Inappropriate")} icon="alert-circle-outline" />
+            <ReportReasonButton label="Beleidigend" onPress={() => submitReport("Harassment")} icon="account-cancel-outline" />
+            <ReportReasonButton label="Anderes" onPress={() => submitReport("Other")} icon="dots-horizontal-circle-outline" />
+          </View>
+
+          <TouchableOpacity 
+            onPress={() => setReportModalVisible(false)}
+            className="mt-6 py-4 bg-gray-100 rounded-2xl"
+          >
+            <Text className="text-center font-bold text-gray-700">Abbrechen</Text>
+          </TouchableOpacity>
+        </Pressable>
+      </Pressable>
+    </Modal>
+    </View>
   );
 }
 
@@ -187,3 +255,13 @@ const InfoCard = ({ icon, label, value }: { icon: string; label: string; value: 
     </View>
   );
 };
+
+const ReportReasonButton = ({ label, onPress, icon }: { label: string; onPress: () => void; icon: any }) => (
+  <TouchableOpacity 
+    onPress={onPress}
+    className="flex-row items-center p-4 bg-gray-50 rounded-2xl border border-gray-100 mb-3"
+  >
+    <MaterialCommunityIcons name={icon} size={22} color="#52814d" />
+    <Text className="ml-3 text-lg font-medium text-textmain">{label}</Text>
+  </TouchableOpacity>
+);

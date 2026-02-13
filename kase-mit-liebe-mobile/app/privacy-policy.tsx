@@ -21,7 +21,7 @@ export default function PrivacyPolicyScreen() {
 
       <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 40 }}>
         <Text className="text-3xl font-bold mb-1" style={{ color: colors.tint }}>Käse mit Liebe</Text>
-        <Text className="text-sm mb-5" style={{ color: colors.icon }}>Letzte Aktualisierung: 12. Februar 2026</Text>
+        <Text className="text-sm mb-5" style={{ color: colors.icon }}>Letzte Aktualisierung: 13. Februar 2026</Text>
 
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Diese Datenschutzerklärung beschreibt, wie die Käse mit Liebe App und Website (im Folgenden „Service“, „wir“, „unser“) Benutzerinformationen sammelt, verwendet und schützt.
@@ -77,7 +77,10 @@ export default function PrivacyPolicyScreen() {
 
         <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>8. Löschung von Konto und Daten</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
-          Der Benutzer kann die Löschung seines Kontos und seiner personenbezogenen Daten beantragen, indem er uns über die auf der Website angegebenen Kontakte kontaktiert.
+          Wir respektieren Ihr Recht auf Vergessenwerden.{"\n"}
+          • **In-App-Löschung:** Sie können Ihr Konto und alle damit verbundenen Daten (Profil, Käse-Chargen, Kommentare) permanent löschen, indem Sie in Ihren Profileinstellungen auf „Account löschen“ klicken.{"\n"}
+          • **Manueller Antrag:** Alternativ können Sie die Löschung per E-Mail an die in dieser Richtlinie angegebenen Kontakte beantragen.{"\n"}
+          • **Datenbereinigung:** Nach der Löschung werden Ihre Daten unwiderruflich aus unserer aktiven Datenbank entfernt.
         </Text>
 
         <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>9. Zweck des Projekts</Text>
@@ -93,6 +96,14 @@ export default function PrivacyPolicyScreen() {
         <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>11. Kontakt</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Wenn Sie Fragen zu dieser Datenschutzerklärung haben, können Sie uns über die auf der Website angegebenen Kontaktinformationen kontaktieren.
+        </Text>
+
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>12. Moderation von Nutzerinhalten (UGC)</Text>
+        <Text className="text-base leading-6" style={{ color: colors.text }}>
+          Um eine sichere Umgebung für alle Nutzer zu gewährleisten, überwachen wir öffentlich geteilte Inhalte:{"\n"}
+          • **Meldemechanismus:** Nutzer können unangemessene Inhalte über die „Melden“-Schaltfläche (Flaggen-Symbol) direkt in der App melden.{"\n"}
+          • **Reaktionszeit:** Wir prüfen jede Meldung innerhalb von 24 Stunden.{"\n"}
+          • **Maßnahmen:** Inhalte, die gegen unsere Richtlinien verstoßen (z. B. Spam, Beleidigungen), werden entfernt. Nutzer, die wiederholt gegen Regeln verstoßen, können blockiert werden.
         </Text>
 
         <Text className="text-sm italic mt-8 pt-5 border-t border-gray-200" style={{ color: colors.icon }}>
