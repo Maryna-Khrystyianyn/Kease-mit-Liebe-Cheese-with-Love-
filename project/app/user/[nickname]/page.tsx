@@ -30,8 +30,28 @@ export default async function PublicUserPage({ params }: Params) {
     );
   }
 
-  const curentUser= await getUserFromToken()
+  const curentUser = await getUserFromToken();
 
+  const isOwner = curentUser?.nick_name === user.nick_name;
+  const isPublic = user.ispublic !== false;
+
+  if (!isPublic && !isOwner) {
+    return (
+      <PageWrapper>
+        <div className="max-w-2xl mx-auto p-12 text-center my-10">
+          <h1 className="text-4xl font-bold mb-6 text-(--text)">{user.nick_name}</h1>
+          <div className="bg-(--olive_light/20) border border-(--olive_bright/30) rounded-2xl p-8">
+            <p className="text-xl text-(--text) opacity-80">
+              Dies ist ein privates Profil.
+            </p>
+            <p className="mt-2 text-neutral-500">
+              Der Inhalt dieses Profils ist nur für den Besitzer sichtbar.
+            </p>
+          </div>
+        </div>
+      </PageWrapper>
+    );
+  }
 
   return (
     <PageWrapper>

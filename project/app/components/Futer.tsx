@@ -27,6 +27,9 @@ export default function Footer() {
             <li>
             <Link href={"/FAQ"} className="link-underline">FAQ</Link>
             </li>
+            <li>
+            <Link href={"/privacy-policy"} className="link-underline">Datenschutzerklärung</Link>
+            </li>
           </ul>
         </div>
 

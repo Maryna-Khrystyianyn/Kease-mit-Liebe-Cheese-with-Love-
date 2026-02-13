@@ -56,16 +56,13 @@ export default function UserBatchesCarousel({ nickname, refreshKey }: Props) {
           <Pressable
             key={batch.id}
             onPress={() => router.push(`/cheese/${batch.id}`)}
-            style={{ width: itemWidth, marginRight: 16 }}
+            style={{ width: itemWidth }}
+            className="mr-4"
           >
             <Image
               source={{ uri: batch.foto }}
-              style={{
-                width: "100%",
-                aspectRatio: 4 / 3,
-                borderRadius: 12,
-                resizeMode: "cover",
-              }}
+              className="w-full aspect-[4/3] rounded-xl"
+              style={{ resizeMode: "cover" }}
             />
           </Pressable>
         ))}

@@ -35,7 +35,7 @@ export default function RecipeCarouselItem({
         </div>
 
         {/* TITLE */}
-        <div className="p-3">
+        <div className="py-3 px-1">
           <h3 className="text-sm sm:text-base font-bold text-center line-clamp-2 bg-(--gray)">
             {name}
           </h3>

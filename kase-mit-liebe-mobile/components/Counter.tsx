@@ -5,10 +5,11 @@ interface CounterProps {
   targetValue: number;
   duration?: number;
   style?: TextStyle;
+  className?: string;
   suffix?: string;
 }
 
-export const Counter: React.FC<CounterProps> = ({ targetValue, duration = 2000, style, suffix = "" }) => {
+export const Counter: React.FC<CounterProps> = ({ targetValue, duration = 2000, style, className, suffix = "" }) => {
   const [count, setCount] = useState(0);
   const startTime = useRef(Date.now());
 
@@ -32,5 +33,5 @@ export const Counter: React.FC<CounterProps> = ({ targetValue, duration = 2000, 
     return () => clearInterval(interval);
   }, [targetValue, duration]);
 
-  return <Text style={style}>{count.toFixed(1)}{suffix}</Text>;
+  return <Text style={style} className={className}>{count.toFixed(1)}{suffix}</Text>;
 };

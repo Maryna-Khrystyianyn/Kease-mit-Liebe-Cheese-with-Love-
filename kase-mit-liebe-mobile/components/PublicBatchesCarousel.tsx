@@ -65,17 +65,14 @@ export default function PublicBatchesCarousel() {
           <Pressable
             key={batch.id}
             onPress={() => router.push(`/cheese/${batch.id}`)}
-            style={{ width: itemWidth, marginRight: 16 }}
+            style={{ width: itemWidth }}
+            className="mr-4"
           >
             <View className="relative">
               <Image
                 source={{ uri: batch.image }}
-                style={{
-                  width: "100%",
-                  aspectRatio: 4 / 3,
-                  borderRadius: 12,
-                  resizeMode: "cover",
-                }}
+                className="w-full aspect-[4/3] rounded-xl"
+                style={{ resizeMode: "cover" }}
               />
               <View className="absolute bottom-0 left-0 right-0 bg-black/40 p-2 rounded-b-xl">
                 <Text className="text-white font-bold text-xs" numberOfLines={1}>

@@ -62,7 +62,7 @@ export default function UserCheese({ nickname, refreshKey }: UserCheeseProps) {
 
   if (loading) {
     return (
-      <View style={[styles.center, { flex: 1 }]}>
+      <View className="flex-1 justify-center items-center">
         <ActivityIndicator size="large" color="#7A8F2A" />
       </View>
     );
@@ -70,9 +70,9 @@ export default function UserCheese({ nickname, refreshKey }: UserCheeseProps) {
 
   if (batches.length === 0) {
     return (
-      <View style={[styles.center, { flex: 1 }]}>
-        <Text style={styles.emptyText}>
-          sie haben keine Käsecharge zu verfolgen.
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-base text-gray-600">
+          sie haben keine Käсеcharge zu verfolgen.
         </Text>
       </View>
     );
@@ -96,8 +96,8 @@ export default function UserCheese({ nickname, refreshKey }: UserCheeseProps) {
     timelineBatches.length*110
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 20 }}>
-      <Text style={styles.title}>Кäsereifungsplan</Text>
+    <ScrollView className="flex-1 p-4" contentContainerStyle={{ paddingBottom: 20 }}>
+      <Text className="font-bold text-xl mt-3">Кäsereifungsplan</Text>
 
       <ScrollView style={{ height: heightContainer }}>
         <CheeseTimelineVertical groups={groups} onHide={hideFromTimeline}/>
@@ -105,24 +105,3 @@ export default function UserCheese({ nickname, refreshKey }: UserCheeseProps) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex:1,
-    padding: 16,
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 20,
-    
-    marginTop: 12,
-  },
-  center: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  emptyText: {
-    fontSize: 16,
-    color: "#555",
-  },
-});

@@ -69,6 +69,7 @@ export default function UserProfile({ user, curentUserNick }: Props) {
             </Link>
 
             <Link href={"/cheese-batches/add"} className="link-underline w-[185px] items-end text-(--olive_bright)">Neue Käsecharge herstellen</Link>
+            <Link href={"/privacy-policy"} className="link-underline w-[185px] items-end text-neutral-500 text-sm mt-4">Datenschutzerklärung</Link>
           </div>
         )}
       </div>
