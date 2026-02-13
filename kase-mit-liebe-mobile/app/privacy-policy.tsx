@@ -30,10 +30,11 @@ export default function PrivacyPolicyScreen() {
         <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>1. Welche Daten wir sammeln</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Bei der Registrierung und Nutzung des Service können wir folgende Daten sammeln:{"\n"}
-          • E-Mail-Adresse (E-Mail){"\n"}
+          • E-Mail-Adresse (verschlüsselt){"\n"}
           • Passwort (verschlüsselt gespeichert){"\n"}
           • Telefonnummer (optional){"\n"}
-          • Benutzerprofil-Daten
+          • Benutzerprofil-Daten{"\n"}
+          • Fotos und Bilder, die Sie für Ihren Avatar oder Ihre Käse-Chargen hochladen (erfordert Kamera- oder Dateizugriff)
         </Text>
 
         <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>2. Wie wir Daten verwenden</Text>
@@ -41,18 +42,27 @@ export default function PrivacyPolicyScreen() {
           Die gesammelten Daten werden verwendet für:{"\n"}
           • Erstellung und Verwaltung des Benutzerkontos{"\n"}
           • Anmeldung im System{"\n"}
+          • Anzeige von Benutzerprofilen und hochgeladenen Fotos{"\n"}
           • Gewährleistung des Betriebs der App und Website{"\n"}
           • Kontaktaufnahme mit dem Benutzer bei Bedarf
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>3. Profilanzeige</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>3. Nutzung der Kamera und Fotos</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
-          Die E-Mail des Benutzers kann im Profil angezeigt werden:{"\n"}
-          • Wenn das Profil öffentlich ist, können andere Benutzer die E-Mail sehen.{"\n"}
-          • Wenn das Profil privat ist, sieht nur der Kontoinhaber die E-Mail.
+          Um Fotos für Avatare oder Käse-Chargen hochzuladen, benötigt die App Zugriff auf die Kamera oder die Fotobibliothek Ihres Geräts.{"\n"}
+          • Sie können diese Berechtigungen jederzeit in Ihren Geräteeinstellungen widerrufen.{"\n"}
+          • Inhalte, die Urheberrechte verletzen oder gegen unsere Richtlinien verstoßen, können von anderen Nutzern gemeldet werden.{"\n"}
+          • Wir überprüfen Meldungen innerhalb von 24 Stunden und entfernen gegebenenfalls unangemessene Inhalte.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>4. Wo Daten gespeichert werden</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>4. Profilanzeige</Text>
+        <Text className="text-base leading-6" style={{ color: colors.text }}>
+          Die E-Mail des Benutzers kann im Profil angezeigt werden:{"\n"}
+          • Öffentliches Profil: andere Nutzer sehen die E-Mail.{"\n"}
+          • Privates Profil: nur der Kontoinhaber sieht die E-Mail.
+        </Text>
+
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>5. Wo Daten gespeichert werden</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Die Daten werden auf sicheren Servern von Drittanbietern gespeichert:{"\n"}
           • Vercel (Hosting der Website){"\n"}
@@ -60,45 +70,45 @@ export default function PrivacyPolicyScreen() {
           Wir ergreifen angemessene Maßnahmen, um Benutzerinformationen zu schützen.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>5. Weitergabe an Dritte</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>6. Weitergabe an Dritte</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Wir verkaufen oder geben personenbezogene Daten nicht an Dritte weiter, außer in Fällen, die für den Betrieb des Service erforderlich sind.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>6. Werbung und Analyse</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>7. Werbung und Analyse</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Im Service werden keine Werbung und keine Analysen von Drittanbietern verwendet.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>7. Online-Shop</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>8. Online-Shop</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
-          Auf der Website kann ein Demonstrations-Online-Shop angezeigt werden, der keine realен Verkäufe tätigt und keine Zahlungsdaten verarbeitet.
+          Auf der Website kann ein Demonstrations-Online-Shop angezeigt werden, der keine realen Verkäufe tätigt und keine Zahlungsdaten verarbeitet.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>8. Löschung von Konto und Daten</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>9. Löschung von Konto und Daten</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Wir respektieren Ihr Recht auf Vergessenwerden.{"\n"}
           • **In-App-Löschung:** Sie können Ihr Konto und alle damit verbundenen Daten (Profil, Käse-Chargen, Kommentare) permanent löschen, indem Sie in Ihren Profileinstellungen auf „Account löschen“ klicken.{"\n"}
-          • **Manueller Antrag:** Alternativ können Sie die Löschung per E-Mail an die in dieser Richtlinie angegebenen Kontakte beantragen.{"\n"}
+          • **Manueller Antrag:** Alternativ können Sie die Löschung per E-Mail an die auf der Website angegebenen Kontakte beantragen.{"\n"}
           • **Datenbereinigung:** Nach der Löschung werden Ihre Daten unwiderruflich aus unserer aktiven Datenbank entfernt.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>9. Zweck des Projekts</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>10. Zweck des Projekts</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Der Service ist ein Bildungsprojekt, das zum Zweck der Erlernung der Entwicklung von Websites und mobilen Apps erstellt wurde.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>10. Änderungen der Richtlinie</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>11. Änderungen der Richtlinie</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Wir können diese Datenschutzerklärung periodisch aktualisieren. Die aktuelle Version ist immer auf dieser Seite verfügbar.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>11. Kontakt</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>12. Kontakt</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Wenn Sie Fragen zu dieser Datenschutzerklärung haben, können Sie uns über die auf der Website angegebenen Kontaktinformationen kontaktieren.
         </Text>
 
-        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>12. Moderation von Nutzerinhalten (UGC)</Text>
+        <Text className="text-lg font-bold mt-5 mb-2" style={{ color: colors.tint }}>13. Moderation von Nutzerinhalten (UGC)</Text>
         <Text className="text-base leading-6" style={{ color: colors.text }}>
           Um eine sichere Umgebung für alle Nutzer zu gewährleisten, überwachen wir öffentlich geteilte Inhalte:{"\n"}
           • **Meldemechanismus:** Nutzer können unangemessene Inhalte über die „Melden“-Schaltfläche (Flaggen-Symbol) direkt in der App melden.{"\n"}
