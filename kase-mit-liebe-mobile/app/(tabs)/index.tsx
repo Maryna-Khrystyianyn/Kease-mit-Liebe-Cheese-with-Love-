@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import { getToken } from "@/services/auth";
 import { jwtDecode } from "jwt-decode";
 
@@ -23,26 +23,31 @@ export default function HomeScreen() {
 
   const router = useRouter();
 
-  // Check authentication
-  useEffect(() => {
-    const checkAuth = async () => {
-      const t = await getToken();
-      if (!t) {
-        router.replace("/login");
-        return;
-      }
-      setToken(t);
-      try {
-        const decoded = jwtDecode<TokenPayload>(t);
-        setNickname(decoded.nick_name);
-        checkUserBatches(decoded.nick_name);
-      } catch (err) {
-        console.error("Token decode error:", err);
-      }
-    };
+  // Check authentication on focus
+  useFocusEffect(
+    useCallback(() => {
+      const checkAuth = async () => {
+        const t = await getToken();
+        if (!t) {
+          setNickname(null);
+          setToken(null);
+          router.replace("/login");
+          return;
+        }
+        setToken(t);
+        try {
+          const decoded = jwtDecode<TokenPayload>(t);
+          setNickname(decoded.nick_name);
+          checkUserBatches(decoded.nick_name);
+        } catch (err) {
+          console.error("Token decode error:", err);
+          router.replace("/login");
+        }
+      };
 
-    checkAuth();
-  }, []);
+      checkAuth();
+    }, [router])
+  );
 
   // Check if the user has their own batches
   const checkUserBatches = async (name: string) => {

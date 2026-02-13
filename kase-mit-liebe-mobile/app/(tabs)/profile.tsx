@@ -89,7 +89,7 @@ export default function ProfileScreen() {
           onPress: async () => {
             try {
               await deleteAccount();
-              router.replace("/");
+              router.replace("/login");
             } catch (error: any) {
               Alert.alert("Fehler", error.message);
             }
