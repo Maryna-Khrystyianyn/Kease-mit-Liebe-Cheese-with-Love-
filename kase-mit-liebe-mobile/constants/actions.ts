@@ -26,9 +26,4 @@ export type HomeAction = {
       icon: "book-open-page-variant",
       route: "/recipes",
     },
-    {
-      label: "Shop",
-      icon: "cart",
-      externalUrl: "https://kease-mit-liebe-cheese-with-love.vercel.app/shop", // <-- сюди твій URL
-    },
   ];

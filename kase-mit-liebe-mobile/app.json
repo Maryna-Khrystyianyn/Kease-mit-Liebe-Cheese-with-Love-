@@ -2,7 +2,7 @@
   "expo": {
     "name": "KäseTagebuch",
     "slug": "kase-mit-liebe-mobile",
-    "version": "1.0.0",
+    "version": "1.4.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "scheme": "kasemitliebemobile",
@@ -12,7 +12,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 5,
       "minSdkVersion": 23,
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",

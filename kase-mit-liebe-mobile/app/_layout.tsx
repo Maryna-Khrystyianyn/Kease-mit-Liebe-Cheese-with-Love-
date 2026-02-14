@@ -1,11 +1,14 @@
+import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
+import * as SplashScreen from "expo-splash-screen";
+import { ThemeProvider, DarkTheme, DefaultTheme } from "@react-navigation/native";
 import { getToken } from "@/services/auth";
-import SplashScreen from "@/components/SplashScreen";
+import AppSplashScreen from "@/components/SplashScreen";
 
 import { Colors } from "@/constants/theme";
 
@@ -25,7 +28,7 @@ export default function RootLayout() {
   }, []);
 
   if (loading) {
-    return <SplashScreen onFinish={() => setLoading(false)} />;
+    return <AppSplashScreen onFinish={() => setLoading(false)} />;
   } 
 
   return (

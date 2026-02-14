@@ -27,8 +27,8 @@ export default function HomeActions() {
           onPress={() => handlePress(item)}
           className=" items-center"
         >
-          <View className="w-12 h-12 rounded-full bg-olive_bright items-center justify-center">
-            <MaterialCommunityIcons name={item.icon as any} size={28} color="white" />
+          <View className="w-16 h-16 rounded-full mx-4 bg-olive_bright items-center justify-center">
+            <MaterialCommunityIcons name={item.icon as any} size={32} color="white" />
           </View>
           <Text className="text-[10px] font-bold text-center mt-2 w-20 text-textmain">
             {item.label}
