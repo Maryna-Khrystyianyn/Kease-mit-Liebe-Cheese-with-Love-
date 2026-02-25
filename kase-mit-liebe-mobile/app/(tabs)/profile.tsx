@@ -12,7 +12,7 @@ import {
   Pressable
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useColorScheme } from "nativewind";
 import { Colors } from "@/constants/theme";
 import { getMe, getUserStats, updateProfile, logout, deleteAccount } from "@/services/auth";
 import { ThemedText } from "@/components/themed-text";
@@ -20,8 +20,9 @@ import { Counter } from "@/components/Counter";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 
 export default function ProfileScreen() {
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+  const { colorScheme } = useColorScheme();
+  const currentScheme = colorScheme || "light";
+  const colors = Colors[currentScheme];
   const router = useRouter();
 
   const [user, setUser] = useState<any>(null);
@@ -101,7 +102,7 @@ export default function ProfileScreen() {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-background">
+      <View className="flex-1 justify-center items-center bg-background dark:bg-neutral-900">
         <ActivityIndicator size="large" color={colors.tint} />
       </View>
     );
@@ -109,14 +110,14 @@ export default function ProfileScreen() {
 
   if (!user) {
     return (
-      <View className="flex-1 justify-center items-center bg-background">
+      <View className="flex-1 justify-center items-center bg-background dark:bg-neutral-900">
         <ThemedText>Bitte melden Sie sich an, um Ihr Profil zu sehen.</ThemedText>
       </View>
     );
   }
 
   return (
-    <ScrollView className="flex-1 bg-background">
+    <ScrollView className="flex-1 bg-background dark:bg-neutral-900">
       {/* HEADER */}
       <View className="items-center pt-16 pb-6">
         {user.avatar ? (
@@ -261,7 +262,7 @@ export default function ProfileScreen() {
 
       {/* AGREEMENT */}
       <View className="mt-5 mb-12 px-5 items-center">
-        <Text className="text-xs text-center opacity-70">
+        <Text className="text-xs text-textmain dark:text-neutral-100 text-center opacity-70">
           Durch die Nutzung dieser App stimmen Sie unserer{" "}
           <Text
             className="text-blue-500 underline"
@@ -291,21 +292,12 @@ const InfoItem = ({
   multiline?: boolean;
   vertical?: boolean;
 }) => {
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
-
   return (
-    <View className={`py-3 border-b border-gray-300 ${vertical ? "flex-col items-start gap-1" : "flex-row justify-between items-center gap-2"}`}>
+    <View className={`py-3 border-b border-gray-300 dark:border-neutral-800 ${vertical ? "flex-col items-start gap-1" : "flex-row justify-between items-center gap-2"}`}>
       <ThemedText className={`font-bold text-base ${vertical ? "mb-1" : "flex-[0.4]"}`}>{label}:</ThemedText>
       {isEditing ? (
         <TextInput
-          className={`${vertical ? "w-full py-2" : "flex-[0.6] py-1"} border rounded-lg px-3 text-base`}
-          style={{ 
-            color: colors.text, 
-            borderColor: colors.icon,
-            backgroundColor: colorScheme === 'dark' ? '#333' : '#f9f9f9',
-            minHeight: multiline ? 60 : 40
-          }}
+          className={`${vertical ? "w-full py-2" : "flex-[0.6] py-1"} border rounded-lg px-3 text-base text-textmain dark:text-neutral-100 border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 ${multiline ? 'h-[60px]' : 'h-[40px]'}`}
           value={value || ""}
           onChangeText={onChangeText}
           multiline={multiline}
@@ -320,17 +312,22 @@ const InfoItem = ({
 };
 
 const StatCard = ({ label, value, suffix, icon }: { label: string; value: number; suffix: string; icon: string }) => {
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+  const { colorScheme } = useColorScheme();
+  const currentScheme = colorScheme || "light";
+  const colors = Colors[currentScheme];
   
   return (
     <View 
-      className={`flex-row items-center p-4 rounded-xl gap-4 ${colorScheme === 'light' ? 'bg-gray-100' : 'bg-[#2c2c2e]'}`}
+      className={`flex-row items-center p-4 rounded-xl gap-4 ${currentScheme === 'light' ? 'bg-gray-100' : 'bg-neutral-800'}`}
     >
       <IconSymbol name={icon as any} size={24} color={colors.tint} />
       <View className="flex-1">
         <ThemedText className="text-sm opacity-70">{label}</ThemedText>
-        <Counter targetValue={value} suffix={suffix} className="text-xl font-bold" />
+        <Counter 
+          targetValue={value} 
+          suffix={suffix} 
+          className="text-xl font-bold text-textmain dark:text-neutral-100" 
+        />
       </View>
     </View>
   );

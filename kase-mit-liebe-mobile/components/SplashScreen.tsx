@@ -30,7 +30,7 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
  
 
   return (
-    <View className="flex-1 justify-center items-center bg-white">
+    <View className="flex-1 justify-center items-center bg-white dark:bg-neutral-900">
 
       {/* Logo & Name */}
       <View className="flex-row items-center mb-10">

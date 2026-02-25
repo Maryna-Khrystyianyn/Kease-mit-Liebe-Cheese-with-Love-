@@ -44,7 +44,7 @@ export default function UserBatchesCarousel({ nickname, refreshKey }: Props) {
 
   return (
     <View className="mt-6">
-      <Text className="font-bold text-2xl text-textmain px-6 h-12">
+      <Text className="font-bold text-2xl text-textmain dark:text-neutral-100 px-6 h-12">
         Meine Käsechargen
       </Text>
       <ScrollView
@@ -61,8 +61,7 @@ export default function UserBatchesCarousel({ nickname, refreshKey }: Props) {
           >
             <Image
               source={{ uri: batch.foto }}
-              className="w-full aspect-[4/3] rounded-xl"
-              style={{ resizeMode: "cover" }}
+              className="w-full aspect-[4/3] rounded-xl resize-cover"
             />
           </Pressable>
         ))}

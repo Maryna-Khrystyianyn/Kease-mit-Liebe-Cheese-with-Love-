@@ -13,13 +13,15 @@ import {
 import { useRouter, useFocusEffect } from "expo-router";
 import { getRecipes, getCategories } from "@/services/cheese";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useColorScheme } from "nativewind";
 import { Colors } from "@/constants/theme";
 
 export default function AllRecipesScreen() {
   const router = useRouter();
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+  const { colorScheme } = useColorScheme();
+  const currentScheme = colorScheme || "light";
+  const colors = Colors[currentScheme];
+  const isDark = currentScheme === "dark";
 
   const [recipes, setRecipes] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
@@ -73,35 +75,31 @@ export default function AllRecipesScreen() {
   const renderItem = ({ item }: { item: any }) => (
     <TouchableOpacity 
       onPress={() => router.push(`/recipes/${item.id}`)}
-      className="mb-6 rounded-2xl overflow-hidden shadow-sm border"
-      style={{ 
-        backgroundColor: colorScheme === 'light' ? '#fff' : '#2c2c2e',
-        borderColor: colorScheme === 'light' ? '#eee' : '#333'
-      }}
+      className="mb-6 rounded-2xl overflow-hidden shadow-sm border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800"
     >
       {item.image ? (
         <Image source={{ uri: item.image }} className="w-full h-48" />
       ) : (
-        <View className="w-full h-48 items-center justify-center bg-gray-100">
-          <MaterialCommunityIcons name="book-open-page-variant" size={60} color="#ccc" />
+        <View className="w-full h-48 items-center justify-center bg-neutral-100 dark:bg-neutral-700">
+          <MaterialCommunityIcons name="book-open-page-variant" size={60} color={isDark ? "#555" : "#ccc"} />
         </View>
       )}
       <View className="p-4">
-        <Text className="text-xl font-bold mb-2" style={{ color: colors.text }}>
+        <Text className="text-xl font-bold mb-2 text-textmain dark:text-neutral-100">
           {item.name}
         </Text>
         
         <View className="flex-row justify-between mb-3">
           <View className="flex-row items-center">
             <MaterialCommunityIcons name="tag-outline" size={16} color="#e29b03" />
-            <Text className="ml-1 text-sm opacity-60" style={{ color: colors.text }}>
+            <Text className="ml-1 text-sm opacity-60 text-textmain dark:text-neutral-400">
               {item.recipes_categories?.name}
             </Text>
           </View>
           {item.aging && (
             <View className="flex-row items-center">
               <MaterialCommunityIcons name="clock-outline" size={16} color="#e29b03" />
-              <Text className="ml-1 text-sm opacity-60" style={{ color: colors.text }}>
+              <Text className="ml-1 text-sm opacity-60 text-textmain dark:text-neutral-400">
                 {item.aging} Tage
               </Text>
             </View>
@@ -110,9 +108,8 @@ export default function AllRecipesScreen() {
 
         {item.description && (
           <Text 
-            className="text-sm opacity-80" 
+            className="text-sm opacity-80 text-textmain dark:text-neutral-300" 
             numberOfLines={3}
-            style={{ color: colors.text }}
           >
             {item.description}
           </Text>
@@ -122,30 +119,28 @@ export default function AllRecipesScreen() {
   );
 
   return (
-    <View className="flex-1" style={{ backgroundColor: colors.background }}>
+    <View className="flex-1 bg-white dark:bg-neutral-900">
       <View className="px-5 pt-12 pb-4">
         <View className="flex-row items-center mb-4">
           <TouchableOpacity onPress={() => router.back()} className="mr-2">
-            <MaterialCommunityIcons name="arrow-left" size={28} color={colors.text} />
+            <MaterialCommunityIcons name="arrow-left" size={28} color={isDark ? "#fff" : "#000"} />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold" style={{ color: colors.text }}>
+          <Text className="text-2xl font-bold text-textmain dark:text-neutral-100">
             Alle Rezepte
           </Text>
         </View>
 
         {/* Search Bar */}
         <View 
-          className="flex-row items-center px-4 h-12 rounded-full border mb-4"
-          style={{ borderColor: "#ccc", backgroundColor: colorScheme === 'light' ? '#f0f0f0' : '#333' }}
+          className="flex-row items-center px-4 h-12 rounded-full border mb-4 border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800"
         >
           <MaterialCommunityIcons name="magnify" size={20} color="#999" />
           <TextInput
-            className="flex-1 ml-2"
+            className="flex-1 ml-2 text-textmain dark:text-neutral-100"
             placeholder="Rezept suchen..."
             placeholderTextColor="#999"
             value={search}
             onChangeText={setSearch}
-            style={{ color: colors.text }}
           />
           {search.length > 0 && (
             <TouchableOpacity onPress={() => setSearch("")}>
@@ -163,17 +158,17 @@ export default function AllRecipesScreen() {
         >
           <TouchableOpacity 
             onPress={() => setSelectedCategory(null)}
-            className={`px-4 py-2 rounded-full border ${!selectedCategory ? 'bg-olive_bright border-olive_bright' : 'border-gray-300'}`}
+            className={`px-4 py-2 rounded-full border ${!selectedCategory ? 'bg-olive_bright border-olive_bright' : (isDark ? 'border-neutral-700' : 'border-gray-300')}`}
           >
-            <Text style={{ color: !selectedCategory ? '#fff' : colors.text }}>Alle</Text>
+            <Text className={!selectedCategory ? 'text-white' : 'text-textmain dark:text-neutral-400'}>Alle</Text>
           </TouchableOpacity>
           {categories.map(cat => (
             <TouchableOpacity 
               key={cat.id}
               onPress={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-full border ${selectedCategory === cat.id ? 'bg-olive_bright border-olive_bright' : 'border-gray-300'}`}
+              className={`px-4 py-2 rounded-full border ${selectedCategory === cat.id ? 'bg-olive_bright border-olive_bright' : (isDark ? 'border-neutral-700' : 'border-gray-300')}`}
             >
-              <Text style={{ color: selectedCategory === cat.id ? '#fff' : colors.text }}>{cat.name}</Text>
+              <Text className={selectedCategory === cat.id ? 'text-white' : 'text-textmain dark:text-neutral-400'}>{cat.name}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -182,21 +177,21 @@ export default function AllRecipesScreen() {
         <View className="flex-row gap-2 mb-4">
           <TouchableOpacity 
             onPress={() => setSelectedAging(selectedAging === 'short' ? null : 'short')}
-            className={`flex-1 py-2 rounded-lg border items-center ${selectedAging === 'short' ? 'bg-orange-100 border-orange-400' : 'border-gray-200'}`}
+            className={`flex-1 py-2 rounded-lg border items-center ${selectedAging === 'short' ? 'bg-orange-50 dark:bg-orange-900/20 border-orange-400' : (isDark ? 'border-neutral-700' : 'border-gray-200')}`}
           >
-            <Text className="text-xs" style={{ color: selectedAging === 'short' ? '#e29b03' : colors.text }}>&lt; 30 Tage</Text>
+            <Text className="text-xs" style={{ color: selectedAging === 'short' ? '#e29b03' : (isDark ? '#999' : '#666') }}>&lt; 30 Tage</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             onPress={() => setSelectedAging(selectedAging === 'medium' ? null : 'medium')}
-            className={`flex-1 py-2 rounded-lg border items-center ${selectedAging === 'medium' ? 'bg-orange-100 border-orange-400' : 'border-gray-200'}`}
+            className={`flex-1 py-2 rounded-lg border items-center ${selectedAging === 'medium' ? 'bg-orange-50 dark:bg-orange-900/20 border-orange-400' : (isDark ? 'border-neutral-700' : 'border-gray-200')}`}
           >
-            <Text className="text-xs" style={{ color: selectedAging === 'medium' ? '#e29b03' : colors.text }}>30-90 Tage</Text>
+            <Text className="text-xs" style={{ color: selectedAging === 'medium' ? '#e29b03' : (isDark ? '#999' : '#666') }}>30-90 Tage</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             onPress={() => setSelectedAging(selectedAging === 'long' ? null : 'long')}
-            className={`flex-1 py-2 rounded-lg border items-center ${selectedAging === 'long' ? 'bg-orange-100 border-orange-400' : 'border-gray-200'}`}
+            className={`flex-1 py-2 rounded-lg border items-center ${selectedAging === 'long' ? 'bg-orange-50 dark:bg-orange-900/20 border-orange-400' : (isDark ? 'border-neutral-700' : 'border-gray-200')}`}
           >
-            <Text className="text-xs" style={{ color: selectedAging === 'long' ? '#e29b03' : colors.text }}>&gt; 90 Tage</Text>
+            <Text className="text-xs" style={{ color: selectedAging === 'long' ? '#e29b03' : (isDark ? '#999' : '#666') }}>&gt; 90 Tage</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -210,13 +205,14 @@ export default function AllRecipesScreen() {
           data={filteredRecipes}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
-          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}
+          className="px-5"
+          contentContainerStyle={{ paddingBottom: 20 }}
           onRefresh={onRefresh}
           refreshing={refreshing}
           ListEmptyComponent={
             <View className="items-center mt-20">
-              <MaterialCommunityIcons name="book-off-outline" size={60} color="#ccc" />
-              <Text className="text-lg opacity-60 mt-4" style={{ color: colors.text }}>
+              <MaterialCommunityIcons name="book-off-outline" size={60} color={isDark ? "#444" : "#ccc"} />
+              <Text className="text-lg opacity-60 mt-4 text-textmain dark:text-neutral-400">
                 Keine Rezepte gefunden.
               </Text>
             </View>

@@ -16,9 +16,9 @@ export default function CheeseCard({ title, subtitle, image, onPress }: Props) {
         className="w-full h-36 justify-center"
         imageStyle={{ borderRadius: 16 }}
       >
-        <View className="bg-white/85 p-2">
+        <View className="bg-white/85 dark:bg-neutral-800/85 p-2">
           <Text className="font-bold text-lg text-olive_bright text-center">{title}</Text>
-          <Text className="text-[12px] text-gray-500 text-center">{subtitle}</Text>
+          <Text className="text-[12px] text-gray-500 dark:text-neutral-400 text-center">{subtitle}</Text>
         </View>
       </ImageBackground>
     </Pressable>

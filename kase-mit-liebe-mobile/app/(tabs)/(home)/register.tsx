@@ -12,11 +12,17 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import * as SecureStore from "expo-secure-store";
-import { register } from "@/services/auth"; // твоя функція register повинна підтримувати FormData
+import { register } from "@/services/auth";
 import { API_URL } from "@/constants/config";
+import { useColorScheme } from "nativewind";
+
+import { LoadingOverlay } from "@/components/ui/LoadingOverlay";
 
 export default function RegisterScreen() {
   const router = useRouter();
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === "dark";
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     nick_name: "",
@@ -55,6 +61,8 @@ export default function RegisterScreen() {
   };
 
   const handleRegister = async () => {
+    if (loading) return;
+    setLoading(true);
     try {
       let avatarUrl = form.avatar;
   
@@ -114,82 +122,88 @@ export default function RegisterScreen() {
       router.replace("/");
     } catch (e: any) {
       Alert.alert("Fehler", e.message);
+    } finally {
+      setLoading(false);
     }
   };
   
-  
-
   return (
-    <ScrollView className="flex-1 bg-white p-4">
-      <Text className="text-3xl font-bold mb-6">Registrierung</Text>
+    <ScrollView className="flex-1 bg-white dark:bg-neutral-900 p-4">
+      <Text className="text-3xl font-bold mb-6 text-textmain dark:text-neutral-100">Registrierung</Text>
 
       {/* Фото профілю */}
       <Pressable onPress={pickImage} className="mb-4 items-center">
         {form.avatar ? (
           <Image
             source={{ uri: form.avatar }}
-            className="w-32 h-32 rounded-full"
+            className="w-32 h-32 rounded-full border-2 border-olive_bright"
           />
         ) : (
-          <View className="w-32 h-32 bg-gray-200 rounded-full items-center justify-center">
-            <Text>Foto wählen</Text>
+          <View className="w-32 h-32 bg-gray-200 dark:bg-neutral-800 rounded-full items-center justify-center border-2 border-dashed border-olive_bright">
+            <Text className="text-textmain dark:text-neutral-400">Foto wählen</Text>
           </View>
         )}
       </Pressable>
 
       {/* Inputs */}
-      <Input label="Spitzname *" value={form.nick_name} onChange={(v:string) => handleChange("nick_name", v)} />
-      <Input label="Benutzername *" value={form.username} onChange={(v:string) => handleChange("username", v)} />
-      <Input label="E-Mail *" value={form.email} onChange={(v:string) => handleChange("email", v)} />
-      <Input label="Passwort *" value={form.password} secure onChange={(v:string) => handleChange("password", v)} />
-      <Input label="Telefon" value={form.telefon} onChange={(v:string) => handleChange("telefon", v)} />
-      <Input label="Adresse" value={form.user_address} onChange={(v:string) => handleChange("user_address", v)} />
-      <Input label="Stimmung" value={form.mood} multiline onChange={(v:string) => handleChange("mood", v)} />
-      <Input label="Informationen über dich" value={form.info} multiline onChange={(v:string) => handleChange("info", v)} />
+      <Input label="Spitzname *" value={form.nick_name} onChange={(v:string) => handleChange("nick_name", v)} isDark={isDark} />
+      <Input label="Benutzername *" value={form.username} onChange={(v:string) => handleChange("username", v)} isDark={isDark} />
+      <Input label="E-Mail *" value={form.email} onChange={(v:string) => handleChange("email", v)} isDark={isDark} />
+      <Input label="Passwort *" value={form.password} secure onChange={(v:string) => handleChange("password", v)} isDark={isDark} />
+      <Input label="Telefon" value={form.telefon} onChange={(v:string) => handleChange("telefon", v)} isDark={isDark} />
+      <Input label="Adresse" value={form.user_address} onChange={(v:string) => handleChange("user_address", v)} isDark={isDark} />
+      <Input label="Stimmung" value={form.mood} multiline onChange={(v:string) => handleChange("mood", v)} isDark={isDark} />
+      <Input label="Informationen über dich" value={form.info} multiline onChange={(v:string) => handleChange("info", v)} isDark={isDark} />
 
       {/* Switches */}
       <View className="flex-row justify-between items-center my-3">
-        <Text>Öffentliches Profil</Text>
-        <View style={{ transform: [{ scale: 1.3 }] }}>
+        <Text className="text-textmain dark:text-neutral-300">Öffentliches Profil</Text>
+        <View className="scale-125">
           <Switch
             value={form.ispublic}
             onValueChange={(v) => handleChange("ispublic", v)}
-            trackColor={{ false: "#e5e5e5", true: "#e29b03" }}
+            trackColor={{ false: isDark ? "#444" : "#e5e5e5", true: "#e29b03" }}
             thumbColor={form.ispublic ? "#52814d" : "#a8b6a6"}
           />
         </View>
       </View>
 
       <View className="flex-row justify-between items-center mb-6">
-        <Text>Newsletter abonnieren</Text>
-        <View style={{ transform: [{ scale: 1.3 }] }}>
+        <Text className="text-textmain dark:text-neutral-300">Newsletter abonnieren</Text>
+        <View className="scale-125">
           <Switch
             value={form.issubscribed}
             onValueChange={(v) => handleChange("issubscribed", v)}
-            trackColor={{ false: "#e5e5e5", true: "#e29b03" }}
+            trackColor={{ false: isDark ? "#444" : "#e5e5e5", true: "#e29b03" }}
             thumbColor={form.issubscribed ? "#52814d" : "#a8b6a6"}
           />
         </View>
       </View>
 
-      <Pressable onPress={handleRegister} className="bg-olive_bright py-3 rounded mb-20">
+      <Pressable 
+        onPress={handleRegister} 
+        disabled={loading}
+        className={`bg-olive_bright py-3 rounded mb-20 active:opacity-80 ${loading ? 'opacity-50' : ''}`}
+      >
         <Text className="text-white text-center font-bold text-lg">Registrieren</Text>
       </Pressable>
+      <LoadingOverlay visible={loading} />
     </ScrollView>
   );
 }
 
 /* reusable Input */
-function Input({ label, value, onChange, secure = false, multiline = false }: any) {
+function Input({ label, value, onChange, secure = false, multiline = false, isDark }: any) {
   return (
     <View className="mb-4">
-      <Text className="mb-1 text-olive_bright">{label}</Text>
+      <Text className="mb-1 text-olive_bright font-medium">{label}</Text>
       <TextInput
         value={value}
         onChangeText={onChange}
         secureTextEntry={secure}
         multiline={multiline}
-        className="border border-olive p-3 rounded"
+        placeholderTextColor={isDark ? "#777" : "#999"}
+        className="border border-olive p-3 rounded text-textmain dark:text-neutral-100 bg-transparent dark:bg-neutral-800"
       />
     </View>
   );

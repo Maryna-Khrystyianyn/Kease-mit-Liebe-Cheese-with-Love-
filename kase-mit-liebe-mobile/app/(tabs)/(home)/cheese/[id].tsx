@@ -18,14 +18,15 @@ import { getBatchDetails, reportContent } from "@/services/cheese";
 import { getMe } from "@/services/auth";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useColorScheme } from "nativewind";
 import { Colors } from "@/constants/theme";
 
 export default function BatchDetailScreen() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+  const { colorScheme } = useColorScheme();
+  const currentScheme = colorScheme || "light";
+  const colors = Colors[currentScheme];
 
   const [batch, setBatch] = useState<any>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -68,7 +69,7 @@ export default function BatchDetailScreen() {
 
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center" style={{ backgroundColor: colors.background }}>
+      <View className="flex-1 items-center justify-center bg-white dark:bg-neutral-900">
         <ActivityIndicator size="large" color="#e29b03" />
       </View>
     );
@@ -76,8 +77,8 @@ export default function BatchDetailScreen() {
 
   if (!batch) {
     return (
-      <View className="flex-1 items-center justify-center" style={{ backgroundColor: colors.background }}>
-        <Text style={{ color: colors.text }}>Batch nicht gefunden.</Text>
+      <View className="flex-1 items-center justify-center bg-white dark:bg-neutral-900">
+        <Text className="text-textmain dark:text-neutral-100">Batch nicht gefunden.</Text>
       </View>
     );
   }
@@ -85,20 +86,19 @@ export default function BatchDetailScreen() {
   const isOwner = currentUser && (currentUser.nick_name === batch.user_nick);
 
   return (
-    <View className="flex-1" style={{ backgroundColor: colors.background }}>
+    <View className="flex-1 bg-white dark:bg-neutral-900">
     <ScrollView className="flex-1">
       <View className="relative h-72">
         {batch.foto ? (
-          <Image source={{ uri: batch.foto }} className="w-full h-full" resizeMode="cover" />
+          <Image source={{ uri: batch.foto }} className="w-full h-full resize-cover" />
         ) : (
-          <View className="w-full h-full items-center justify-center bg-gray-200">
+          <View className="w-full h-full items-center justify-center bg-neutral-100 dark:bg-neutral-800">
             <MaterialCommunityIcons name="cheese" size={100} color="#ccc" />
           </View>
         )}
         <TouchableOpacity 
           onPress={() => router.back()} 
-          className="absolute top-12 left-5 w-10 h-10 rounded-full items-center justify-center"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+          className="absolute top-12 left-5 w-10 h-10 rounded-full items-center justify-center bg-black/50"
         >
           <MaterialCommunityIcons name="arrow-left" size={24} color="#fff" />
         </TouchableOpacity>
@@ -106,8 +106,7 @@ export default function BatchDetailScreen() {
         {isOwner && (
           <TouchableOpacity 
             onPress={() => router.push(`/cheese/edit/${batch.id}`)} 
-            className="absolute top-12 right-5 px-4 h-10 rounded-full items-center justify-center flex-row"
-            style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+            className="absolute top-12 right-5 px-4 h-10 rounded-full items-center justify-center flex-row bg-black/50"
           >
             <MaterialCommunityIcons name="pencil" size={20} color="#fff" />
             <Text className="text-white font-bold ml-1">Bearbeiten</Text>
@@ -116,8 +115,7 @@ export default function BatchDetailScreen() {
         {!isOwner && (
           <TouchableOpacity 
             onPress={handleReport} 
-            className="absolute top-12 right-5 w-10 h-10 rounded-full items-center justify-center"
-            style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+            className="absolute top-12 right-5 w-10 h-10 rounded-full items-center justify-center bg-black/50"
           >
             <MaterialCommunityIcons name="flag" size={20} color="#fff" />
           </TouchableOpacity>
@@ -125,10 +123,10 @@ export default function BatchDetailScreen() {
       </View>
 
       <View className="px-5 py-6">
-        <Text className="text-2xl font-bold mb-1" style={{ color: colors.text }}>
+        <Text className="text-2xl font-bold mb-1 text-textmain dark:text-neutral-100">
           {batch.recipes.name} {dayjs(batch.date_batch).format("DD.MM.YYYY")} 
         </Text>
-        <Text className="text-base opacity-60 mb-6" style={{ color: colors.text }}>
+        <Text className="text-base opacity-60 mb-6 text-textmain dark:text-neutral-400">
           {batch.recipes.recipes_categories.name}
         </Text>
 
@@ -141,18 +139,18 @@ export default function BatchDetailScreen() {
           <InfoCard 
             icon="calendar-check" 
             label="Reifedatum" 
-            value={batch.ready_at ? dayjs(batch.ready_at).format("DD.MM.YYYY") : "Nicht angegeben"} 
+            value={batch.ready_at ? dayjs(batch.ready_at).format("DD.MM.YYYY") : "Nicht angegeben"}
           />
         </View>
 
         <View className="mb-8">
-          <Text className="text-lg font-bold mb-3 border-b pb-2" style={{ color: colors.text, borderColor: '#ccc' }}>
+          <Text className="text-lg font-bold mb-3 border-b pb-2 text-textmain dark:text-neutral-100 dark:border-neutral-800">
             Milch
           </Text>
           {batch.milk_in_batch.map((m: any, index: number) => (
             <View key={index} className="flex-row items-center mb-2">
               <MaterialCommunityIcons name="water" size={18} color="#52814d" />
-              <Text className="ml-2 text-base" style={{ color: colors.text }}>
+              <Text className="ml-2 text-base text-textmain dark:text-neutral-300">
                 {m.ingredients.name}: <Text className="font-bold">{m.amount} L</Text>
               </Text>
             </View>
@@ -161,14 +159,14 @@ export default function BatchDetailScreen() {
 
         {batch.description && (
           <View className="mb-8 ">
-            <Text className="text-lg font-bold mb-3 border-b pb-2" style={{ color: colors.text, borderColor: '#ccc' }}>
+            <Text className="text-lg font-bold mb-3 border-b pb-2 text-textmain dark:text-neutral-100 dark:border-neutral-800">
               Beschreibung
             </Text>
             <RenderHTML
               contentWidth={Dimensions.get("window").width - 40}
               source={{ html: batch.description }}
               baseStyle={{ 
-                color: colors.text, 
+                color: currentScheme === 'dark' ? '#ECEDEE' : '#2a2424', 
                 fontSize: 16, 
                 lineHeight: 24 
               }}
@@ -180,11 +178,11 @@ export default function BatchDetailScreen() {
           </View>
         )}
 
-        <View className="flex-row items-center pt-6 border-t" style={{ borderColor: '#ccc' }}>
+        <View className="flex-row items-center pt-6 border-t dark:border-neutral-800 border-neutral-100">
           {batch.users.avatar && (
             <Image source={{ uri: batch.users.avatar }} className="w-10 h-10 rounded-full" />
           )}
-          <Text className="ml-3 text-base font-bold" style={{ color: colors.text }}>
+          <Text className="ml-3 text-base font-bold text-textmain dark:text-neutral-100">
             {batch.users.username}
           </Text>
         </View>
@@ -204,30 +202,30 @@ export default function BatchDetailScreen() {
         onPress={() => setReportModalVisible(false)}
       >
         <Pressable 
-          className="w-full bg-white rounded-3xl p-6"
+          className="w-full bg-white dark:bg-neutral-900 rounded-3xl p-6 shadow-xl"
           onPress={(e) => e.stopPropagation()}
         >
           <View className="flex-row justify-between items-center mb-6">
-            <Text className="text-xl font-bold text-textmain">Inhalt melden</Text>
+            <Text className="text-xl font-bold text-textmain dark:text-neutral-100">Inhalt melden</Text>
             <TouchableOpacity onPress={() => setReportModalVisible(false)}>
-              <MaterialCommunityIcons name="close" size={24} color="#333" />
+              <MaterialCommunityIcons name="close" size={24} color={currentScheme === 'dark' ? '#fff' : '#333'} />
             </TouchableOpacity>
           </View>
 
-          <Text className="text-gray-500 mb-6">Warum möchten Sie diesen Inhalt melden?</Text>
+          <Text className="text-gray-500 dark:text-neutral-400 mb-6">Warum möchten Sie diesen Inhalt melden?</Text>
           
-          <View className="space-y-1">
-            <ReportReasonButton label="Spam" onPress={() => submitReport("Spam")} icon="mail-off" />
-            <ReportReasonButton label="Unangemessen" onPress={() => submitReport("Inappropriate")} icon="alert-circle-outline" />
-            <ReportReasonButton label="Beleidigend" onPress={() => submitReport("Harassment")} icon="account-cancel-outline" />
-            <ReportReasonButton label="Anderes" onPress={() => submitReport("Other")} icon="dots-horizontal-circle-outline" />
+          <View className="gap-y-1">
+            <ReportReasonButton label="Spam" onPress={() => submitReport("Spam")} icon="mail-off" isDark={currentScheme === 'dark'} />
+            <ReportReasonButton label="Unangemessen" onPress={() => submitReport("Inappropriate")} icon="alert-circle-outline" isDark={currentScheme === 'dark'} />
+            <ReportReasonButton label="Beleidigend" onPress={() => submitReport("Harassment")} icon="account-cancel-outline" isDark={currentScheme === 'dark'} />
+            <ReportReasonButton label="Anderes" onPress={() => submitReport("Other")} icon="dots-horizontal-circle-outline" isDark={currentScheme === 'dark'} />
           </View>
 
           <TouchableOpacity 
             onPress={() => setReportModalVisible(false)}
-            className="mt-6 py-4 bg-gray-100 rounded-2xl"
+            className="mt-6 py-4 bg-neutral-100 dark:bg-neutral-800 rounded-2xl"
           >
-            <Text className="text-center font-bold text-gray-700">Abbrechen</Text>
+            <Text className="text-center font-bold text-gray-700 dark:text-neutral-300">Abbrechen</Text>
           </TouchableOpacity>
         </Pressable>
       </Pressable>
@@ -237,31 +235,27 @@ export default function BatchDetailScreen() {
 }
 
 const InfoCard = ({ icon, label, value }: { icon: string; label: string; value: string }) => {
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
-  
   return (
     <View 
-      className="p-4 rounded-xl items-center justify-center flex-1 min-w-[45%]"
-      style={{ backgroundColor: colorScheme === 'light' ? '#f5f5f5' : '#1c1c1e' }}
+      className="p-4 rounded-xl items-center justify-center flex-1 min-w-[45%] bg-neutral-100 dark:bg-neutral-800"
     >
       <MaterialCommunityIcons name={icon as any} size={24} color="#e29b03" />
-      <Text className="text-xs opacity-60 mt-2 text-center" style={{ color: colors.text }}>
+      <Text className="text-xs opacity-60 mt-2 text-center text-textmain dark:text-neutral-400">
         {label}
       </Text>
-      <Text className="text-sm font-bold mt-1 text-center" style={{ color: colors.text }}>
+      <Text className="text-sm font-bold mt-1 text-center text-textmain dark:text-neutral-100">
         {value}
       </Text>
     </View>
   );
 };
 
-const ReportReasonButton = ({ label, onPress, icon }: { label: string; onPress: () => void; icon: any }) => (
+const ReportReasonButton = ({ label, onPress, icon, isDark }: { label: string; onPress: () => void; icon: any; isDark: boolean }) => (
   <TouchableOpacity 
     onPress={onPress}
-    className="flex-row items-center p-4 bg-gray-50 rounded-2xl border border-gray-100 mb-3"
+    className={`flex-row items-center p-4 rounded-2xl border mb-3 ${isDark ? 'bg-neutral-800 border-neutral-700' : 'bg-gray-50 border-gray-100'}`}
   >
     <MaterialCommunityIcons name={icon} size={22} color="#52814d" />
-    <Text className="ml-3 text-lg font-medium text-textmain">{label}</Text>
+    <Text className={`ml-3 text-lg font-medium ${isDark ? 'text-neutral-100' : 'text-textmain'}`}>{label}</Text>
   </TouchableOpacity>
 );

@@ -13,7 +13,7 @@ export default function CheeseRecommendations() {
 
   return (
     <View className="mt-8">
-      <Text className="text-xl font-bold text-textmain mb-4">
+      <Text className="text-xl font-bold text-textmain dark:text-neutral-100 mb-4">
         Unsere Empfehlung für den Start:
       </Text>
       <View className="flex-row gap-4">

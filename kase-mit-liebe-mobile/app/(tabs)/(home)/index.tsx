@@ -62,7 +62,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-white dark:bg-neutral-900">
       {/* Header */}
       <HomeHeader />
 

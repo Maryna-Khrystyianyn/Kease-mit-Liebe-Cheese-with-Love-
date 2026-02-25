@@ -1,7 +1,8 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import dayjs from "dayjs";
 import "dayjs/locale/de";
+import { useColorScheme } from "nativewind";
 
 dayjs.locale("de");
 
@@ -30,36 +31,57 @@ export default function CheeseTimelineVertical({
   onHide: (id: number) => void;
 }) {
   const router = useRouter();
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === "dark";
+
+  const OLIVE = "#7A8F2A";
+  const ORANGE = "#F5A623";
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView className="flex-1 py-4">
       {groups.map((group, index) => (
-        <View key={group.monthKey} style={styles.row}>
+        <View key={group.monthKey} className="flex-row items-start">
           {/* LEFT — month */}
-          <View style={styles.left}>
-            <Text style={styles.monthText}>{group.monthLabel}</Text>
+          <View className="w-[90px] items-end pr-2">
+            <Text className={`text-sm font-semibold text-right ${isDark ? 'text-neutral-100' : 'text-textmain'}`}>
+              {group.monthLabel}
+            </Text>
           </View>
 
           {/* CENTER — line*/}
-          <View style={styles.center}>
-            <View style={styles.dot} />
-            {index !== groups.length - 1 && <View style={styles.line} />}
+          <View className="w-[30px] items-center">
+            <View 
+              className="w-3 h-3 rounded-full mt-1" 
+              style={{ backgroundColor: ORANGE }} 
+            />
+            {index !== groups.length - 1 && (
+              <View 
+                className="w-[2px] flex-1 mt-[2px]" 
+                style={{ backgroundColor: OLIVE }} 
+              />
+            )}
           </View>
 
           {/* RIGHT - cheeses*/}
-          <View style={styles.right}>
+          <View className="flex-1 pb-6">
             {group.items.map((b) => (
               <TouchableOpacity 
                 key={b.id} 
-                style={styles.cheeseCard}
+                className={`p-[10px] rounded-lg mb-2 shadow-sm ${isDark ? 'bg-neutral-800' : 'bg-white border border-neutral-100'}`}
                 onPress={() => router.push(`/cheese/${b.id}`)}
               >
-                <Text style={styles.recipe}>🧀 {b.recipeName}</Text>
-                <Text style={styles.dates}>
+                <Text className={`text-[15px] font-semibold ${isDark ? 'text-neutral-100' : 'text-textmain'}`}>
+                  🧀 {b.recipeName}
+                </Text>
+                <Text className={`text-xs mt-[2px] ${isDark ? 'text-neutral-400' : 'text-neutral-500'}`}>
                   {dayjs(b.createdAt).format("DD.MM.YYYY")} →{" "}
                   {dayjs(b.readyAt).format("DD.MM.YYYY")}
                 </Text>
-                <Text style={styles.hideBtn} onPress={() => onHide(b.id)}>
-                Nicht  zeigen
+                <Text 
+                  className="mt-[6px] text-[13px] color-[#7A8F2A] font-semibold" 
+                  onPress={() => onHide(b.id)}
+                >
+                  Nicht zeigen
                 </Text>
               </TouchableOpacity>
             ))}
@@ -69,85 +91,3 @@ export default function CheeseTimelineVertical({
     </ScrollView>
   );
 }
-
-/* ---------- STYLES ---------- */
-
-const OLIVE = "#7A8F2A";
-const ORANGE = "#F5A623";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: 16,
-  },
-
-  row: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-  },
-
-  /* ЛІВО — місяць */
-  left: {
-    width: 90,
-    alignItems: "flex-end",
-    paddingRight: 8,
-  },
-
-  monthText: {
-    fontSize: 14,
-    fontWeight: "600",
-    textAlign: "right",
-  },
-
-  /* ЦЕНТР — лінія */
-  center: {
-    width: 30,
-    alignItems: "center",
-  },
-
-  dot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: ORANGE,
-    marginTop: 4,
-  },
-
-  line: {
-    width: 2,
-    flex: 1,
-    backgroundColor: OLIVE,
-    marginTop: 2,
-  },
-
-  /* ПРАВО — контент */
-  right: {
-    flex: 1,
-    paddingBottom: 24,
-  },
-
-  cheeseCard: {
-    backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 8,
-    elevation: 2,
-  },
-
-  recipe: {
-    fontSize: 15,
-    fontWeight: "600",
-  },
-
-  dates: {
-    fontSize: 12,
-    color: "#666",
-    marginTop: 2,
-  },
-  hideBtn: {
-    marginTop: 6,
-    fontSize: 13,
-    color: "#7A8F2A",
-    fontWeight: "600",
-  },
-});

@@ -53,7 +53,7 @@ export default function PublicBatchesCarousel() {
 
   return (
     <View className="mt-6">
-      <Text className="font-bold text-2xl text-textmain px-6 h-12">
+      <Text className="font-bold text-2xl text-textmain dark:text-neutral-100 px-6 h-12">
         Inspiration von anderen
       </Text>
       <ScrollView
@@ -71,8 +71,7 @@ export default function PublicBatchesCarousel() {
             <View className="relative">
               <Image
                 source={{ uri: batch.image }}
-                className="w-full aspect-[4/3] rounded-xl"
-                style={{ resizeMode: "cover" }}
+                className="w-full aspect-[4/3] rounded-xl resize-cover"
               />
               <View className="absolute bottom-0 left-0 right-0 bg-black/40 p-2 rounded-b-xl">
                 <Text className="text-white font-bold text-xs" numberOfLines={1}>

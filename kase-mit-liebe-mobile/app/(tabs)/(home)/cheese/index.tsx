@@ -14,13 +14,15 @@ import { getMe } from "@/services/auth";
 import { getUserBatches } from "@/services/cheese";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useColorScheme } from "nativewind";
 import { Colors } from "@/constants/theme";
 
 export default function CheeseBatchesScreen() {
   const router = useRouter();
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+  const { colorScheme } = useColorScheme();
+  const currentScheme = colorScheme || "light";
+  const colors = Colors[currentScheme];
+  const isDark = currentScheme === "dark";
 
   const [nickname, setNickname] = useState<string | null>(null);
   const [batches, setBatches] = useState<any[]>([]);
@@ -87,28 +89,27 @@ export default function CheeseBatchesScreen() {
   const renderItem = ({ item }: { item: any }) => (
     <TouchableOpacity 
       onPress={() => router.push(`/cheese/${item.id}`)}
-      className="flex-row p-4 mb-3 rounded-xl shadow-sm"
-      style={{ backgroundColor: colorScheme === 'light' ? '#fff' : '#2c2c2e' }}
+      className="flex-row p-4 mb-3 rounded-xl shadow-sm bg-white dark:bg-neutral-800"
     >
-      <View className="w-20 h-20 rounded-lg overflow-hidden bg-gray-200">
+      <View className="w-20 h-20 rounded-lg overflow-hidden bg-gray-200 dark:bg-neutral-700">
         {item.image ? (
           <Image source={{ uri: item.image }} className="w-full h-full" />
         ) : (
           <View className="w-full h-full items-center justify-center">
-            <MaterialCommunityIcons name="cheese" size={40} color="#ccc" />
+            <MaterialCommunityIcons name="cheese" size={40} color={isDark ? "#555" : "#ccc"} />
           </View>
         )}
       </View>
       <View className="flex-1 ml-4 justify-center">
-        <Text className="text-lg font-bold" style={{ color: colors.text }}>
+        <Text className="text-lg font-bold text-textmain dark:text-neutral-100">
           {item.recipeName}
         </Text>
-        <Text className="text-sm opacity-60" style={{ color: colors.text }}>
+        <Text className="text-sm opacity-60 text-textmain dark:text-neutral-400">
           {item.recipeCategory}
         </Text>
         <View className="flex-row items-center mt-1">
-          <MaterialCommunityIcons name="calendar" size={14} color={colors.text} style={{ opacity: 0.6 }} />
-          <Text className="text-xs ml-1 opacity-60" style={{ color: colors.text }}>
+          <MaterialCommunityIcons name="calendar" size={14} color={isDark ? "#999" : "#666"} />
+          <Text className="text-xs ml-1 opacity-60 text-textmain dark:text-neutral-400">
             {dayjs(item.date).format("DD.MM.YYYY")}
           </Text>
         </View>
@@ -118,29 +119,27 @@ export default function CheeseBatchesScreen() {
   );
 
   return (
-    <View className="flex-1" style={{ backgroundColor: colors.background }}>
+    <View className="flex-1 bg-white dark:bg-neutral-900">
       <View className="px-5 pt-12 pb-4">
         <View className="flex-row items-center mb-4">
           <TouchableOpacity onPress={() => router.back()} className="mr-2">
-            <MaterialCommunityIcons name="arrow-left" size={28} color={colors.text} />
+            <MaterialCommunityIcons name="arrow-left" size={28} color={isDark ? "#fff" : "#000"} />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold" style={{ color: colors.text }}>
+          <Text className="text-2xl font-bold text-textmain dark:text-neutral-100">
             Meine Käsechargen
           </Text>
         </View>
 
         <View 
-          className="flex-row items-center px-4 h-12 rounded-full border"
-          style={{ borderColor: "#ccc", backgroundColor: colorScheme === 'light' ? '#f0f0f0' : '#333' }}
+          className="flex-row items-center px-4 h-12 rounded-full border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800"
         >
           <MaterialCommunityIcons name="magnify" size={20} color="#999" />
           <TextInput
-            className="flex-1 ml-2"
+            className="flex-1 ml-2 text-textmain dark:text-neutral-100"
             placeholder="Nach Rezept suchen..."
             placeholderTextColor="#999"
             value={search}
             onChangeText={setSearch}
-            style={{ color: colors.text }}
           />
           {search.length > 0 && (
             <TouchableOpacity onPress={() => setSearch("")}>
@@ -159,14 +158,15 @@ export default function CheeseBatchesScreen() {
           data={batches}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
-          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}
+          className="px-5"
+          contentContainerStyle={{ paddingBottom: 20 }}
           onRefresh={onRefresh}
           refreshing={refreshing}
           onEndReached={loadMore}
           onEndReachedThreshold={0.5}
           ListEmptyComponent={
             <View className="items-center mt-20">
-              <Text className="text-lg opacity-60" style={{ color: colors.text }}>
+              <Text className="text-lg opacity-60 text-textmain dark:text-neutral-400">
                 Keine Chargen gefunden.
               </Text>
             </View>

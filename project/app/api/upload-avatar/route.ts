@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Storage } from "@google-cloud/storage";
-import fetch from "node-fetch"; // для завантаження файлу з URI
 
 const storage = new Storage({
   projectId: process.env.GOOGLE_PROJECT_ID,
@@ -17,44 +16,42 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const fileData = formData.get("file");
 
-    if (!fileData) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-    }
-
     let buffer: Buffer;
     let fileName = `avatar.png`;
     let contentType = "application/octet-stream";
 
-    // Якщо файл з вебу (Blob / File)
+    if (!fileData) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+
+    // Handling file from FormData (both Web and Mobile send it as a Blob/File)
     if (fileData instanceof Blob) {
-      if (fileData.size > 500 * 1024) {
-        return NextResponse.json({ error: "File too large, max 500 KB" }, { status: 400 });
+      if (fileData.size > 2 * 1024 * 1024) { // Increased to 2MB for mobile photos
+        return NextResponse.json({ error: "File too large, max 2 MB" }, { status: 400 });
       }
 
       const arrayBuffer = await fileData.arrayBuffer();
       buffer = Buffer.from(arrayBuffer);
-      fileName = `${Date.now()}_${fileData instanceof File ? fileData.name.replace(/\s+/g, "_") : "avatar.png"}`;
+      
+      const originalName = fileData instanceof File ? fileData.name : "avatar.png";
+      const sanitizedName = originalName.replace(/\s+/g, "_");
+      fileName = `${Date.now()}_${sanitizedName}`;
       contentType = fileData.type || contentType;
-
-    } else if (typeof fileData === "string" && fileData.startsWith("file://")) {
-      // Якщо файл з мобільного (URI з Expo)
-      const response = await fetch(fileData); // завантажуємо локальний файл
-      const arrayBuffer = await response.arrayBuffer();
-      buffer = Buffer.from(arrayBuffer);
-
-      const parts = fileData.split(".");
-      const ext = parts[parts.length - 1];
-      fileName = `${Date.now()}.` + ext;
-      contentType = `image/${ext}`;
     } else {
-      return NextResponse.json({ error: "Invalid file" }, { status: 400 });
+      console.error("Invalid file data type received:", typeof fileData);
+      return NextResponse.json({ error: "Invalid file format" }, { status: 400 });
     }
 
     const blob = bucket.file(fileName);
 
+    console.log(`Saving file to GCS: ${fileName}, Type: ${contentType}, Size: ${buffer.length}`);
+
     await blob.save(buffer, {
       resumable: false,
       contentType,
+      metadata: {
+        cacheControl: "public, max-age=31536000",
+      },
     });
 
     const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
@@ -62,7 +59,12 @@ export async function POST(req: NextRequest) {
 
   } catch (err: unknown) {
     let message = "Unknown error";
-    if (err instanceof Error) message = err.message;
+    let stack = "";
+    if (err instanceof Error) {
+      message = err.message;
+      stack = err.stack || "";
+    }
+    console.error("UPLOAD AVATAR ERROR:", message, stack);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

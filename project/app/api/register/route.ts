@@ -100,7 +100,8 @@ export async function POST(req: Request) {
     return response;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error("REGISTER ERROR:", message);
+    const stack = error instanceof Error ? error.stack : "";
+    console.error("REGISTER ERROR:", message, stack);
     return NextResponse.json(
       { message: "Fehler bei der Registrierung", error: message },
       { status: 500 }

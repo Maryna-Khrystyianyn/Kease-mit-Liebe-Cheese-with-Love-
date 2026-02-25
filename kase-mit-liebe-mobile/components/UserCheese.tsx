@@ -70,8 +70,8 @@ export default function UserCheese({ nickname, refreshKey }: UserCheeseProps) {
 
   if (batches.length === 0) {
     return (
-      <View className="flex-1 justify-center items-center">
-        <Text className="text-base text-gray-600">
+      <View className="flex-1 justify-center items-center bg-white dark:bg-neutral-900">
+        <Text className="text-base text-gray-600 dark:text-neutral-400">
           sie haben keine Käсеcharge zu verfolgen.
         </Text>
       </View>
@@ -96,8 +96,8 @@ export default function UserCheese({ nickname, refreshKey }: UserCheeseProps) {
     timelineBatches.length*110
 
   return (
-    <ScrollView className="flex-1 p-4" contentContainerStyle={{ paddingBottom: 20 }}>
-      <Text className="font-bold text-xl mt-3">Кäsereifungsplan</Text>
+    <ScrollView className="flex-1 p-4 pb-5">
+      <Text className="font-bold text-xl mt-3 text-textmain dark:text-neutral-100">Кäsereifungsplan</Text>
 
       <ScrollView style={{ height: heightContainer }}>
         <CheeseTimelineVertical groups={groups} onHide={hideFromTimeline}/>

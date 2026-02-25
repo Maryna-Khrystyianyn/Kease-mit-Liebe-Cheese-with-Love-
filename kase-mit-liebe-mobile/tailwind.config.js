@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,ts,jsx,tsx}"], // обов’язково вкажи шлях до всіх компонентів
-  presets: [require("nativewind/preset")], // <- це ключовий момент!
+  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
+  presets: [require("nativewind/preset")],
   theme: {
     extend: {
       colors: {

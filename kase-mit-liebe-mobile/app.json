@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "KäseTagebuch",
+    "name": "Tagebuch",
     "slug": "kase-mit-liebe-mobile",
-    "version": "1.4.0",
+    "version": "1.7.1",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/logoapp.png",
     "scheme": "kasemitliebemobile",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -12,10 +12,10 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 5,
+      "versionCode": 8,
       "minSdkVersion": 23,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/logoapp.png",
         "backgroundColor": "#E6F4FE"
       },
       "edgeToEdgeEnabled": false,

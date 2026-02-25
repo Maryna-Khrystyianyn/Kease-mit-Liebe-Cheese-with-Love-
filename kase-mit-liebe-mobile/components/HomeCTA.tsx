@@ -19,12 +19,12 @@ export default function HomeCTA() {
   }, []);
 
   return (
-    <View className="mt-10 bg-olive_light/20 p-6 rounded-3xl border border-olive_bright/30">
-      <Text className="text-2xl font-bold text-textmain mb-2">
+    <View className="mt-10 bg-olive_light/20 dark:bg-olive_bright/5 p-6 rounded-3xl border border-olive_bright/30">
+      <Text className="text-2xl font-bold text-textmain dark:text-neutral-100 mb-2">
         Bereit für deinen eigenen Käse?
       </Text>
-      <Text className="text-textmain/70 mb-6 leading-5">
-        Entdecke unsere Rezepte und wähle den ersten Käse, den du selbst herstellen möchtest.
+      <Text className="text-textmain/70 dark:text-neutral-400 mb-6 leading-5">
+        Entdecke unsere Rezepte und wähle den ersten Käсе, den du selbst herstellen möchtest.
         Wir begleiten dich Schritt für Schritt – mit guter Laune, kleinen Tipps und ganz viel Lust aufs Selbermachen.
       </Text>
 

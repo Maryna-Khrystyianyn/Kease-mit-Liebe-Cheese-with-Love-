@@ -22,15 +22,17 @@ import {
 } from "@/services/cheese";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useColorScheme } from "nativewind";
 import { Colors } from "@/constants/theme";
 import { stripHtml, textToHtml } from "@/services/stripHtml";
 
 export default function EditBatchScreen() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const colorScheme = useColorScheme() ?? "light";
-  const colors = Colors[colorScheme];
+  const { colorScheme } = useColorScheme();
+  const currentScheme = colorScheme || "light";
+  const colors = Colors[currentScheme];
+  const isDark = currentScheme === "dark";
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -170,67 +172,66 @@ export default function EditBatchScreen() {
 
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center" style={{ backgroundColor: colors.background }}>
+      <View className="flex-1 items-center justify-center bg-white dark:bg-neutral-900">
         <ActivityIndicator size="large" color="#e29b03" />
       </View>
     );
   }
 
   return (
-    <ScrollView className="flex-1" style={{ backgroundColor: colors.background }}>
+    <ScrollView className="flex-1 bg-white dark:bg-neutral-900">
       <View className="px-5 pt-12 pb-6">
         <View className="flex-row items-center mb-6">
           <TouchableOpacity onPress={() => router.back()} className="mr-2">
-            <MaterialCommunityIcons name="arrow-left" size={28} color={colors.text} />
+            <MaterialCommunityIcons name="arrow-left" size={28} color={isDark ? "#fff" : "#000"} />
           </TouchableOpacity>
-          <Text className="text-2xl font-bold" style={{ color: colors.text }}>
+          <Text className="text-2xl font-bold text-textmain dark:text-neutral-100">
             Charge bearbeiten
           </Text>
         </View>
 
-        <Text className="text-base font-bold mb-1" style={{ color: "#e29b03" }}>
+        <Text className="text-base font-bold mb-1 text-orange-500">
           Rezept: {formData.recipeName}
         </Text>
 
         {/* Image Section */}
         <TouchableOpacity onPress={pickImage} className="mt-4 mb-6 items-center">
-          <View className="w-full h-48 rounded-xl overflow-hidden bg-gray-200 border-2 border-dashed border-gray-400 items-center justify-center">
+          <View className="w-full h-48 rounded-xl overflow-hidden bg-neutral-100 dark:bg-neutral-800 border-2 border-dashed border-neutral-300 dark:border-neutral-600 items-center justify-center">
             {imageUri ? (
-              <Image source={{ uri: imageUri }} className="w-full h-full" />
+              <Image source={{ uri: imageUri }} className="w-full h-full resize-cover" />
             ) : (
               <View className="items-center">
-                <MaterialCommunityIcons name="camera" size={40} color="#666" />
-                <Text className="text-gray-600 mt-2">Bild hinzufügen</Text>
+                <MaterialCommunityIcons name="camera" size={40} color={isDark ? "#555" : "#666"} />
+                <Text className="text-textmain dark:text-neutral-400 mt-2">Bild hinzufügen</Text>
               </View>
             )}
           </View>
         </TouchableOpacity>
 
-        {/* Date Field - Custom Input for Date for now */}
+        {/* Date Field */}
         <View className="mb-4">
-          <Text className="text-sm font-bold mb-2" style={{ color: colors.text }}>
+          <Text className="text-sm font-bold mb-2 text-textmain dark:text-neutral-100">
             Herstellungsdatum (YYYY-MM-DD) <Text className="text-orange-500">*</Text>
           </Text>
           <TextInput
-            className="p-3 border rounded-xl"
-            style={{ borderColor: colors.border, color: colors.text, backgroundColor: colorScheme === 'light' ? '#fff' : '#2c2c2e' }}
+            className="p-3 border rounded-xl border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-textmain dark:text-neutral-100"
             value={formData.created_at}
             onChangeText={(val) => setFormData(prev => ({ ...prev, created_at: val }))}
-            placeholder="2024-05-20"
+            placeholder="YYYY-MM-DD"
+            placeholderTextColor={isDark ? "#555" : "#999"}
           />
         </View>
 
         {/* Milk Selector */}
         <View className="mb-6">
-          <Text className="text-sm font-bold mb-3" style={{ color: colors.text }}>
+          <Text className="text-sm font-bold mb-3 text-textmain dark:text-neutral-100">
             Milch (Liter)
           </Text>
           {formData.milkItems.map((item) => (
             <View key={item.milk_id} className="flex-row items-center mb-3">
-              <Text className="flex-1" style={{ color: colors.text }}>{item.name}</Text>
+              <Text className="flex-1 text-textmain dark:text-neutral-300">{item.name}</Text>
               <TextInput
-                className="w-24 p-2 border rounded-lg text-center"
-                style={{ borderColor: colors.border, color: colors.text, backgroundColor: colorScheme === 'light' ? '#fff' : '#2c2c2e' }}
+                className="w-24 p-1.5 border rounded-lg text-center border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-textmain dark:text-neutral-100"
                 value={item.amount}
                 keyboardType="numeric"
                 onChangeText={(val) => handleMilkChange(item.milk_id, val)}
@@ -241,56 +242,53 @@ export default function EditBatchScreen() {
 
         {/* Weight Field */}
         <View className="mb-4">
-          <Text className="text-sm font-bold mb-2" style={{ color: colors.text }}>
+          <Text className="text-sm font-bold mb-2 text-textmain dark:text-neutral-100">
             Gewicht (kg)
           </Text>
           <TextInput
-            className="p-3 border rounded-xl"
-            style={{ borderColor: colors.border, color: colors.text, backgroundColor: colorScheme === 'light' ? '#fff' : '#2c2c2e' }}
+            className="p-3 border rounded-xl border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-textmain dark:text-neutral-100"
             value={formData.cheeseweight}
             keyboardType="numeric"
             onChangeText={(val) => setFormData(prev => ({ ...prev, cheeseweight: val }))}
             placeholder="0.000"
+            placeholderTextColor={isDark ? "#555" : "#999"}
           />
         </View>
 
         {/* Description Field */}
         <View className="mb-6">
-          <Text className="text-sm font-bold mb-2" style={{ color: colors.text }}>
+          <Text className="text-sm font-bold mb-2 text-textmain dark:text-neutral-100">
             Beschreibung
           </Text>
           <TextInput
-            className="p-3 border rounded-xl"
-            style={{ 
-              borderColor: colors.border, 
-              color: colors.text, 
-              backgroundColor: colorScheme === 'light' ? '#fff' : '#2c2c2e',
-              minHeight: 120
-            }}
+            className="p-3 border rounded-xl border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 text-textmain dark:text-neutral-100 h-[120px]"
             value={formData.description}
             onChangeText={(val) => setFormData(prev => ({ ...prev, description: val }))}
             multiline
             textAlignVertical="top"
             placeholder="Details über diese Charge..."
+            placeholderTextColor={isDark ? "#555" : "#999"}
           />
         </View>
 
         {/* Timeline Switch */}
-        <View className="flex-row items-center justify-between mb-8 p-3 rounded-xl" style={{ backgroundColor: colorScheme === 'light' ? '#f5f5f5' : '#1c1c1e' }}>
-          <Text className="text-base" style={{ color: colors.text }}>Auf Timeline anzeigen</Text>
+        <View className="flex-row items-center justify-between mb-8 p-4 rounded-xl bg-neutral-50 dark:bg-neutral-800/50">
+          <Text className="text-base text-textmain dark:text-neutral-200">Auf Timeline anzeigen</Text>
           <Switch
             value={formData.onTimeLine}
             onValueChange={(val) => setFormData(prev => ({ ...prev, onTimeLine: val }))}
-            trackColor={{ false: "#767577", true: "#e29b03" }}
+            trackColor={{ false: isDark ? "#444" : "#cbd5e1", true: "#e29b03" }}
+            thumbColor={formData.onTimeLine ? "#52814d" : (isDark ? "#666" : "#f1f5f9")}
           />
         </View>
+
 
         {/* Action Buttons */}
         <View className="gap-4">
           <TouchableOpacity 
             onPress={() => handleSave(false)}
             disabled={saving}
-            className="p-4 rounded-xl items-center bg-gray-400"
+            className="p-4 rounded-xl items-center bg-neutral-400 dark:bg-neutral-700 active:opacity-80"
           >
             {saving ? <ActivityIndicator color="#fff" /> : <Text className="text-white font-bold text-lg">Speichern</Text>}
           </TouchableOpacity>
@@ -298,8 +296,7 @@ export default function EditBatchScreen() {
           <TouchableOpacity 
             onPress={() => handleSave(true)}
             disabled={saving}
-            className="p-4 rounded-xl items-center"
-            style={{ backgroundColor: "#52814d" }}
+            className="p-4 rounded-xl items-center bg-olive_bright active:opacity-80 shadow-md"
           >
             <Text className="text-white font-bold text-lg">Veröffentlichen</Text>
           </TouchableOpacity>
@@ -307,7 +304,7 @@ export default function EditBatchScreen() {
           <TouchableOpacity 
             onPress={handleDelete}
             disabled={saving}
-            className="p-4 rounded-xl items-center bg-red-500"
+            className="p-4 rounded-xl items-center bg-red-500 active:opacity-80"
           >
             <Text className="text-white font-bold text-lg">Löschen</Text>
           </TouchableOpacity>

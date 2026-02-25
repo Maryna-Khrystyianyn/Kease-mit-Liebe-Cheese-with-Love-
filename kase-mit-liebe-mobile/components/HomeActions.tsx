@@ -30,7 +30,7 @@ export default function HomeActions() {
           <View className="w-16 h-16 rounded-full mx-4 bg-olive_bright items-center justify-center">
             <MaterialCommunityIcons name={item.icon as any} size={32} color="white" />
           </View>
-          <Text className="text-[10px] font-bold text-center mt-2 w-20 text-textmain">
+          <Text className="text-[10px] font-bold text-center mt-2 w-20 text-textmain dark:text-neutral-300">
             {item.label}
           </Text>
         </Pressable>

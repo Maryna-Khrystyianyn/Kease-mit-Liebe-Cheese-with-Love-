@@ -28,12 +28,12 @@ export default function TabLayout() {
 
        {/* 🏠 Home */}
        <Tabs.Screen
-        name="index"
+        name="(home)"
         
         options={{
           title: "Home",
           headerShown: false, 
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color }: { color: string }) => (
             <IconSymbol size={28} name="house.fill" color={color} />
           ),
         }}
@@ -44,7 +44,7 @@ export default function TabLayout() {
         options={{
           title: "Website",
           headerShown: false, 
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color }: { color: string }) => (
             <IconSymbol size={28} name="globe" color={color} />
           ),
         }}
@@ -56,26 +56,12 @@ export default function TabLayout() {
         }}
       />
 
-     
-
-      {/* 🧭 Explore */}
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: "Explore",
-          headerShown: false, 
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
-          ),
-        }}
-      />
-
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profil",
           headerShown: false, 
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color }: { color: string }) => (
             <IconSymbol size={28} name="person.crop.circle" color={color} />
           ),
         }}
@@ -86,7 +72,7 @@ export default function TabLayout() {
         name="logout"
         options={{
           title: "Logout",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color }: { color: string }) => (
             <IconSymbol
               size={28}
               name="rectangle.portrait.and.arrow.right"
