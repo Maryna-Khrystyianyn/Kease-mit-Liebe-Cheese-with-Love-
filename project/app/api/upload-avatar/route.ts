@@ -42,19 +42,43 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid file format" }, { status: 400 });
     }
 
+    // Verify environment variables
+    const projectId = process.env.GOOGLE_PROJECT_ID;
+    const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+    const privateKey = process.env.GOOGLE_PRIVATE_KEY;
+    const bucketName = process.env.GCS_BUCKET_AVATARS;
+
+    if (!projectId || !clientEmail || !privateKey || !bucketName) {
+      console.error("Missing GCS configuration variables");
+      return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+    }
+
     const blob = bucket.file(fileName);
+    console.log(`Uploading to GCS: ${fileName}, Type: ${contentType}, Size: ${buffer.length}`);
 
-    console.log(`Saving file to GCS: ${fileName}, Type: ${contentType}, Size: ${buffer.length}`);
+    // Use createWriteStream for better control on serverless environments
+    await new Promise((resolve, reject) => {
+      const blobStream = blob.createWriteStream({
+        resumable: false,
+        contentType,
+        metadata: {
+          cacheControl: "public, max-age=31536000",
+        },
+      });
 
-    await blob.save(buffer, {
-      resumable: false,
-      contentType,
-      metadata: {
-        cacheControl: "public, max-age=31536000",
-      },
+      blobStream.on("error", (err) => {
+        console.error("GCS Upload Stream Error:", err);
+        reject(err);
+      });
+
+      blobStream.on("finish", () => {
+        resolve(true);
+      });
+
+      blobStream.end(buffer);
     });
 
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+    const publicUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
     return NextResponse.json({ url: publicUrl });
 
   } catch (err: unknown) {

@@ -89,23 +89,16 @@ export default function RegisterScreen() {
         avatarUrl = uploadData.url;
       }
   
-      // 2️⃣ Формуємо FormData для реєстрації
-      const formDataToSend = new FormData();
-      for (const key in form) {
-        if (key === "avatar") {
-          formDataToSend.append("avatar", avatarUrl);
-        } else {
-          const value = typeof form[key as keyof typeof form] === "boolean"
-            ? form[key as keyof typeof form] ? "true" : "false"
-            : form[key as keyof typeof form];
-          formDataToSend.append(key, value as string);
-        }
-      }
-  
-      // 3️⃣ Відправляємо на сервер
+      // 2️⃣ Відправляємо дані на сервер як JSON
       const res = await fetch(`${API_URL}/register`, {
         method: "POST",
-        body: formDataToSend,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...form,
+          avatar: avatarUrl, // Використовуємо отриманий URL
+        }),
       });
   
       const data = await res.json();
