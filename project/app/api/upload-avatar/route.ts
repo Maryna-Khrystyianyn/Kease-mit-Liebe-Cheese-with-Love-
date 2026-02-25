@@ -1,16 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Storage } from "@google-cloud/storage";
 
-const storage = new Storage({
-  projectId: process.env.GOOGLE_PROJECT_ID,
-  credentials: {
-    client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-  },
-});
-
-const bucket = storage.bucket(process.env.GCS_BUCKET_AVATARS!);
-
+// Initializing storage inside the handler for better reliability in serverless environments
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -45,13 +36,28 @@ export async function POST(req: NextRequest) {
     // Verify environment variables
     const projectId = process.env.GOOGLE_PROJECT_ID;
     const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY;
+    const rawPrivateKey = process.env.GOOGLE_PRIVATE_KEY;
     const bucketName = process.env.GCS_BUCKET_AVATARS;
 
-    if (!projectId || !clientEmail || !privateKey || !bucketName) {
+    if (!projectId || !clientEmail || !rawPrivateKey || !bucketName) {
       console.error("Missing GCS configuration variables");
       return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
     }
+
+    // Sanitize private key: handle quotes and newlines
+    const sanitizedPrivateKey = rawPrivateKey
+      .replace(/^"|"$/g, '') // remove surrounding quotes
+      .replace(/\\n/g, "\n"); // fix escaped newlines
+
+    // Initialize storage for this request
+    const storage = new Storage({
+      projectId,
+      credentials: {
+        client_email: clientEmail,
+        private_key: sanitizedPrivateKey,
+      },
+    });
+    const bucket = storage.bucket(bucketName);
 
     const blob = bucket.file(fileName);
     console.log(`Uploading to GCS: ${fileName}, Type: ${contentType}, Size: ${buffer.length}`);
@@ -66,7 +72,7 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      blobStream.on("error", (err) => {
+      blobStream.on("error", (err: Error) => {
         console.error("GCS Upload Stream Error:", err);
         reject(err);
       });
