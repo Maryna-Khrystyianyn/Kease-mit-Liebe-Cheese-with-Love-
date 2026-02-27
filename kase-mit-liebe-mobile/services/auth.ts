@@ -115,3 +115,34 @@ export async function deleteAccount() {
   await logout();
   return await res.json();
 }
+
+export async function updateAvatar(imageUri: string) {
+  const token = await getToken();
+  if (!token) throw new Error("No token found");
+
+  const formData = new FormData();
+  const uriParts = imageUri.split(".");
+  const fileType = uriParts[uriParts.length - 1];
+
+  formData.append("file", {
+    uri: imageUri,
+    name: `avatar.${fileType}`,
+    type: `image/${fileType}`,
+  } as any);
+
+  const res = await fetch(`${API_URL}/profile/update-avatar`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || "Failed to update avatar");
+  }
+
+  return await res.json();
+}
+

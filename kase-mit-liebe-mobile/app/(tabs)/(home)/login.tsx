@@ -3,12 +3,14 @@ import { View, TextInput, Text, Image, Alert, Pressable } from "react-native";
 import { login, getToken } from "@/services/auth";
 import { useRouter } from "expo-router";
 import { useColorScheme } from "nativewind";
+import { Eye, EyeOff } from "lucide-react-native";
 
 import { LoadingOverlay } from "@/components/ui/LoadingOverlay";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { colorScheme } = useColorScheme();
@@ -59,14 +61,26 @@ export default function LoginScreen() {
         autoCapitalize="none"
       />
 
-      <TextInput
-        placeholder="Passwort"
-        placeholderTextColor={isDark ? "#999" : "#666"}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        className="border border-olive_bright w-full p-3 mb-6 rounded text-textmain dark:text-neutral-100 bg-transparent dark:bg-neutral-800"
-      />
+      <View className="w-full relative mb-6">
+        <TextInput
+          placeholder="Passwort"
+          placeholderTextColor={isDark ? "#999" : "#666"}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+          className="border border-olive_bright w-full p-3 rounded text-textmain dark:text-neutral-100 bg-transparent dark:bg-neutral-800"
+        />
+        <Pressable
+          onPress={() => setShowPassword(!showPassword)}
+          className="absolute right-3 top-3"
+        >
+          {showPassword ? (
+            <EyeOff size={24} color={isDark ? "#aaa" : "#555"} />
+          ) : (
+            <Eye size={24} color={isDark ? "#aaa" : "#555"} />
+          )}
+        </Pressable>
+      </View>
 
       {/* Login button */}
       <Pressable

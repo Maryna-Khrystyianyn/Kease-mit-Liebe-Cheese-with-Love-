@@ -15,6 +15,7 @@ import * as SecureStore from "expo-secure-store";
 import { register } from "@/services/auth";
 import { API_URL } from "@/constants/config";
 import { useColorScheme } from "nativewind";
+import { Eye, EyeOff } from "lucide-react-native";
 
 import { LoadingOverlay } from "@/components/ui/LoadingOverlay";
 
@@ -187,17 +188,34 @@ export default function RegisterScreen() {
 
 /* reusable Input */
 function Input({ label, value, onChange, secure = false, multiline = false, isDark }: any) {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPasswordField = secure && !multiline;
+
   return (
     <View className="mb-4">
       <Text className="mb-1 text-olive_bright font-medium">{label}</Text>
-      <TextInput
-        value={value}
-        onChangeText={onChange}
-        secureTextEntry={secure}
-        multiline={multiline}
-        placeholderTextColor={isDark ? "#777" : "#999"}
-        className="border border-olive p-3 rounded text-textmain dark:text-neutral-100 bg-transparent dark:bg-neutral-800"
-      />
+      <View className="relative">
+        <TextInput
+          value={value}
+          onChangeText={onChange}
+          secureTextEntry={isPasswordField ? !showPassword : false}
+          multiline={multiline}
+          placeholderTextColor={isDark ? "#777" : "#999"}
+          className="border border-olive p-3 rounded text-textmain dark:text-neutral-100 bg-transparent dark:bg-neutral-800 w-full"
+        />
+        {isPasswordField && (
+          <Pressable
+            onPress={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-3"
+          >
+            {showPassword ? (
+              <EyeOff size={24} color={isDark ? "#888" : "#666"} />
+            ) : (
+              <Eye size={24} color={isDark ? "#888" : "#666"} />
+            )}
+          </Pressable>
+        )}
+      </View>
     </View>
   );
 }

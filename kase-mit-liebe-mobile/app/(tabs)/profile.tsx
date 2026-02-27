@@ -12,9 +12,18 @@ import {
   Pressable
 } from "react-native";
 import { useRouter } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 import { useColorScheme } from "nativewind";
+import { Pencil } from "lucide-react-native";
 import { Colors } from "@/constants/theme";
-import { getMe, getUserStats, updateProfile, logout, deleteAccount } from "@/services/auth";
+import { 
+  getMe, 
+  getUserStats, 
+  updateProfile, 
+  logout, 
+  deleteAccount,
+  updateAvatar 
+} from "@/services/auth";
 import { ThemedText } from "@/components/themed-text";
 import { Counter } from "@/components/Counter";
 import { IconSymbol } from "@/components/ui/icon-symbol";
@@ -31,6 +40,7 @@ export default function ProfileScreen() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<any>({});
   const [saving, setSaving] = useState(false);
+  const [updatingAvatar, setUpdatingAvatar] = useState(false);
 
   const loadData = async () => {
     try {
@@ -70,6 +80,34 @@ export default function ProfileScreen() {
       Alert.alert("Fehler", error.message || "Fehler beim Aktualisieren.");
     } finally {
       setSaving(false);
+    }
+  };
+  
+  const handleAvatarChange = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert("Berechtigung erforderlich", "Zugriff auf die Galerie erforderlich");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.7,
+      allowsEditing: true,
+      aspect: [1, 1],
+    });
+
+    if (!result.canceled) {
+      setUpdatingAvatar(true);
+      try {
+        await updateAvatar(result.assets[0].uri);
+        await loadData(); // Reload user data to show new avatar
+        Alert.alert("Erfolg", "Profilbild wurde aktualisiert.");
+      } catch (error: any) {
+        Alert.alert("Fehler", error.message || "Fehler beim Hochladen.");
+      } finally {
+        setUpdatingAvatar(false);
+      }
     }
   };
 
@@ -120,13 +158,27 @@ export default function ProfileScreen() {
     <ScrollView className="flex-1 bg-background dark:bg-neutral-900">
       {/* HEADER */}
       <View className="items-center pt-16 pb-6">
-        {user.avatar ? (
-          <Image source={{ uri: user.avatar }} className="w-32 h-32 rounded-full mb-3" />
-        ) : (
-          <View className="w-32 h-32 rounded-full justify-center items-center mb-3 bg-gray-400">
-            <IconSymbol name="person.fill" size={60} color="#fff" />
+        <TouchableOpacity 
+          className="relative" 
+          onPress={handleAvatarChange}
+          disabled={updatingAvatar}
+        >
+          {user.avatar ? (
+            <Image source={{ uri: user.avatar }} className="w-32 h-32 rounded-full mb-3" />
+          ) : (
+            <View className="w-32 h-32 rounded-full justify-center items-center mb-3 bg-gray-400">
+              <IconSymbol name="person.fill" size={60} color="#fff" />
+            </View>
+          )}
+          
+          <View className="absolute bottom-3 right-0 bg-olive_bright w-10 h-10 rounded-full items-center justify-center border-2 border-white dark:border-neutral-900">
+            {updatingAvatar ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Pencil size={20} color="#fff" />
+            )}
           </View>
-        )}
+        </TouchableOpacity>
 
         <ThemedText type="title" className="mb-1">
           {user.nick_name}
