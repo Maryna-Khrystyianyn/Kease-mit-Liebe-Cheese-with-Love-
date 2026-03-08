@@ -1,70 +1,113 @@
-# 🧀 Käse mit Liebe ❤️
+# 🧀 Cheese with Love (Käse mit Liebe) ❤️
 
-https://kease-mit-liebe-cheese-with-love.vercel.app/
+[![Vercel Deployment](https://img.shields.io/badge/Deployment-Vercel-black?style=flat-square&logo=vercel)](https://kease-mit-liebe-cheese-with-love.vercel.app/)
+[![Trello Progress](https://img.shields.io/badge/Project-Trello-blue?style=flat-square&logo=trello)](https://trello.com/invite/b/695b86ae7e00340881f103c7/ATTI09c7e3a0032cda64cb62f78e935769bcF12F0330/🧀-kase-mit-liebe-❤️)
 
-**Eine Plattform für Käser und Käseliebhaber.**  
-„Käse mit Liebe“ ist ein digitaler Treffpunkt für Menschen, die Käse lieben, ihn zu Hause herstellen oder es einfach ausprobieren möchten.
-Hier finden Nutzer geprüfte Rezepte, alle notwendigen Zutaten außer Milch, Unterstützung während des Herstellungsprozesses und eine Community aus Gleichgesinnten.
-Eigene Erfahrungen können dokumentiert, geteilt und über eine Zeitleiste verfolgt werden, sodass man jederzeit sieht, welcher Käse wann reif ist.
+**A professional platform for cheesemakers and enthusiasts.**
 
----
-
-## 🚀 Projektstatus
-
-Dieses Projekt befindet sich aktuell in der **Entwicklungsphase (MVP)**.  
-Ziel: Aufbau der Grundstruktur mit Authentifizierung, Rezeptverwaltung, Käsetagebuch und Onlineshop.
+"Cheese with Love" is a digital ecosystem designed for people who love cheese, make it at home, or are just starting their journey. It provides a comprehensive set of tools to manage the cheesemaking process, from sourcing ingredients to tracking maturation.
 
 ---
 
-## ✅ Actueller Fortschritt
+## 🚀 Project Overview
 
-[Trello](https://trello.com/invite/b/695b86ae7e00340881f103c7/ATTI09c7e3a0032cda64cb62f78e935769bcF12F0330/🧀-kase-mit-liebe-❤️)
-
-- Prisma wurde installiert und erfolgreich mit der Neon-Datenbank verbunden.
-
-- [ERD - logical Data model ](docs/ERD_logical_data_model_final.png)
-
-- [ERD - physical Data Model](https://dbdiagram.io/d/68f0c40a2e68d21b41c5476b)
-
-- [Figma design - in process](https://www.figma.com/design/3lPi9DrVtBNnbKULPAvOpB/K%C3%A4se-mit-liebe?node-id=0-1&p=f)
-
-## 🧩 Hauptfunktionen
-
-### 🔐 Rollen & Zugriffsrechte
-
-| Rolle                          | Beschreibung                                                                                 |
-| ------------------------------ | -------------------------------------------------------------------------------------------- |
-| **Administrator**              | Rezepte und Produkte verwalten, Bestellungen bearbeiten, Status ändern                       |
-| **Registrierter Nutzer**       | Eigene Käsepartien erstellen, Reifung verfolgen, Rezepte ansehen und zu Favoriten hinzufügen |
-| **Nicht registrierter Nutzer** | Rezepte & allgemeine Informationen ansehen, Produkte kaufen                                  |
+Everything a cheesemaker needs in one place:
+- **Community Hub**: Connect with fellow cheesemakers.
+- **Recipe Management**: Access verified recipes and contribute your own.
+- **Batch Tracking**: Document every step of your cheesemaking process.
+- **AI Assistant**: Get instant help with recipes and troubleshooting via a specialized RAG-based chatbot.
+- **Integrated Shop**: One-stop shop for cultures, equipment, and additives.
 
 ---
 
-### 🧀 Kernfunktionen
+## 🧩 Key Features
 
-- **🧾 Käsetagebuch:** persönliche Einträge für jede Käsepartie
-- **🕓 Reifungszeitachse:** zeigt an, wann welcher Käse reif ist
-- **🛒 Onlineshop:** Zutaten, Starterkulturen, Ausrüstung & Zusatzstoffe
-- **📸 Persönliche Seiten:** Galerie hergestellter Käse für jeden Käsemacher
-- **📚 Rezeptdatenbank:** Rezepte hinzufügen, durchsuchen & speichern
-- **🤖 AI-Chatbot (RAG):** intelligenter Assistent mit Wissensdatenbank für Rezepte, Reifung & Käseherstellung
+### 🧀 Core Functionalities
+- **🧾 Cheese Diary**: Personal logs for every batch produced.
+- **🕓 Maturation Timeline**: Visual tracking of aging progress with notifications for when cheese is ready.
+- **🛒 Online Shop**: Curated marketplace for essential cheesemaking supplies.
+- **📸 Personal Maker Profiles**: Showcases for your handcrafted cheeses.
+- **📚 Recipe Database**: Robust searchable collection of techniques and recipes.
+- **🤖 AI-Powered Concierge (RAG)**: An intelligent assistant trained on cheesemaking knowledge bases to assist with recipes, technical questions, and maturation stages.
 
-## 🛠️ Technologie-Stack
+### 🔐 User Roles & Permissions
+| Role | Capabilities |
+| :--- | :--- |
+| **Administrator** | Manage recipes/products, process orders, oversee system status. |
+| **Registered User** | Create batches, track maturation, save favorites, participate in the community. |
+| **Guest** | Browse recipes, view public maker galleries, shop for products. |
 
-| Technologie                                                  | Zweck                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------ |
-| [Next.js](https://nextjs.org/)                               | Frontend & Backend (Fullstack Framework)               |
-| [TypeScript](https://www.typescriptlang.org/)                | Typsicherheit im gesamten Projekt                      |
-| [PostgreSQL](https://www.postgresql.org/)                    | Relationale Datenbank                                  |
-| [Prisma](https://www.prisma.io/)                             | ORM für Datenbankzugriff                               |
-| [Tailwind CSS](https://tailwindcss.com/)                     | Styling & responsive Design                            |
-| [Swiper.js](https://swiperjs.com/)                           | Bildergalerien & Slider                                |
-| [Framer Motion](https://www.framer.com/motion/)              | Animationen im UI                                      |
-| [Quill / React‑Quill](https://quilljs.com/)                  | Rich‑Text‑Editor                                       |
-| [Cloudinary](https://github.com/colbyfayock/next-cloudinary) | Cloudinary‑Cloud‑Speicher für Bilder                   |
-| [Google Cloud Storage](https://cloud.google.com/storage)     | Cloud‑Speicher für Dateien & Bilder                    |
-| [Vis‑Timeline](https://visjs.github.io/vis-timeline/)        | Interaktive Zeitachsen & Datenvisualisierung           |
-| [Python](https://www.python.org/)                            | Backend‑Logik für AI‑Chatbot                           |
-| [FastAPI](https://fastapi.tiangolo.com/)                     | API‑Framework für Chatbot‑Server                       |
-| [LlamaIndex](https://www.llamaindex.ai/)                     | Retrieval‑Augmented Generation (RAG) für den Chatbot   |
-| [OpenAI](https://openai.com/)                                | KI‑Modell für die Generierung von Antworten im Chatbot |
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Web Frontend/Backend** | [Next.js](https://nextjs.org/) (Fullstack Framework) |
+| **Mobile App** | [React Native / Expo](https://expo.dev/) |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) (Strict typing) |
+| **Database & ORM** | [PostgreSQL](https://www.postgresql.org/) + [Prisma ORM](https://www.prisma.io/) |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) & [Framer Motion](https://www.framer.com/motion/) |
+| **Storage** | [Cloudinary](https://cloudinary.com/) & [Google Cloud Storage](https://cloud.google.com/storage) |
+| **AI Components** | [Python](https://www.python.org/), [FastAPI](https://fastapi.tiangolo.com/), [LlamaIndex](https://www.llamaindex.ai/), [OpenAI API](https://openai.com/) |
+| **Visuals/UI** | [Vis-Timeline](https://visjs.github.io/vis-timeline/), [Swiper.js](https://swiperjs.com/), [Quill](https://quilljs.com/) |
+
+---
+
+## 📂 Repository Structure
+
+The project is organized as a monorepo-style structure for cohesive development:
+
+- `project/`: Main Next.js web application.
+- `kase-mit-liebe-mobile/`: Expo-based mobile application.
+- `project/bot_backend/`: Python-based AI service.
+- `docs/`: Design documents, ERDs, and technical specifications.
+
+---
+
+## 🛫 Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- PostgreSQL instance (e.g., [Neon](https://neon.tech/))
+- Python 3.9+ (for AI services)
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Maryna-Khrystyianyn/Kease-mit-Liebe-Cheese-with-Love-
+   cd Kease-mit-Liebe-Cheese-with-Love-
+   ```
+
+2. **Web Setup:**
+   ```bash
+   cd project
+   npm install
+   npx prisma generate
+   npm run dev
+   ```
+
+3. **Mobile Setup:**
+   ```bash
+   cd kase-mit-liebe-mobile
+   npm install
+   npx expo start
+   ```
+
+---
+
+## 📈 Roadmap & Development Status
+
+The project is currently in the **MVP Phase**. 
+- [x] Database Schema Design ([logical](docs/ERD_logical_data_model_final.png) | [physical](https://dbdiagram.io/d/68f0c40a2e68d21b41c5476b))
+- [x] Core Authentication & Role System
+- [x] Recipe Management & Search
+- [/] AI Chatbot Integration (In Progress)
+- [ ] Advanced Mobile Notifications
+- [ ] Complete E-commerce Payment Integration
+
+---
+
+## 🎨 Design Reference
+Our UI/UX design is managed in Figma: [Explore the Figma Design](https://www.figma.com/design/3lPi9DrVtBNnbKULPAvOpB/K%C3%A4se-mit-liebe?node-id=0-1&p=f)
